@@ -5,7 +5,7 @@ This repository collects together my notes on topics in the formalization of mat
 
 ### Inspiration :cloud: :books: :thinking:
 
-The notes and work I have collected here are the result of countless discussions, many hours reading a number of books and webpages, and reflection. I list here a number of the key (and free) resources that I have enjoyed and learned a lot from:
+The notes and work I have collected here are the result of reflecting on countless discussions, and many hours reading a number of books and webpages. I list here a number of the key (and free) resources that I have enjoyed and learned a lot from:
 
   - [Logic Matters](https://www.logicmatters.net/) an extensive collection of notes on formal logic and metamathematics.
   - [Introduction to Formal Logic] (https://leanprover.github.io/logic_and_proof/) with an emphasis on Lean.
