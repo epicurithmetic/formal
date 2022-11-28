@@ -1,0 +1,452 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{soul}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 27: $\lambda$-Encoding Propositional Logic}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Boolean $\lambda$-Expressions}
+
+\begin{frame}
+	\frametitle{Summary}
+
+	In the previous lecture, motivated by conditional branching, we defined the following $\lambda$-expressions to mimic the Boolean values TRUE and FALSE: 
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item[] $\text{COND} = \lambda f. \ \lambda g. \ \lambda c. \ ((c \ f) \ g)$
+		\item[] $\text{TRUE} = \lambda x. \ \lambda y. \ x$
+		\item[] $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+		\item[] $\text{NOT} = \text{COND} \ \text{FALSE} \ \text{TRUE}$
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	Where COND is a $\lambda$-expression which reduces to $f$ if $c = TRUE$ and reduces to $g$ if $c = FALSE$. 
+
+	\vspace{0.3cm}
+
+	You may expand and $\beta$-reduce the definition of NOT using the other three definitions above. However, you should perform any appropriate $\alpha$-reduction to make sure there are no variable name clashes.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examples}
+
+	When computing $\beta$-reduction on Booleans these redex will arise regularly. So lets simplify them now.
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item[] TRUE TRUE \vspace{1cm}
+		\item[] TRUE FALSE \vspace{1cm}
+		\item[] FALSE TRUE \vspace{1cm}
+		\item[] FALSE FALSE \vspace{1cm} 
+	\end{itemize}
+	
+\end{frame}
+
+\section{Propositional Connectives}
+
+\begin{frame}
+	\frametitle{Propositional Connectives}
+
+	In this lecture we will think about how to define the following propositional connectives and binary/Boolean functions:
+
+	\vspace{0.3cm}
+
+	\begin{itemize}
+		%\item[] NOT 
+		\item[] AND 
+		\item[] OR 
+		\item[] IMP(LICATION)
+		\item[] NAND 
+		\item[] EQUIV(ALENT) 
+		\item[] IsTRUE?
+		\item[] IsFALSE?
+	\end{itemize}
+
+	\vspace{3cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{AND}
+
+	AND is a binary function that returns a Boolean
+
+	\begin{center}
+		$\begin{array}{ c c | c }			
+			P & Q & P \land Q\\
+			\cline{1 - 3}
+			T & T & T \\ 
+			T & F & F \\ 
+			F & T & F \\ 
+			F & F & F
+		\end{array}$
+	\end{center}
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{0.5cm}
+
+	$\text{AND} = \lambda p. \ \lambda q. \  $
+
+	\vspace{5cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	$\beta$-reduce the following $\lambda$-expression to normal form.
+
+	\vspace{0.5cm}
+
+	$\text{AND} \ \text{TRUE} \ \text{FALSE}$
+
+	\vspace{6cm}
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{OR}
+
+	OR is a binary function that returns a Boolean
+
+	\begin{center}
+		$\begin{array}{ c c | c }			
+			P & Q & P \lor Q\\
+			\cline{1 - 3}
+			T & T & T \\ 
+			T & F & T \\ 
+			F & T & T \\ 
+			F & F & F
+		\end{array}$
+	\end{center}
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{0.5cm}
+
+	$\text{OR} = \lambda p. \ \lambda q. \  $
+
+	\vspace{5cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	$\beta$-reduce the following $\lambda$-expression to normal form.
+
+	\vspace{0.5cm}
+
+	$\text{OR} \ \text{FALSE} \ \text{TRUE}$
+
+	\vspace{6cm}
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{IMP}
+
+	IMPlication is a binary function that returns a Boolean
+
+	\begin{center}
+		$\begin{array}{ c c | c }			
+			P & Q & P \to Q\\
+			\cline{1 - 3}
+			T & T & T \\ 
+			T & F & F \\ 
+			F & T & T \\ 
+			F & F & T
+		\end{array}$
+	\end{center}
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{0.5cm}
+
+	$\text{IMP} = \lambda p. \ \lambda q. \  $
+
+	\vspace{5cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	$\beta$-reduce the following $\lambda$-expression to normal form.
+
+	\vspace{0.5cm}
+
+	$\text{IMP} \ \text{TRUE} \ \text{FALSE}$
+
+	\vspace{6cm}
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{NAND}
+
+	NAND is a binary function that returns a Boolean
+
+	\begin{center}
+		$\begin{array}{ c c | c }			
+			P & Q & \text{NAND}PQ\\
+			\cline{1 - 3}
+			T & T & F \\ 
+			T & F & T \\ 
+			F & T & T \\ 
+			F & F & T
+		\end{array}$
+	\end{center}
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{0.5cm}
+
+	$\text{NAND} = \lambda p. \ \lambda q. \  $
+
+	\vspace{5cm}
+	
+\end{frame}
+
+\section{Boolean Equivalence}
+
+\begin{frame}
+	\frametitle{EQUIV}
+
+	EQUIV is a binary function that returns a Boolean
+
+	\begin{center}
+		$\begin{array}{ c c | c }			
+			P & Q & \text{EQUIV}PQ\\
+			\cline{1 - 3}
+			T & T & T \\ 
+			T & F & F \\ 
+			F & T & F \\ 
+			F & F & T
+		\end{array}$
+	\end{center}
+
+	% This one is tricky. One way to get it is to find a propositional formula involving the connectives that defines this function.
+
+	% $=pq := (p \land q) \lor \lnot(p \lor q)$
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{0.5cm}
+
+	$\text{EQUIV} = \lambda p. \ \lambda q. \  $
+
+	\vspace{5cm}
+	
+\end{frame}
+   
+\begin{frame}
+	\frametitle{Example}
+
+	$\beta$-reduce the following $\lambda$-expression to normal form.
+
+	\vspace{0.5cm}
+
+	$\text{EQUIV} \ \text{FALSE} \ \text{FALSE}$
+
+	\vspace{6cm}
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{IsTRUE?}
+
+	IsTRUE? is a unary function that returns a Boolean.
+
+	\begin{center}
+		$\begin{array}{ l | c }			
+			A &  \text{IsTRUE?} A\\
+			\cline{1 - 2}
+			T &  T \\ 
+			F &  F
+		\end{array}$
+	\end{center}
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{0.5cm}
+
+	$\text{IsTRUE?} = $
+
+	\vspace{3cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{IsFALSE?}
+
+	IsFALSE? is a unary function that returns a Boolean.
+
+	\begin{center}
+		$\begin{array}{ l | c }			
+			A &  \text{IsFALSE?} A\\
+			\cline{1 - 2}
+			T &  F \\ 
+			F &  T
+		\end{array}$
+	\end{center}
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{0.5cm}
+
+	$\text{IsFALSE?} = $
+
+	\vspace{3cm}
+
+\end{frame}
+
+\section{Summary}
+
+\begin{frame}
+	\frametitle{Propositional Logic Summary}
+
+	This is a list of encodings for propositional logic into $\lambda$-expressions. Note that there are many ways to encode these expressions.
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item[] $\text{COND} = \lambda f. \ \lambda g. \ \lambda c. \ ((c \ f) \ g)$
+		\item[] $\text{TRUE} = \lambda x. \ \lambda y. \ x$
+		\item[] $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+		\item[] $\text{NOT} = \text{COND} \ \text{FALSE} \ \text{TRUE}$
+		\item[] $\text{AND} = \lambda p. \ \lambda q. \ (p \ q) \ p$
+		\item[] $\text{OR} = \lambda p. \ \lambda q. \ (p \ p) \ q$
+		\item[] $\text{IMP} = \lambda p. \ \lambda q. \ \text{OR} \ (\text{NOT} \ p) \ q$
+		\item[] $\text{EQUIV} = \lambda p. \ \lambda q. \ (p \ q) (NOT \ q)$
+		%\item[] $\text{EQUIV} = \lambda p. \ \lambda q. \ \text{OR} \ (\text{AND} \ p \ q) \ (\text{NOT} \ (\text{OR} \ p \ q))$
+		\item[] $\text{IsTRUE?} = I$
+		\item[] $\text{IsFALSE?} = \text{NOT}$
+	\end{itemize}
+
+\end{frame}
+
+% \section{Glimpse Towards Curry-Howard Correspondence}
+% \begin{frame}
+% 	\frametitle{Logical v. $\beta$-Equivalence}
+% 	% At least true in spirit: morally true. Something probably needs to be said about types in the lambda calculus. Maybe some other details required too. 
+
+% 	Logical equivalences raise an interesting question.
+
+% 	$$ P \lor Q \dashv \vdash \lnot(\lnot P \land \lnot Q) $$
+
+% 	\vspace{0.2cm}
+
+% 	Suppose we encode both sides of a logical equivalence as $\lambda$-expressions using the encoding we have developed above. 
+
+% 	\vspace{0.2cm}
+
+% 	\begin{itemize}
+% 		\item[] Do the two functions agree on Booleans? Yes!
+% 		\item[] Are the two $\lambda$-expressions $\beta$-equivalent? 
+% 	\end{itemize}
+
+% 	\vspace{0.2cm}
+
+% 	The answer to the second question is Yes if and only if the equivalence can be witnessed with an intuitionitistic proof!
+
+% 	\vspace{0.2cm}
+
+% 	{\bf Curry-Howard Correspondence}
+
+% 	There is a deep relationship between intuitionitistic proofs and $\beta$-reduction. Intuitionitistic proofs are precisely those with computational content!
+	
+% \end{frame}
+
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. Some are freely available online. 
+
+	\vspace{0.4cm}
+
+	Type Theory and Functional Programming, \emph{Simon Thompson}
+	
+	\vspace{0.1cm}
+	
+	\begin{itemize}
+		\item Stanford Encyclopedia Articles: 
+			\begin{enumerate}
+				\item The Lambda Calculus
+				\item Type Theory
+				\item Church's Type Theory
+			\end{enumerate}
+	\end{itemize}
+
+	Church's original papers are worth visiting, although more work than Turing's paper. 
+
+	An Unsolvable Problem of Elementary Number Theory, \emph{Alonso Church}
+
+	\vspace{0.2cm}
+
+	A Note on the Entscheidungsproblem, \emph{Alonso Church}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

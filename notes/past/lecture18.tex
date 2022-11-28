@@ -1,0 +1,374 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 18: Foundations of Mathematics}
+\subtitle{Survey of Further Topics}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Hilbert's Program}
+
+\begin{frame}
+  \frametitle{Hilbert's Program}
+  
+  We have set out to study the work inspired by David Hilbert. 
+  
+	\begin{itemize}
+		\item Completeness of arithmetic
+		\item Consistency of arithmetic
+		\item Decidability of arithmetic
+  \end{itemize}
+
+	
+
+\end{frame}
+
+\section{Incompleteness}
+
+\begin{frame}
+	\frametitle{G\"{o}del's First Incompleteness Theorem}
+	
+	In 1931 G\"{o}del published the following theorem:
+	
+	\vspace{0.5cm}
+	
+	Any consistent formal theory $F$ within which Peano arithmetic can be carried out is necessarily incomplete. That is, there are sentences, $\alpha$, in $F$ such that neither $F \vdash \alpha$ nor $F \vdash \lnot \alpha$. 
+	
+	\vspace{0.5cm} 
+	
+	Thus, Peano arithmetic is incomplete. 
+	
+	\vspace{0.5cm}
+	
+	Perhaps we can add axioms to PA to make it complete? No!  
+	
+	\vspace{0.5cm} 
+	
+	{\bf Peano arithmetic is incompletable!}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Non-Standard Models}
+	
+	This theorem hints at non-standard models. G\"{o}del showed that we can prove everything that is true in \textit{every} model. 
+	
+	\vspace{0.2cm}
+	
+	If there are sentences that can't be proved, then that might be due to their truth value across interpreations.
+	
+	\vspace{0.5cm}
+	
+	{\bf Example: Hyperreal Numbers} Abraham Robinson (1960) showed that the theory of the reals with infinitesimals is equiconsistent with the theory of the real numbers. The extension of the natural numbers within' the hyperreals provides an example of a non-standard model of PA. 
+	
+	\vspace{4cm}
+	% Draw the real line. Draw infinitesimals. Write down a wff true in one but not the other. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Independence}
+	
+	These G\"{o}delian sentences are often referred to as \emph{independent sentences}. Sentences whose truth is independent of the axioms. 
+	
+	\vspace{0.5cm}
+	
+	Although G\"{o}del showed they exist for Peano arithmetic. This notion was not new to mathematicians at the time. Since the time of Euclid mathematicians had been battling with the so called parallel postulate - the axiom in geometry defining what it means for lines to be parallel. 
+	
+	\vspace{0.5cm}
+	
+	Long story short, the axiom is not as elegant as the others, so it was hoped it could be proved from the neater axioms. But the discovery of Non-Euclidean geometries proves this is not possible! 
+	
+	\vspace{0.5cm}
+	
+	Modern examples include: the continuum hypothesis, the axiom of choice, the consistency of PA, and many others. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Axioms of Q}
+	
+	Robinson Arithmetic has signature $\mathcal{Q}: \{0,s,+,\times\}$ and axioms
+	
+	\begin{enumerate}
+		\item $\forall x \lnot(s(x) = 0)$
+		\item $\forall x \ \forall y ((s(x) = s(y)) \to (x = y))$
+		\item $\forall x \ ((x = 0) \lor \exists y (x = s(y)))$
+		\item $\forall x \ (x + 0 = x)$
+		\item $\forall x \ \forall y \ (x + s(y) = s(x + y))$
+		\item $\forall x \ (x \times 0 = 0)$
+		\item $\forall x \ \forall y \ (x \times s(y) = (x \times y) + x)$
+	\end{enumerate}
+	
+	\vspace{0.2cm}
+	
+	Without the induction schema $\mathcal{Q}$ is \emph{fintely} axiomatized, and much weaker than Peano arithmetic. However, Raphael Robinson introduced $\mathcal{Q}$ in 1950 to show that although $\mathcal{Q}$ is much weaker than PA, it (and any extension of $\mathcal{Q}$) is still incomplete. There is enough number theory to carry out G\"{o}del's proof. 
+	
+	% It's not the infinite number of axioms that cause the incompleteness or undecidability.
+	
+\end{frame}
+
+\section{Consistency}
+
+\begin{frame}
+	\frametitle{G\"{o}del's Second Incompleteness Theorem}
+	
+	In 1931 G\"{o}del published the following theorem:
+	
+	\vspace{0.5cm}
+	
+	For any consistent formal theory $F$ within which Peano arithmetic can be carried out, the consistency of $F$ cannot be proved in $F$ itself. 
+	
+	\vspace{0.5cm} 
+	
+	Thus, Peano arithmetic can't prove it's own consistency. Nor can any extension of it. 
+	
+	\vspace{0.5cm} 
+	
+	G\"{o}del showed the consistency of PA can be written in PA and is one of those G\"{o}delian sentences!
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Consistency}
+	
+	If we are genuinely worried about the consistency of a theory, then we can't ever use the theory itself to convince ourselve of its consistency. 
+	
+	\vspace{0.5cm}
+	
+	For suppose we showed 
+	
+	$$ \text{PA} \vdash \text{Con(PA)}$$
+	
+	This could be a result of either (i) PA is inconsistent and hence can prove anything, or (ii) because the theory is genuinely consistent. 
+	
+	\vspace{0.5cm}
+	
+	If we are questioning which of the states we're in, then we can't conclude anything from $ \text{PA} \vdash \text{Con(PA)}$.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Consequences of the Second Incompleteness Theorem}
+	
+	What are we to take from the second incompletness theorem? 
+	
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item Finitary methods can't prove PA consistent,
+		\item Any extension of PA can't ever be proved consistent.
+	\end{itemize}
+	
+	\vspace{0.3cm}
+	
+	It is the latter point that puts a blow to Hilbert's Program. 
+	
+	We can't bootstrap consistency proofs of stronger theories. We can't use then use the consistency of PA to conclude the consistency of theories more powerful than PA.
+	
+	%For he hoped that the consistency of more far-reaching parts of mathematics could be proved from (the assumption of) the consistency of lower - ``more trustworthy" - aspects of mathematics i.e. arithmetic. 
+	
+	%\vspace{0.5cm}
+	
+	%{\bf Theory $T$ is consistent if and only if PA is consistent.}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Set Theory}
+	
+	Georg Cantor developed a theory of sets 
+	
+	$$ \{1,2,3\}, \ \mathbb{N}, \ \mathbb{R}\times\mathbb{R}, \ \mathcal{P}(\mathbb{N}), \ \mathbb{R} $$
+	
+	to help provide rigorous foundations for the continuum. His ideas for formalisation have been universally adopted. 
+	
+	\vspace{0.4cm}
+	
+	$$R = \{S \ | S \notin S\} \quad \text{Question: } R \notin R?$$
+	
+	\vspace{0.5cm}
+	
+	It was this theory that provided a lot of the worry among mathematicians. Thus it received a first-order axiomatic treatment in hope that some part of it could be shown consistent.
+	
+	\vspace{3cm}
+	% Explain how natural numbers modelled in set theory. Thus ZFC at least as strong as arithmetic and hence can't be proved consistent. 
+	
+\end{frame}
+
+\section{Decidability}
+
+\begin{frame}
+	\frametitle{Effective Procedures}
+	
+	Decidability of PA would mean: there exists an ``effective procedure" into which you can give a wff $\alpha$ and it would output Yes/No according to $\text{PA} \vdash \alpha$ or $\text{PA} \nvdash \alpha$.
+	
+	\vspace{0.5cm}
+	
+	The entscheidungsproblem is the name given to the same problem but for first-order logic itself. Is there an effective procedure that can decide whether $\vdash \alpha$? i.e. decide whether $\alpha$ is a theorem. 
+	
+	\vspace{0.5cm}
+	
+	Mathematicians have developed algorithms for ever. Algorithms are easy to spot. But what would it mean to answer the above questions {\bf in the negative}? How could we ever say: there is no algorithm.
+	
+	\vspace{0.5cm}
+	
+	For that, we have to be crystal clear by what we mean by an algorithm or an effective procedure. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Propositional logic is decidable - truth tables!
+	
+	\vspace{0.5cm}
+	
+	First-order classical logic is not decidable - How do we show that?
+	
+	\vspace{1cm} 
+	
+	We need a specific definition of an effective procedure which can act on wff. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{G\"{o}del Numbering}
+	
+	Recall that the process of G\"{o}del numbering provides a unique integer to each wff and proof.
+	
+	\vspace{0.5cm}
+	
+	With this the problem of ``an effective procedure" on wff and proofs, becomes a problem of ``an effective procedure" on the natural numbers. 
+	
+	\vspace{3cm}
+	% Examples that Godel was interested in. 
+	
+	It was this insight that lead G\"{o}del to realise that perhaps an already exisiting family of functions could be the required definition of an effective procedure.
+	
+	\vspace{0.5cm}
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Primitive Recursion}
+	
+	Which family of functions $f:\mathbb{N} \rightarrow \mathbb{N}$ is effective in the sense that it is completely defined a head of time (needs no further input from the user mid-computation) and will only ever require finitely many steps to obtain the output? 
+	
+	\vspace{0.5cm} 
+	
+	Here G\"{o}del used what was understood by mathematicians at the time: primitive recursive functions.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Recursion}
+	
+	This is an idea familiar to anyone who has done a course in computer programming. Put simply: they're functions who call themselves. 
+	
+	\vspace{0.5cm}
+	
+	{\bf Examples}
+	
+	\begin{itemize}
+		\item Fibonacci Sequence (Fibonacci, Leonardo of Pisa)
+		\item Addition (Charles Sanders Peirce)
+		\item Multiplication (Charles Sanders Peirce)
+	\end{itemize}
+
+	\vspace{4cm}
+	% Fib(n) = Fib(n-1) + Fib(n-2) bottoms out at Fib(0) and Fib(1).
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Computability?}
+	
+	To the question: What is an effective procedure? G\"{o}del (and others) answered: a recursive function. To say that there is an effective procedure for something is to show that there is a recursive function which outputs the answer. 
+	
+	\vspace{0.5cm} 
+	
+	To say that there is no effective procedure for something is to say there can be no recursive function which outputs the answer. 
+	
+	\vspace{0.5cm} 
+	
+	Others had other ideas
+	
+	\begin{itemize}
+		%\item Recursion, 
+		\item Turing Machines, 
+		\item $\lambda$-calculus, 
+		\item Post machines, 
+		\item Cellular automata, 
+		\item Finite state machines, push-down automata, von-Neumann Architecture.		
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item L$\exists \forall$N, \emph{Logic and Proof}. Sections: 17, 18 (+ 23 optional).
+		\item Logic Matters, \emph{G\"{o}del Without Too Many Tears}.
+		\item SEP, \emph{G\"{o}del's Incompleteness Theorem} (Optional!).
+		\item SEP, Recursive Functions.
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

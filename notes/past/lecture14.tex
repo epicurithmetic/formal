@@ -1,0 +1,245 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 14: First-Order Theories of Arithmetic I}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Axioms, Models, and Completeness}
+
+\begin{frame}
+  \frametitle{Direction}
+
+	We now have the precise language required to express mathematics!
+	
+	\vspace{0.5cm}
+	
+	Formalising a particular area of mathematics in first-order logic requires us to
+	
+	\begin{itemize}
+		\item Pick a first-order language $\mathcal{L}$ i.e. fix a signature,
+		\item and pick axioms that define the structure of the signature. 
+	\end{itemize}
+	
+	Throughout the entire course we have been carrying around a set $\Sigma$ of hypotheses. Now we think of that set as our axioms and the conclusions in our arguments as the theorems we hope to deduce from those axioms. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{First-Order Theories}
+	
+	Mathematics abounds with first-order theories. This idea was adopted for much of mathematics in the early 1900s. To the point that now you would be unlikely to find an advanced undergraduate course in mathemtaics that does not introduce the objects of interest (e.g. groups) by specifying them as objects which obey some first-order axioms. 
+	
+	\vspace{0.2cm}
+	
+	We are going to focus on different theories of \textit{arithmetic}. By that we will mean the natural (non-negative) numbers under addition and multiplication.
+	
+	\vspace{0.2cm}
+	
+	Where do we start? Ultimately, we have total freedom to chose the signature of the language and the axioms. As long as the natural numbers are a model of language. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Categorical Theories}
+	
+	Suppose we have a set of axioms $\Sigma$ in a language $\mathcal{L}$ such that there is a \textit{unique} model, $\mathfrak{M}$, satisfying $\Sigma$. Such theories are called categorical.
+	
+	\vspace{0.5cm} 
+	
+	If a sentence $\phi$ of $\mathcal{L}$ is true in $\mathfrak{M}$, then it is true in \textit{every} model - by the uniqueness. G\"{o}del's \textit{completeness} theorem of first-order logic implies there exists a derivation of $\phi$ from the axioms $\Sigma$. 
+	
+	\vspace{0.5cm} 
+	
+	Thus categorical theories are \textit{syntactically complete}.
+	
+	\vspace{0.5cm}
+
+	{\bf Hope:} Write down some axioms for which the natural numbers are \emph{the} model...
+\end{frame}
+
+\begin{frame}
+	\frametitle{Standard and Non-Standard Models}
+	
+	In this process of formalisation we typically have an intended model for the axioms in mind. We will refer to this as the standard model. 
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} For us we are interested in the arithmetic of the natural numbers. This is our standard model of arithmetic. 
+	
+	\vspace{0.5cm}
+	
+	If there is a sentence $\phi$ that is true in the standard model, then one reason we may not be able to prove it from our deductive calculus is that there maybe some other model for which it's not true. In that case, by the completeness theorem, we would not be able to prove $\phi$. Remember our deductive calculus proves all, \textit{and only those}, formulae true in \emph{every} model that satisfies the axioms $\Sigma$. 
+	
+	\vspace{0.5cm}
+	
+	Thus the existence of \textit{non-standard models} can stop us from ever proving things about the standard model.
+\end{frame}
+
+\section{Meta}
+
+\begin{frame}
+	\frametitle{Meta Hopes and Dreams}
+	
+	Once we've fixed a language and written down some axioms, there are some natural enough questions we might want to ask: 
+	
+	\begin{itemize}
+		\item Is the set of derivable formulae consistent?
+		\item Is the set of derivable formulae decidable? 
+		\item Given a sentence $\phi$, is there a proof of $\phi$ or $\lnot \phi$ from the axioms? This is known as \textit{syntactic completeness}.
+		\item Is there \textit{a} model? How many models are there? 
+	\end{itemize}
+
+	Studying the answers to these questions in any detail is beyond the scope, and time limit, of this course. But these are the kind of questions one would learn about when studying this subject further. 
+	
+	\vspace{0.2cm}
+	
+	These are the questions Hilbert set out to answer in his Program. 
+	
+\end{frame}
+
+\section{Presburger Arithmetic}
+
+\begin{frame}
+	\frametitle{Presburger Arithmetic}
+	
+	In 1930 Moj\.{z}esz Presburger presented the following language and axioms in his thesis: About the completeness of a certain system of integer arithmetic in which addition is the only operation.
+	
+	\vspace{0.2cm}
+	
+	Presburger arithmetic has signature $\mathcal{P}: \{0,1,+,=\}$ and axioms
+	
+	\vspace{0.2cm}
+	
+	\begin{enumerate}
+		\item $\forall x \ \lnot(0 = x + 1)$
+		\item $\forall x \ \forall y \ ((x + 1  = y + 1) \rightarrow x = y)$
+		\item $\forall x \ (x + 0 = x)$
+		\item $\forall x \ \forall y \ (x + (y + 1) = (x + y) + 1)$
+		\item $(P(0) \land \forall x \ (P(x) \to P(x+1))) \rightarrow \forall y (P(y))$
+	\end{enumerate}
+
+	\vspace{0.2cm}
+
+	Axiom 5 is really infinitely many axioms; an axiom schema. One statement for each first-order formula, $P$, in the language $\mathcal{P}$.  
+	
+	% Ask the class to translate this is in the standard model.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{The Identity Predicate}
+	
+	The equality predicate is often treated implicitly, to the point it is not explicitly stated in the signature of the language. We always assume the following axioms 
+	
+	$$\forall x \ (x = x) $$ $$ \forall x \ \forall y \ (x = y \rightarrow (fx = fy)) $$ $$ \forall x \ \forall y \ (x = y \rightarrow (Px = Py))$$
+	
+	and rule of inference
+	
+		\begin{center}
+		$\begin{array}{ c }
+		
+		\infer[=]{\alpha[x/t]}
+		{
+			\begin{array}{c} \Sigma_{1}  \\ \mathcal{D}_{1} \\ \alpha[x/s] \end{array}
+			& 
+			\begin{array}{c} \Sigma_{2}  \\ \mathcal{D}_{2} \\ t = s 
+		 \end{array}
+		}	
+		
+	\end{array}$
+	\end{center}
+	
+	hold in first-order logic with identity. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	% Do some example proof in P.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Meta-results on $\mathcal{P}$}
+	
+	In his thesis Presburger proved $\mathcal{P}$ is
+	
+	\begin{enumerate}
+		\item consistent,
+		\item complete, 
+		\item and decidable.
+	\end{enumerate}
+	
+	\vspace{5cm}
+	
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item L$\exists \forall$N, \emph{Logic and Proof}. Section: 17 
+		\item Logic Matters, \emph{G\"{o}del without (too) many tears}: Sections 5,6
+		
+		\quad \quad https://www.logicmatters.net/igt/
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

@@ -1,0 +1,340 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{soul}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 25: $\lambda$ Calculus}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Lambda ($\lambda$) Calculus}
+
+\begin{frame}
+	\frametitle{Lambda Calculus}
+
+	The lambda calculus is a formal language with rules of formatation, manipulation, and simplification of strings called $\lambda$-expressions. 
+
+	\vspace{0.5cm}
+
+	It is the process of ``simplification" - to be known as $\beta$-reduction - that is the process of computation in this model.
+	
+	\vspace{0.5cm}
+
+	Some of the ideas of the lambda calculus go back to Gottlob Frege, but Alonso Church took those ideas and developed the theory proper through a series of papers in the 1930s. 
+
+	\vspace{0.5cm}
+
+	This (with its type theory counterparts) has fascinating links to proofs in first-order logic and through this to program and proof verification.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Grammar of Lambda Calculus}
+
+	Lambda calculus has countably many variables $x,y,z,a,b,c,\dots$
+
+	\vspace{0.5cm}
+
+	$\lambda$-expressions are constructed from variables using the following three mechanisms.
+
+	\begin{itemize}
+		\item[] Variables: $x,y,z, \dots$
+		\item[] Application: $(t \ u)$ for $\lambda$-expressions $t,u$
+		\item[] Abstraction: $(\lambda x. \ t)$ for variable $x$ and $\lambda$-expression $t$
+	\end{itemize}
+
+	\vspace{0.2cm}
+
+	{\bf Examples}
+	
+	\begin{itemize}
+		\item[] $g$
+		
+		\item[] $(\lambda x. \ x \ x)$
+
+		\item[] $((\lambda x. \ x \ x) \ g)$
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Notation Conventions}
+
+	As with well-formed formulae in logic, we may opt to drop brackets. If you do, then all $\lambda$-expressions will be interpreted under the following conventions.
+
+	\vspace{0.5cm}
+
+	Application associates to the left e.g. 
+	
+	$t \ u \ v = (t \ u) \ v$
+
+	\vspace{0.3cm}
+
+	Abstraction associates to the right e.g. $\lambda x. \lambda y. \lambda z. \ t = \lambda x. (\lambda y. (\lambda z. \ t))$
+
+	\vspace{0.3cm}
+
+	Application binds tighter than abstraction e.g. $\lambda x. \ t \ u = \lambda x. \ (t \ u) \neq (\lambda x. \ t) u $ 
+
+	\vspace{0.5cm}
+
+	If you find brackets useful and clarifying, then feel free to keep them. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Interpreting $\lambda$-expressions}
+
+	All $\lambda$-expressions are to be thought of as functions.
+
+	\vspace{0.5cm}
+
+	Functions are first class citizens in the $\lambda$-calculus. 
+
+	\vspace{0.5cm}
+
+	Application, $(t \ u)$, is thought of as applying $t$ to the input $u$.
+
+	\vspace{0.5cm}
+
+	Abstraction $\lambda x. \ u$ is a function which takes input into $x$ and substitutes that value in every (free) instance of $x$ in the $\lambda$-expression $u$.
+
+	\vspace{0.5cm}
+
+	This means we have analogous free, bound, and substitution definitions as discussed for first-order logic and quantifiers. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Free \& Bound Variables}
+
+	The $\lambda$ abstraction operator bounds instances of its variable within the body of the abstraction expression. If $x$ is a variable and $e$ is a $\lambda$-expression, then $x$ is bound in any sub-expression of the form 
+	
+	$$\lambda x. \ e$$
+
+	Any variable in $e$, other than $x$, is said to be free in the above sub-expression.
+
+	\vspace{0.5cm}
+
+	{\bf Examples}
+
+	\begin{itemize}
+
+		\item[] $(\lambda x.\lambda y. \ yx)$ \vspace{0.2cm}
+
+		\item[] $(\lambda z. zx)(x) $ \vspace{0.2cm}
+
+		\item[] $(\lambda x.\lambda y. \ yx)((\lambda z. zx)(x))$
+	
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Substitution Rules}
+	
+	When we substitute one $\lambda$-expression $N$ into another $\lambda$-expression $M$ for a variable $x$ we replace all \emph{free occurences} of $x$ in $M$ with $N$: this is denoted $M[x:=N]$. 
+
+	\vspace{0.2cm}
+
+	Substitution of $\lambda$-expressions is defined inductively as follows
+
+	\vspace{0.2cm}
+
+	\begin{itemize}
+		\item[] $x[x:=N] = N$ \vspace{0.2cm}
+		\item[] $y[x:=N] = y$ when $y \neq x$ \vspace{0.2cm}
+		\item[] $(M_{1} \ M_{2})[x:=N] = (M_{1}[x:=N] \ M_{2}[x:=N])$ \vspace{0.2cm}
+		\item[] $(\lambda x. \ e)[x:=N] = \lambda x. \ e$ \vspace{0.2cm}
+		\item[] $(\lambda y. \ e)[x:=N] = \lambda y. \ e[x:=N]$
+	\end{itemize}
+
+	As with substitution of well-formed formulae in first-order logic, this formal definition looks more complicated than the intuitive idea of substituting one term for another. 
+	
+\end{frame}
+
+\section{Reduction Steps}
+
+\begin{frame}
+	\frametitle{$\alpha$-reduction}
+
+	We do not want to make free variables bound when substituting.
+
+	\vspace{0.2cm}
+
+	Bound variables are \emph{dummy variables} in the sense that their name is not important. Compare the functions 
+
+	$$f(x) = x^2 \hspace{2cm} f(t) = t^2$$
+
+	The fact that one is written in terms of $x$, while the other is in terms of $t$ does not change the fact that these functions \emph{do} the same thing: square their input. 
+
+	\vspace{0.5cm}
+
+	We are free to rename bound variables in $\lambda$-expressions. This process is called $\alpha$-reduction. 
+
+	\vspace{0.5cm}
+
+	{\bf Examples}
+
+	$\lambda x. \ x =_{\alpha} \lambda y. \ y$
+
+	\vspace{0.1cm}
+
+	$(\lambda x. \ (\lambda y. \ y x)) \ y =_\alpha$
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\beta$-reduction}
+
+	This is intended to capture the idea that application $(M N)$ of one expression to another is to be thought of as applying the function $M$ to the input $N$.
+	
+	\vspace{0.5cm}
+
+	Furthermore, the abstractions $\lambda x. \ e$ are intended to be interpreted as functions which take in an $x$ and substitute this into $e$. 
+
+	\vspace{0.3cm}
+
+	$$(\lambda x. \ e) \ M =_{\beta} e[x:=M]$$
+
+	\vspace{0.3cm}
+
+	$\lambda$-expressions of the form $\lambda x. \ e$ are called $\beta$-redexes.
+
+	\vspace{0.3cm}
+
+	Computation is: evaluating recursive functions, carrying out instructions for a Turing machine, and now computing $\beta$-reductions on $\lambda$-expressions.
+	
+\end{frame}
+
+\section{Examples}
+\begin{frame}
+	\frametitle{Example}
+
+	Perform a step of $\beta$-reduction on the following $\beta$-redex
+
+	$$(\lambda x. \ x)(\lambda y. \ y (\lambda z. \ z w))$$
+	% What does \lambda x. \ x  do here? Identity.
+
+	\vspace{7cm}
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Perform a step of $\beta$-reduction on the following $\beta$-redex
+
+	$$((\lambda x. \ \lambda y. \ y x) \ f) \ g $$
+	% What does (\lambda x. \ \lambda y. y x)  do here? Prepares first function to be applied to the next. 
+
+	\vspace{7cm}
+
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Example}
+
+	Perform a step of $\beta$-reduction on the following $\beta$-redex
+
+	$$(\lambda x. \ x x x)(\lambda x. \ x x x)$$
+
+	\vspace{7cm}
+
+
+\end{frame}
+
+\section{Currying}
+\begin{frame}
+	\frametitle{Multivariable Functions?}
+
+	Multivariable functions are abundant in mathematics. Construction rules for $\lambda$-expressions only allow for the construction of unary functions. What gives? Currying means this actually isn't a problem.
+
+	$$f(x,y) = x^{2}y + y^{2}x$$
+
+	\vspace{7cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. Some are freely available online. 
+
+	\vspace{0.4cm}
+
+	Type Theory and Functional Programming, \emph{Simon Thompson}
+	
+	\vspace{0.1cm}
+	
+	\begin{itemize}
+		\item Stanford Encyclopedia Articles: 
+			\begin{enumerate}
+				\item The Lambda Calculus
+				\item Type Theory
+				\item Church's Type Theory
+			\end{enumerate}
+	\end{itemize}
+
+	Church's original papers are worth visiting, although more work than Turing's paper. 
+
+	An Unsolvable Problem of Elementary Number Theory, \emph{Alonso Church}
+
+	\vspace{0.2cm}
+
+	A Note on the Entscheidungsproblem, \emph{Alonso Church}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

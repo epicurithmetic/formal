@@ -1,0 +1,339 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 5: Rules of Inference}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Rules of Inference}
+
+\begin{frame}
+	\frametitle{Hypothetical Reasoning}
+	
+	In mathematics we often prove statements of the following hypothetical form: ``If ..., then ..." 
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} Suppose $f$ is a smooth function. If $f$ is continuous, then it is differentiable.
+	
+	\vspace{0.5cm}
+	
+	The proof of such a statement will assume the hypothesis of continuity and show that it implies differentiability.
+	
+	\vspace{0.5cm} 
+	
+	The conclusion is the entire implication, not just differentiablity. 
+	
+	\vspace{3cm}
+	
+\end{frame}
+
+\begin{frame}
+  \frametitle{$\rightarrow$ Introduction}
+
+	If $^{\Sigma}_{\beta}\mathcal{D}$ is a deduction of $\beta$ from $\Sigma$, then
+
+	\begin{center}		
+		$\begin{array}{c}		
+			\infer[\rightarrow I]{\alpha \rightarrow \beta}
+				{\begin{array}{c} \hline \cancel{\alpha} \\ \Sigma \\ \mathcal{D} \\ \beta \end{array}}
+		\end{array}$
+	\end{center}
+
+	is a deduction of $\alpha \rightarrow \beta$ from hypotheses $\Sigma \backslash \{\alpha\}$.
+	
+	\vspace{1.5cm} 
+	
+	{\bf Note: }As the assumption $\alpha$ is struck out after this deduction, we are free to use $\alpha$ \emph{even if it is not in} $\Sigma$ when using implication introduction. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show $\{\alpha \rightarrow \beta, \ \beta \rightarrow \gamma\} \ \vdash \ \alpha \rightarrow \gamma$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Falsum}
+	
+	We introduce the logical constant $\bot$ (falsum or absurdity) to define the syntactic form of the $\lnot$ connective. We make the following definition: 
+	
+	$$\lnot \alpha:= \alpha \rightarrow \bot$$
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		$\begin{array} { c c c }
+		
+		\infer[MP]{\bot}{\alpha \quad & \alpha \rightarrow \bot}
+		
+		& \hspace{3cm} &
+		
+		\infer[\rightarrow I]{\alpha \rightarrow \bot}{\begin{array}{c} 
+			\hline \cancel{\alpha} \\
+			\mathcal{D} \\ 
+			\bot			
+		\end{array}}		
+		
+		\end{array}$
+	\end{center}
+	
+	\vspace{1cm}
+	
+	Falsum $\bot$ is to be thought of as ``absurdity" or ``contradiction". 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Modus Tollens}	
+	
+	Show $\{\alpha \rightarrow \beta, \quad \lnot\beta\} \vdash \lnot \alpha$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Contradiction Implies Absurdity}
+	
+	Show $A \land \lnot A \ \vdash \ \bot$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\land$ Introduction}
+	
+	If $^{\Sigma_{1}}_{\alpha}\mathcal{D}_{1}$ and $^{\Sigma_{2}}_{\beta}\mathcal{D}_{2}$ are deductions, then
+
+	\vspace{0.5cm}
+
+	\begin{center}
+		$\begin{array}{c}		
+			\infer[\land I]{\alpha \land \beta}{\begin{array}{c} \Sigma_{1} \\ \mathcal{D}_{1} \\ \alpha \end{array} \quad & \begin{array}{c} \Sigma_{2} \\ \mathcal{D}_{2} \\ \beta \end{array}}	
+		\end{array}$
+	\end{center}
+
+	is a deduction of $\alpha \land \beta$ from $\Sigma_{1} \cup \Sigma_{2}$. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\land$ Elimination}
+	
+	If $^{\Sigma}_{\alpha \land \beta}\mathcal{D}$ is a deduction of $\alpha \land \beta$ from $\Sigma$, then
+	
+	\begin{center}	
+		
+		$\begin{array}{ c c }		
+		\begin{array}{c}		
+			\infer[\land E_{L}]{\alpha}
+			{\begin{array}{c} \Sigma \\ \mathcal{D} \\ \alpha \land \beta \end{array}}
+		\end{array}
+		
+		\quad
+		
+		&
+		
+		\quad
+		
+		\begin{array}{c}		
+			\infer[\land E_{R}]{\beta}
+			{\begin{array}{c} \Sigma \\ \mathcal{D} \\ \alpha \land \beta \end{array}}
+		\end{array}
+		\end{array}$
+	\end{center}
+	
+	are deductions of $\alpha$ and $\beta$ from $\Sigma$.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Commutativity of $\land$}
+	
+	Show $\alpha \land \beta \dashv\vdash \beta \land \alpha$
+		
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Idempotence of $\land$}
+	
+	Show $\alpha \land \alpha \dashv\vdash \alpha$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{$\lor$ Introduction}
+	
+	If $^{\Sigma}_{\alpha}\mathcal{D}$ is a derivation of $\alpha$ from $\Sigma$, then 
+	
+	\begin{center}
+		
+	$\begin{array}{ c c c }	
+		\begin{array}{ c c }		
+			\begin{array}{c}		
+				\infer[\lor I_{R}]{\alpha \lor \beta}
+				{\begin{array}{c} \Sigma \\ \mathcal{D} \\ \alpha \end{array}}
+			\end{array}
+		\end{array}
+		
+		&
+		
+		&
+		
+		\begin{array}{ c c }		
+			\begin{array}{c}		
+				\infer[\lor I_{R}]{\beta \lor \alpha}
+				{\begin{array}{c} \Sigma \\ \mathcal{D} \\ \alpha \end{array}}
+			\end{array}
+		\end{array}		
+		
+		
+	\end{array}$
+	\end{center}
+	
+	are derivations of $\alpha \lor \beta$ and $\beta \lor \alpha$ from $\Sigma$. 
+	
+	\vspace{1cm}
+	
+	{\bf Note:} We are free to choose $\beta$ as, if we know $\alpha$ to be the case, then $\alpha \lor \beta$  is necessarily the case \emph{for any }$\beta$. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\lor$ Elimination}
+	
+	If $^{\Sigma_{1}}_{\alpha\lor\beta}\mathcal{D}_{1}$, $^{\Sigma_{2}}_{\alpha\rightarrow\gamma}\mathcal{D}_{2}$, and $^{\Sigma_{2}}_{\beta\rightarrow\gamma}\mathcal{D}_{3}$ are derivations, then
+	
+	\begin{center}
+	$\begin{array}{ c }
+	
+		\infer[\lor_{E}]{\gamma}
+			{
+			\begin{array}{c} \Sigma_{1}  \\ \mathcal{D}_{1} \\ \alpha\lor\beta \end{array}
+			 & 
+			\begin{array}{c} \Sigma_{2}  \\ \mathcal{D}_{2} \\ \alpha\rightarrow\gamma \end{array}				
+			 & 
+			\begin{array}{c} \Sigma_{2}  \\ \mathcal{D}_{2} \\ \beta\rightarrow\gamma \end{array}				 
+			}	
+	
+	\end{array}$
+	\end{center}
+	
+	is a derivation of $\gamma$ from $\Sigma_{1}\cup\Sigma_{2}\cup\Sigma_{3}$.
+	
+	\vspace{1cm}
+	
+	{\bf Note:} You can't remove one of the arguments from a disjunction. Knowledge of $\alpha \lor \beta$ is not sufficient to conclude either $\alpha$ or $\beta$ alone.
+	
+\end{frame}
+
+\section{Minimal Logic}
+
+\begin{frame}
+	\frametitle{Minimal Logic}
+	
+	Together the rules of inference that we've given so far define \emph{minimal} logic. They include much, but not all, of the logical inferences that practising mathematicians might use in a proof. What they do include is uncontroversial.
+	
+	\vspace{0.5cm}
+	
+	However it is not universally agreed upon how minimal logic should be extended. There are philosophical differences among mathematicians and logicians about what other rules of inference should be included. 
+	
+	\begin{itemize}
+		\item Classical logic 
+		\item Intuitionistic logic
+		\item Modal logic		
+	\end{itemize}
+	
+	{\bf Report:} These philosophical differences and different logics would make for an interesting report topic. 
+	
+\end{frame}
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+
+Below is a selection of resources that I used to prepare the lecture. You might like to read over them yourself to help get a more complete picture of the topics discussed. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+	\item L$\exists \forall$N, \emph{Logic and Proof}. Section: $3$ (and $4$ if you're interested)  
+	\item Logic Matters, \emph{An Introduction to Formal Logic}. Sections: Interlude, $20 - 22$
+\end{itemize}
+
+\end{frame}
+
+
+
+
+
+\end{document}

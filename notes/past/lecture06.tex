@@ -1,0 +1,231 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 6: Classical Logic}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+  \frametitle{Example: Minimal Logic}
+
+	Show $\{ A \lor B, \ (A \lor C)\rightarrow D, \ B \rightarrow D  \} \ \vdash D$
+	
+	\vspace{7cm}
+
+
+
+\end{frame}
+
+\section{Intuitionistic Logic}
+
+\begin{frame}
+	\frametitle{Ex Falso Sequitur Quadlibet}
+	
+	So far, we have not made much mention of how to deal with the derivation of $\bot$ absurdity. 
+	
+	\vspace{0.5cm}
+		
+	If $^{\Sigma}_{\bot}\mathcal{D}$ is a deduction of $\bot$ from $\Sigma$, then
+	
+	\begin{center}		
+		$\begin{array}{c}		
+		\infer[\bot]{\alpha}
+		{\begin{array}{c} \Sigma \\ \mathcal{D} \\ \bot \end{array}}
+		\end{array}$
+	\end{center}
+
+	is a derivation of $\alpha$ from the assumptions $\Sigma$.
+	
+	\vspace{0.5cm}
+	
+	\emph{Anything you want follows from a falsehood.} Recall this is valid. 
+	 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Disjunctive Syllogism}
+	
+	Show $\{\alpha \lor \beta, \lnot\beta\} \vdash \alpha$
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Double Negation Elimination}
+	
+	Show $\lnot\lnot \alpha \vdash \alpha$ 
+	\vspace{5cm}
+	
+	\pause
+	% LaTeX the derivation here. 
+	
+	{\bf Ex falso does not give us a proof.} In fact we have shown the following: $\{\lnot\lnot\alpha, \lnot\alpha\} \vdash \alpha$.
+	
+\end{frame}
+
+\section{Classical Logic}
+
+
+\begin{frame}
+	\frametitle{Reductio Ad Absurdum}
+	
+	If $^{\Sigma}_{\bot}\mathcal{D}$ is a deduction of $\bot$ from $\Sigma$, then
+	
+	\begin{center}		
+		$\begin{array}{c}		
+		\infer[RAA]{\alpha}
+		{\begin{array}{c} \hline \cancel{\lnot\alpha} \\ \Sigma \\ \mathcal{D} \\ \bot \end{array}}
+		\end{array}$
+	\end{center}
+	
+	is a derivation of $\alpha$ from the assumptions $\Sigma \backslash\{\lnot\alpha\}$.
+	
+	\vspace{0.5cm}
+	
+	If absurdity follows from $\lnot\alpha$, then we may conclude $\alpha$ {\bf and discharge $\lnot \alpha$ from our assumptions.}
+	 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Double Negation}	
+	
+	Show $\lnot\lnot\alpha \vdash \alpha$
+	\vspace{7cm}	
+	
+	% Notice the difference if Ex Falso is used - then we prove something very different!
+\end{frame}
+
+\begin{frame}
+	\frametitle{Law of Excluded Middle}
+	
+	Show $\vdash \alpha \lor \lnot \alpha$
+	\vspace{7cm}
+	
+	% Notice the difference if Ex Falso is used - then we prove something very different!	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	Show $\{\alpha \rightarrow \beta, \hspace{0.2cm} \alpha \rightarrow \lnot\beta\} \vdash \lnot\alpha$
+	\vspace{7cm}
+	
+	
+	% The last step can be achieved by RAA... but it can also be seen as implication introdcution. It's minimal!
+	
+\end{frame}
+
+\section{Derived Rules of Inference}
+
+\begin{frame}
+	\frametitle{Derived Rules of Inference}
+	
+	Proofs can be simplified by using results already proved. You may, in the course of a proof, use any result that has been proven in class or previously in a tutorial. However, when substituting previous proofs, you must bring all of the premises with the conclusion. 
+	
+	\vspace{0.5cm}
+	
+	We have already seen this with the use of \emph{modus tollens} (MT) in some examples.
+	
+	\vspace{0.5cm} 
+	
+	This can help keep proofs manageable and neat.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Substituting LEM}
+	
+	%Earlier we showed $\vdash \alpha \lor \lnot\alpha$ so we can call on this theorem when ever it may help us.
+	Show $\alpha \rightarrow \beta \vdash \lnot\alpha \lor \beta$
+	
+	\vspace{7cm}
+		
+	
+\end{frame}
+
+
+
+
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+
+Below is a selection of resources that I used to prepare the lecture. You might like to read over them yourself to help get a more complete picture of the topics discussed. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+	\item L$\exists \forall$N, \emph{Logic and Proof}. Section: 5  
+	\item Logic Matters, \emph{An Introduction to Formal Logic}: Sections 17, 23, and 24.8
+\end{itemize}
+
+
+\end{frame}
+
+
+
+
+
+\end{document}

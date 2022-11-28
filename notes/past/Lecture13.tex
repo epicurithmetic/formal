@@ -1,0 +1,324 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 13: Proof Theory II}
+\subtitle{Syntax of the Existential Quantifier}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+	
+	\titlepage
+	
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+	\frametitle{Outline}
+	
+	\tableofcontents
+	
+\end{frame}
+
+
+
+\section{Rules of Inference: Existential Quantifier}
+
+\begin{frame}
+	\frametitle{Existential Introduction}
+	
+	If $^{\Sigma}_{\alpha[x/y]}\mathcal{D}$ is a derivation, where $y$ is free for $x$ in $\alpha$, then
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		$\begin{array}{c}
+		\infer[\exists I]{\exists x \alpha}{\begin{array}{c} 
+			\Sigma \\
+			\mathcal{D} \\ 
+			\alpha[x/y]			
+			\end{array}}
+		\end{array}$
+	\end{center}
+	
+	is a derivation of $\exists x \alpha$ from hypotheses $\Sigma$. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show $\forall x Px \ \vdash \ \exists Px$
+	
+	\vspace{6cm}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show $\{\forall x (Px \rightarrow Qx), \lnot Qa\} \ \vdash \ \exists x \ \lnot Px$
+	
+	\vspace{6cm}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Existential Elimination}
+	
+	If $^{\Sigma_{1}}_{\exists x \alpha}\mathcal{D}_{1}$, $^{\Sigma_{2}}_{\alpha[x/y]\rightarrow\gamma}\mathcal{D}_{2}$, and $y$ is neither free in $\gamma$ nor $\Sigma$, then
+	
+	\begin{center}
+	$\begin{array}{ c }
+	
+	\infer[\exists E]{\gamma}
+	{
+		\begin{array}{c} \Sigma_{1}  \\ \mathcal{D}_{1} \\ \exists x \alpha \end{array}
+		& 
+		\begin{array}{c} \Sigma_{2}  \\ \mathcal{D}_{2} \\ \alpha[x/y]\rightarrow\gamma \end{array}				
+	}	
+	
+	\end{array}$
+	\end{center}
+
+	is a derivation of $\gamma$ from hypotheses $\Sigma_{1} \cup \Sigma_{2}$. 
+	
+	% Take time to explain that if $y$ is arbitary, then we can put in the term we know to exist from the first deduction. The fact that $y$ is arbitrary is encoded by not being free in $\gamma$ nor $\Sigma$. 
+	
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show $\{\forall x (Px \rightarrow Qx), \ \exists x Px\} \ \vdash \ \exists x Qx$
+	
+	% There are a few wrong things one might do here which are worth pointing out. 
+	
+	\vspace{6cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: When Things Go Wrong I}
+	
+	Sherlock is a detective. Therefore, everyone is a detective. 
+	
+	\vspace{0.5cm}
+	
+	$$ \exists x Dx \ \vdash \ \forall x Dx $$
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		$\begin{array}{c}
+			\infer[\forall I]{\forall x Dx}{\infer[\exists E]{Da}
+					{\exists x Dx & \infer[\rightarrow I]{Da \rightarrow Da}{\infer[]{ \ Da \ }{}}
+				}
+			}
+		
+		 \end{array}$
+	\end{center}
+
+	
+\end{frame}
+	
+\begin{frame}
+	\frametitle{Example: When Things Go Wrong II}
+	
+	Sherlock is a human. Gladstone is a dog. Therefore, there exists somthing that is both a human and a dog. 
+	
+	\vspace{0.5cm}
+	
+	$$ Hs, \ \exists x Dx \ \vdash \ \exists x (Hx \land Dx) $$
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		$\begin{array}{c}
+	
+			\infer[\exists E]{\exists x (Hx \land Dx)}{\exists x Dx & \infer[\rightarrow I]{Ds \rightarrow \exists x (Hx \land Dx)}
+				{\infer[\exists I]{\exists x (Hx \land Dx)}
+					{\infer[\land I]{Hs \land Ds}
+						{Hs & \infer[]{Ds}
+							{}}}}}
+
+
+	     \end{array}$
+	\end{center}
+\end{frame}
+
+\section{Extended Example}
+
+\begin{frame}
+	\frametitle{Proof Strategy}
+	
+	\begin{center}
+	Show $\exists x Px \lor \exists x Qx \ \vdash \ \exists x (Px \lor Qx)$
+	\end{center}
+
+	{\bf Note:} Our hypothesis is a disjunction. So we will need the disjunction elimination rule to make use of it. 
+	
+	\vspace{2cm}
+	
+	This breaks the proof into two steps: 
+	
+	\begin{center}
+	\begin{enumerate}
+		\item $\exists x Px \rightarrow \exists x (Px \lor Qx)$
+		\item $\exists x Qx \rightarrow \exists x (Px \lor Qx)$		
+	\end{enumerate}
+	\end{center}
+	
+	Both of these steps will have the same form, so let's focus on the first.
+		
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof Strategy}
+
+	We have reduced the problem to showing:	
+
+	 $$ \ \vdash \ \exists x Px \rightarrow \exists x (Px \lor Qx)$$
+	
+	\pause
+	
+	The deduction theorem ($\rightarrow I$) implies this is equivalent to showing:
+	
+	$$\exists x Px \ \vdash \  \exists x (Px \lor Qx)$$
+	
+	\pause
+	
+	Now our hypothesis has an existential quantifier in it, so we need to use the corresponding elimination rule. Our proof will have a line of the form: 
+	
+	\vspace{0.7cm}
+	
+	$$ \infer[\exists E]{\exists x (Px \lor Qx)}{\exists x Px \ & \infer[?]{\ Pa \rightarrow \exists x (Px \lor Qx)}{} } $$
+
+	How can we complete the proof? 
+		
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof Strategy}
+	
+		We want to show $ \ \vdash \ \exists x Px \rightarrow \exists x (Px \lor Qx)$ and so far our proof looks like this. What can we do to finish this proof?
+	
+	$$ \infer[\exists E]{\exists x (Px \lor Qx)}{\infer[]{\exists x Px}{} \ & \infer[\rightarrow I]{\ Pa \rightarrow \exists x (Px \lor Qx)}{\infer[\exists I]{\exists x (Px \lor Qx)}
+			{\infer[\lor I]{Pa \lor Qa}
+				{\infer[]{ \ Pa \ }{}}}}} $$
+	
+	\vspace{3cm}		
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof Strategy}
+	
+	We have proven the first of our subgoals. Go through the same process to prove the second subgoal. 
+	
+	\begin{center}
+		\begin{enumerate}
+			\item $\exists x Px \rightarrow \exists x (Px \lor Qx)$
+			\item $\exists x Qx \rightarrow \exists x (Px \lor Qx)$		
+		\end{enumerate}
+	\end{center}	
+	
+	Use the disjunction elimination to tie these goals together into a proof of the original statement
+	
+	$$\exists x Px \lor \exists x Qx \ \vdash \ \exists x (Px \lor Qx)$$
+	
+	\vspace{2cm}
+	
+	%\hspace{6cm}\footnotesize{See tutorials for a full proof.}
+	
+\end{frame}
+
+\section{G\"{o}del's Completeness Theorem}
+
+\begin{frame}
+	\frametitle{Metalogical Theorems}
+	
+	G\"{o}del proved that first-order predicate logic is both sound and complete. 
+	
+	$$ \Sigma \vDash \alpha \quad \text{if and only if} \quad \Sigma \vdash \alpha$$
+	
+	Thus we can provide deductions for all, and only those, wff that are true in every model satisfying the hypotheses $\Sigma$. 
+	
+	\vspace{0.5cm}
+	
+	We will not prove this. But it's worth noting that the proofs follow the same form as the proofs for the soundness and completeness of propositional logic. 
+	
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+
+Below is a selection of resources that I used to prepare the lecture. You might like to read over them yourself to help get a more complete picture of the topics discussed. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+	\item L$\exists \forall$N, \emph{Logic and Proof}. Sections:  7 and 8.
+	\item Logic Matters, \emph{An Introduction to Formal Logic}: Not so helpful for our version of deduction. But you might like to read Chapter 31, 32, and 33. 
+\end{itemize}
+
+
+\end{frame}
+
+
+
+
+
+\end{document}

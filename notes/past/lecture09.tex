@@ -1,0 +1,286 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 9: Mathematics}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Motivation}
+
+\begin{frame}
+  \frametitle{Mathematics}
+  
+  Recall that we have introduced logic so that we can write mathematics in a precise enough manner to analyse proof and provability. 
+  
+  \vspace{0.5cm}
+  
+  {\bf Question:} What kind of statements do mathematicians care about? 
+  
+  \vspace{0.5cm}
+  
+  {\bf Question:} Is our new language strong enough to express those statements and arguments?
+  
+  \vspace{0.5cm} 
+  
+  In this lecture we will approach the topic of first-order logic by determining which components are still missing from our language. Next week we will address the points raised in this lecture and write down what we mean by first-order logic. 
+  
+\end{frame}
+
+\section{Number Theory}
+
+\begin{frame}
+	\frametitle{Fundamental Theorem of Arithmetic}
+	
+	If $n$ is an integer greater than $1$, then either $n$ is a prime or $n$ is a finite product of primes. 
+	
+	\vspace{7cm}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Primes}
+	
+	If $a,b$ are integers, $p$ is a prime, and $p|ab$, then $p|a$ or $p|b$. 
+	
+	\vspace{7cm}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Primes}
+	
+	There are infinitely many primes. 
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Fermat's Last Theorem}
+	
+	If $n \geq 3$ there are no integers $x,y,z$ that satisfy the equation 
+	
+	$$ x^{n} + y^{n} = z^{n}$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\section{Quantification and Relations}
+
+\begin{frame}
+\frametitle{Properties and Relations: $P,Q,R,...$}
+	
+	Common to the examples above are the relations between objects: 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item Divides, 
+		\item equal,
+		\item primality.
+	\end{itemize}
+
+	\vspace{0.5cm}
+	
+	If we want a language that can express mathematics, then we need to have the expression of relations. 
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Variables: $x,y,z...$}
+	
+	Some of these statements are written \emph{generally}. That is to say, the values associated to the particular letters are left open to be anything within' some domain of discourse: 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item If $n$ is an integer...
+		\item If $a,b$ are integers...
+		\item If $p$ is some prime...
+	\end{itemize}
+
+	\vspace{0.5cm}
+	
+	So our language will need the ability to express \emph{variables} which can be interpreted in some specific \emph{domain of discourse}. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Quantification: $\forall$ and $\exists$}
+	
+	Quantification goes hand-in-hand with this expression of generality and use of variables. What we mean when we say: 
+	
+	\begin{center}
+		If $n$ is some integer, then $\phi(n)$ 
+	\end{center}
+
+	Is that $\phi(n)$ holds \emph{for every} integer. 
+	
+	\vspace{0.5cm} 
+	
+	Similarly claims like \emph{there exists} an $n$ such that $\phi(n)$, are quantifiying over some domain of discourse. Of all the things in that domain, at least one of them satisfies $\phi(n)$. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Functions: $f,g,h,...$}
+	
+	Sums, products, and exponentiation were used to state the above claims. These are examples of the fundamental notion of \emph{function}. Mathematicians use functions to express all sorts of things: we would be lost with them. 
+	
+	\vspace{0.5cm}
+	
+	The idea being that functions take in some number of inputs (from the domain) and output one element of the domain of discourse. 
+	
+	\vspace{0.5cm} 
+	
+	Note: this makes them different from predicates/relations as these do not output elements of the domain. Rather, they output Booleans (0,1 or T,F).
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{PL to First-Order Logic}
+	
+	In summary then, we need to add the following to PL: 
+	
+	\begin{itemize}
+		\item Properties/Relations (Predicates)
+		\item Variables
+		\item Quantifiers
+		\item Functions
+	\end{itemize}
+	
+	These, with $PL$, will form the language of \emph{first-order logic}. 
+	
+	\vspace{0.5cm} 
+	
+	In a similar manner to truth values giving meaning to the otherwise meaningless wff of PL, the domain of discourse will be semantic definitions \emph{extra} to the language: so called, model theory. 
+	
+\end{frame}
+
+\section{Foundations of Mathematics}
+
+\begin{frame}
+	\frametitle{Hilbert's Program}
+	
+	David Hilbert asked for mathematics to be formalised into a language so that proofs could be easily checked. He even hoped there would be a finite procedure that could decide whether a given proof was correct, or a finite procedure that could \textit{generate} a proof of any given statement. 
+	
+	\vspace{0.5cm}
+	
+	Hilbert knew that this would require stating axioms for mathematics, at least for each specific part of mathematics. Previous foundations provided by Euclid (some two millenia prior!) were no long sufficient.
+	
+	\vspace{0.3cm}
+	
+	\begin{itemize}
+		\item Mathematics is now too rich, and 
+		\item there were known problems with Euclid's axioms and proofs. 
+	\end{itemize}
+
+	\vspace{0.3cm}
+	
+	First-order logic is a language in which these axioms and proofs can be written. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Calculus and the Continuum}
+	
+	One of the major concerns throughout those two millenia were the ideas at the foundation of Gottfried Leibniz' and Isaac Newton's calculus. Infinitesimals and limits were used in the methods of mathematicians (at least) as far back as Archimedes. 
+	
+	\vspace{0.5cm}
+	
+	These caused debates based on logical and theological grounds\footnote{Amir Alexander, \emph{Infinitesimal: How a Dangerous Mathematical Theory Shaped the Modern World.}}. All of these debates came to a head in the nineteenth and twentith centuries. 
+	
+	\vspace{0.5cm} 
+	
+	Georg Cantor, Richard Dedekind, and Gottlob Frege seemed to put these problems to an end by providing foundations of the real number system based on (i) natural numbers, and (ii) set theory. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Russell's Paradox}
+	
+	Unfortunately the set theory of Frege was found to be contradictory!
+	
+	$$R = \{S \ | \ S \notin S \}$$
+	
+	\vspace{0.5cm}
+	
+	For these reasons, mathematicians were concerned with formal theories of arithmetic (natural numbers) and set theory in first-order logic. So that they could be sure the foundations of analysis and geometry were free of contradictions as well as, hopefully, decidable and complete. 
+	
+	\vspace{0.5cm}
+	
+	This process has become the norm for much of modern mathematics. Pick any theory you're interested in and it will have first-order axioms defining them. Any deductions you make will be from those first-order axioms defining the objects you're interested in. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Arithmetic}
+	
+	So we are going to develop a first-order theory of arithmetic over the coming lectures. We will also try to approach some of the meta-questions about that theory of arithmetic. How much of Hilbert's Program can be realised? Are there limits to this process?
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item L$\exists \forall$N, \emph{Logic and Proof}. Section: 7
+		%\item Logic Matters, \emph{An Introduction to Formal Logic}: 
+		\item Stanford Encyclopedia of Philosophy: Emergence of First-Order Logic, Nineteenth Century Geometry.
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

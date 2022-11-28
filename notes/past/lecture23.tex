@@ -1,0 +1,548 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Package for centering quotes
+\usepackage{csquotes}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+% Turing Machine macros
+\usepackage{tikz}
+\def \bcell {\hspace{0.5em}}
+\def \tmtape#1#2#3#4#5#6#7#8#9 {
+	$\begin{array}{|||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+		\cline{1-17}
+		@ & 
+		#1 &
+		#2 & 
+		#3 & 
+		#4 & 
+		#5 & 
+		#6 & 
+		#7 & 
+		#8 &
+		#9 & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\cdots  \\
+		\cline{1-17}
+	\end{array}$
+	}
+
+\def \headposition#1 {
+	% Gross hack to get the head position indicator lined up with the cell set by the input of this function.
+	\ifnum#1=1 \hspace{0.1cm} $\bigtriangleup$ \else 
+		\ifnum#1=2 \hspace{0.7cm} $\bigtriangleup$ \else 
+			\ifnum#1=3 \hspace{1.25cm} $\bigtriangleup$ \else  
+				\ifnum#1=4 \hspace{1.8cm} $\bigtriangleup$ \else 
+					\ifnum#1=5 \hspace{2.35cm} $\bigtriangleup$ \else 
+						\ifnum#1=6 \hspace{2.9cm} $\bigtriangleup$ \else 
+							\ifnum#1=7 \hspace{3.45cm} $\bigtriangleup$ \else 
+								\ifnum#1=8 \hspace{4cm} $\bigtriangleup$ \else 
+									\ifnum#1=9 \hspace{4.55cm} $\bigtriangleup$ \else
+										\ifnum#1=10 \hspace{5.1cm} $\bigtriangleup$ \else  \fi
+									
+									\fi								
+								\fi
+							\fi
+						\fi
+					\fi				
+				\fi			
+			\fi		
+		\fi
+	 \fi}
+
+\title{Lecture 23: Turing Machines}
+\subtitle{Examples}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Instruction Format}
+
+\begin{frame}
+	\frametitle{Turing Machine Format}
+
+	All machine instructions for tutorial and assignment questions must be submitted using the following format:
+
+	\vspace{0.3cm}
+
+	\begin{enumerate}
+		\item Written to a .txt file with a helpful name
+		\item Comments are lines beginning with \#
+		\item Instructions are to be written in standard form 
+		\item Instructions end with a semicolon and a newline
+		\item The final line must either be a comment or a blank line		
+	\end{enumerate}
+
+	\vspace{0.3cm}
+
+	This is so your instructions can be read by the script available on learn. This will help you visualise what your instructions do on particular inputs, keep record of your work, and more easily adjust your instructions. It will also help me check your instructions.
+
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Write a Turing machine to NAND two bits.
+	\tmtape{1}{0}{\bcell}{\bcell}{\bcell}{\bcell}{\bcell}{\bcell}{\bcell} \\
+	\headposition{1}
+
+	Write the output bit to the right of the home square.
+
+	\vspace{0.5cm}
+
+	$\begin{array}{ c | c | c | c | c }
+		C & R & P & M & U \\
+		\cline{1-5}
+		q_{0} & @ & @ & R & \ \\ 
+		 \ & \ & \ & \ & \ \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \ 
+	\end{array}$
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Write a Turing machine to check if a binary input is a palindrome
+
+	\tmtape{1}{0}{1}{1}{0}{1}{1}{0}{1} \\
+	\headposition{1}
+
+	Print 1 next to home if the input is a palindrome, otherwise print 0.
+	
+	\vspace{0.5cm}
+
+	When we are trying to write instructions to do a task like this, we should always start with a high-level idea. 
+
+	\vspace{1cm}
+
+	Once we have that it's a matter of breaking the high-level idea into specific subroutines. One thing you always need to think about is how you will detect whether the task is complete? 
+
+	\vspace{2cm}
+
+	% High-level description on this slide. 
+	% Idea: Check first with last.
+	% Remove the digits checked.
+	% Branch into two right searching states depending on whether looking for one or zero.
+	% Detect the end. 
+	% How will we know if the number is a palindrome? How will we know when to halt?
+	%	A palindrome may have an odd or even number of bits.
+	% 		If odd number of digits, then right search while hit two blanks
+	%		If even number of digits, then search left won't find anything!	%	
+	%	If input not a palindrome, then this will be detected in right searching state.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	How will we know whether the number is a palindrome? 
+
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Write a Turing machine to check if a binary input is a palindrome
+
+	\tmtape{1}{0}{1}{1}{0}{1}{1}{0}{1} \\
+	\headposition{1}
+	
+	%\vspace{7cm}
+
+	Let's write some instructions to get the back-and-forth checking.
+
+	$\begin{array}{ c | c | c | c | c }
+		C & R & P & M & U \\
+		\cline{1-5}
+		q_{0} & @ & @ & R & \ \\ 
+		 \ & \ & \ & \ & \ \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \ 
+	\end{array}$
+
+	\vspace{2cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Write a Turing machine to check if a binary input is a palindrome
+
+	\tmtape{\bcell}{\bcell}{\bcell}{\bcell}{0}{\bcell}{\bcell}{\bcell}{\bcell} \\
+	\headposition{6}
+	
+	%\vspace{7cm}
+
+	Which instructions do we need to move to in order to output the appropriate bit? 
+
+	$\begin{array}{ c | c | c | c | c }
+		C & R & P & M & U \\
+		\cline{1-5}
+		 \ & \ & \ & \ & \ \\ 
+		 \ & \ & \ & \ & \ \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \\
+		 \ & \ & \ & \ & \
+	\end{array}$
+
+	\vspace{2cm}
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{$E$-Squares and $F$-Squares}
+
+	In his 1936 paper Turing offers an example machine which prints the sequence 
+
+	$$0010110111011110111110\dots$$
+
+	This machine never halts and prints increasingly longer sequences of 1s separated by 0s.
+
+	\vspace{0.5cm}
+
+	In this example he illustrates the use of $E$-squares and $F$-squares. 
+
+	\vspace{0.5cm}
+
+	\begin{enumerate}
+		\item[] $E$-squares are to \emph{only} hold symbols for working
+		\item[] $F$-squares are to \emph{only} hold content symbols
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{$E$-Squares and $F$-Squares}
+
+	Turing explains that the output can be printed on every second square so that the alternating squares can be used for markings to keep track of where one is in the calculation.
+
+	\vspace{0.3cm}
+
+	$\begin{array}{|||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+		\cline{1-17}
+		@ & 
+		0 &
+		\bcell & 
+		0 & 
+		\bcell & 
+		\bcell & 
+		\bcell & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\cdots  \\
+		\cline{1-17}
+	\end{array}$ \\
+	\headposition{1}	
+
+
+	Turing suggests the following steps to obtain the desired output. 
+
+	\begin{enumerate}
+		\item Find the next blank $F$-square and print a 1.
+		\item Search left for 1s in previous block. Print x next to them.
+		\item Use each x as a marker to write a 1 to the end of the tape. 
+		\item Once all x symbols gone, write a 0 at the end of the tape. 
+		\item Restart this loop from the first instruction.
+	\end{enumerate}
+
+	\vspace{1cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{$E$-Squares and $F$-Squares}
+
+	Use $x$ markers to help keep track of what needs to be copied. 
+
+	\vspace{0.3cm}
+
+	$\begin{array}{|||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+		\cline{1-17}
+		@ & 
+		0 &
+		\bcell & 
+		0 & 
+		\bcell & 
+		1 & 
+		\bcell & 
+		0 & 
+		\bcell &
+		1 & 
+		\bcell & 
+		1 &
+		\bcell & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\cdots  \\
+		\cline{1-17}
+	\end{array}$ \\
+	\headposition{1}	
+
+	\vspace{0.5cm}
+
+	Turing suggests the following steps to obtain the desired output. 
+
+	\begin{enumerate}
+		\item Find the next blank $F$-square and print a 1.
+		\item Search left for 1s in previous block. Print x next to them.
+		\item Use each x as a marker to write a 1 to the end of the tape. 
+		\item Once all x symbols gone, write a 0 at the end of the tape. 
+		\item Restart this loop from the first instruction.
+	\end{enumerate}
+
+	\vspace{1cm}
+
+\end{frame}
+
+\section{Subroutines}
+
+\begin{frame}
+	\frametitle{Abbreviated Tables}
+
+	Turing uses shortcuts when describing many of his machine instructions.
+
+	\vspace{0.5cm}
+
+	\begin{displayquote}
+		There are certain types of process used by nearly all machines... These processes include copying down of symbols, comparing sequences, erasing all symbols of a given form ... we can abbreviate the tables for $\mathfrak{m}$-configurations considerably by the use of ``skeleton tables".		
+	\end{displayquote}
+
+	\vspace{0.5cm}
+
+	This style of thinking is similar to that of high-level languages. Turing explains that one can always substitute the precise commands into (i.e. compile?) the skeleton table to get back the complete set of $\mathfrak{m}$-configurations. 
+
+	\vspace{0.5cm}
+
+	This is yet another reason why Turing's paper is so influential.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examples of Abbreviations}
+
+	By way of example, we note that Turing used the following when describing the capabilities of Turing machines. 
+
+	\begin{itemize}
+		\item[] Look left until symbol found, then go into particular state.
+		\item[] He uses if then, else to describe conditions for updating states.
+		\item[] Look left erasing all symbols of a particular kind. 
+		\item[] Find the end and print a particular symbol. 
+	\end{itemize}
+	
+	When thinking about, and explaining, Turing machines in a high-level language you should feel free to use such language. 
+
+	\vspace{0.5cm}
+
+	Your first description of a machine does not have to be in terms of specific quintuples of state instructions. 
+
+\end{frame}
+
+% \begin{frame}
+% 	\frametitle{Turing's Example}
+
+% 	Turing never explicitly says this in the paper, but this shows that Turing machines can print irrational numbers. If we interpret this as increasing powers of $\frac{1}{2}$, then this must represent an irrational number.
+
+% 	\vspace{0.5cm}
+
+% 	Rational numbers are precisely those with (eventually) periodic representations in any (non-unary) base. Since this binary string never repeats, the number it represents can't be rational.
+	
+% \end{frame}
+
+\section{Variations and Oracles}
+
+\begin{frame}
+	\frametitle{Computational Equivalence}
+
+	We now have three models of computation 
+
+	\begin{itemize}
+		\item[] Primitive Recursion
+		\item[] General $\mu$-recursion 
+		\item[] Turing machines
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	One then begins to wonder how they relate to one another. Let us say two models $M_{1}$ and $M_{2}$ of computation are equivalent if a function $f:\mathbb{N}^{k} \rightarrow \mathbb{N}^{m}$ can be computed using $M_{1}$ if and only if it can be computed using $M_{2}$.
+
+	\vspace{0.5cm}
+
+	If a model of computation is computationally equivalent to a Turing machine, then we say that model of computation is {\bf Turing complete}. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\mu$-Recursion = Turing}
+
+	{\bf Theorem:} a function on the natural numbers is computable by a Turing machine if and only if there is a $\mu$-recursive function for computing the output of the function.
+
+	\vspace{7cm}
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Variations on a Theme}
+
+	Each of the choices made in the definition can be changed for a machine of \emph{apparently} different capabilities: 
+
+		\begin{itemize}
+			\item[] More characters in the alphabet.
+			\item[] Two-way infinite tapes.
+			\item[] Multiple tapes.
+			\item[] Multiple independent scanning heads.
+			\item[] Multiple tapes and multiple scanning heads.
+			\item[] Multiple dimensions.
+			\item[] Infinite time Turing machines.
+		\end{itemize}
+	
+	Each of these apparently more powerful ideas of a computing machine are computationally equivalent to having a single one-way infinite tape with a single scanning head.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Oracle Machines}
+	
+	In the coming lectures we will see that Turing's definition sufficed to show (solutions to) some problems are not computable by a Turing machine.
+
+	\vspace{0.5cm}
+
+	One reaction to this is to try and get an understanding of the \emph{relative} difficulty of particular computations. If we grant the use of an \emph{oracle} that solves a particular problem, then what other problems can such an oracle machine solve? 
+
+	\vspace{0.5cm}
+
+	These machines are, by definition, more ``computationally" powerful than Turing's original definition. 
+	
+	\vspace{0.5cm}
+
+	Thus showing a hierarchy of computational methods. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Relativity}
+
+	This strategy is also apparent in the work of mathematicians and logicians. G\"{o}del clarified the issue of independence phenomena of first-order axiomatic theories. Showing that some statements are not provable from the axioms and the method of deduction.
+
+	\vspace{0.5cm}
+
+	If $\alpha, \beta$ are independent to axioms $\Sigma$, then one might wonder how they relate to one another. Does assuming one give the other? 
+	
+	\vspace{0.5cm}
+
+	Specifically one might try to determine 
+
+		\begin{itemize}
+			\item[] $\Sigma \cup \{\alpha\} \vdash \beta$?
+			\item[] $\Sigma \cup \{\beta\} \vdash \alpha$?
+			\item[] What other $\Gamma$ will yield $\Sigma \cup \Gamma \vdash \alpha$?
+		\end{itemize}
+	
+	These sorts of questions yield hierarchies of computability and independence respectively. Active topics of research in computer science and mathematics to this day. Of particular interest to mathematicians is the hierarchy of set theories. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content.
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item The Annotated Turing \emph{Charles Petzold}
+		\item SEP: Turing Machines
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

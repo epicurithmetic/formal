@@ -1,0 +1,363 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{soul}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 26: Normal Forms and Reduction}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Perform a step of $\beta$-reduction on the following $\beta$-redex
+
+	$$(\lambda x. \ x \ (\lambda y. \ x \ y)) \ z$$
+
+	\vspace{7cm}	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Use $\alpha$-reduction to relabel this $\lambda$-expression so that there are no clashes between bound and free variables. 
+
+	$$(\lambda x. \ x \ (\lambda y. \ x \ y)) \ y$$
+
+	\vspace{2cm}
+
+	Now reduce the expression using $\beta$-reduction.
+
+	\vspace{3cm}
+	
+	
+\end{frame}
+
+\section{$\beta$-reduction Strategies}
+
+\begin{frame}
+	\frametitle{Reduction Strategies}
+
+	One $\lambda$-expression can consist of multiple $\beta$-redex. If this is the case, then different strategies may give different outcomes. 
+
+	$$(\lambda y. \ \lambda z. \ z) \ ((\lambda x. \ x \ x) \ (\lambda x. \ x \ x))$$
+
+	\vspace{3cm}
+
+	If we are to define an automatic model for computation, then we can't have any ambiguity in the process. One needs to decide ahead of time how to deal with these choices. 
+	
+	\vspace{0.5cm}
+	
+	Two primary strategies are known as call-by-name and call-by-value.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Call-by-name}
+
+	Once the leftmost $\beta$-redex is identified, this strategy calls the leftmost abstraction leaving the input (potentially) unevaluated.
+
+	$$(\lambda y. \ \lambda z. \ z) \ ((\lambda x. \ x \ x) \ (\lambda x. \ x \ x))$$
+
+	\vspace{4.5cm}
+	
+	This strategy is also known as either \emph{normal order} or \emph{lazy evaluation}.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Call-by-value}
+
+	Once the leftmost $\beta$-redex is identified, this strategy calls the innermost abstraction. Calls the value of the outermost $\beta$-redex. 
+
+	$$(\lambda y. \ \lambda z. \ z) \ ((\lambda x. \ x \ x) \ (\lambda x. \ x \ x))$$
+
+	\vspace{4.5cm}
+	
+	This strategy is also known as either \emph{strict evaluation} or \emph{eager evaluation}.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Normal Form}
+
+	We say a $\lambda$-expression is in normal form if it does not contain any $\beta$-redex. If a $\lambda$-expression is $\beta$-equivalent to a $\lambda$-expression in normal form, then it is unique upto $\alpha$-reduction. 
+
+	\vspace{0.5cm}
+
+	If a $\lambda$-expression has a normal form, then call-by-name evaluation will result in that normal form. 
+
+	\vspace{0.5cm}
+
+	{\bf Observation:} As a consequence of the above, if you can show that call-by-name evaluation does not terminate, then you may conclude that the $\lambda$-expression does not have a normal form. 
+
+	\vspace{3cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Call-by-Value}
+
+	Perform a step of $\beta$-reduction on the following $\beta$-redex
+
+	$$(\lambda y. \ y \ a) \ ((\lambda x. \ x) \ (\lambda z. \ (\lambda u. \ u) \ z))$$
+
+	\vspace{7cm}	
+		
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Call-by-Name}
+
+	Perform a step of $\beta$-reduction on the following $\beta$-redex
+
+	$$(\lambda y. \ y \ a) \ ((\lambda x. \ x) \ (\lambda z. \ (\lambda u. \ u) \ z))$$
+
+	\vspace{7cm}	
+		
+\end{frame}
+
+\begin{frame}
+	\frametitle{Reduction Graphs}
+
+	You may come across graphs of $\lambda$-expressions for which the different paths through the graph represent different evaluation strategies. 
+
+	$$(\lambda x. \ 3\cdot x) \ ((\lambda x. \ x + 1) \ 2) $$
+	% Here I am assuming there are lambda expressions that can represent natural numbers and the arithmetic thereof. We will come to that later. 
+	% However it's nice to point out that we can substitute a lambda expression for a name as we only need to know the lambda expression for IF we ever call it. 
+	\vspace{5cm}
+
+\end{frame}
+
+\section{Encoding Booleans}
+\begin{frame}
+	\frametitle{Common Expressions}
+
+	Some expressions that are common enough, or illustrative of some point, have been granted names. As we saw in the previous example, when writing $\lambda$-expressions it can be enough to know the name - until we need to evaluate that expression on some input. 
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item[] $I = \lambda x. \ x$
+		\item[] $\omega = \lambda x. \ x \ x$
+		\item[] $\Omega = \omega \omega$
+		\item[] $\text{Apply} = \lambda f. \ \lambda a. \ (f \ a)$
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	We will now talk about how we can encode ideas from logic and arithmetic into the $\lambda$-calculus. This requires giving $\lambda$-expression encoding for Booleans (True/False), natural numbers, and arithmetic functions.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conditional Execution}
+
+	Remember: everything (!) is a $\lambda$-expression. 
+
+	\vspace{0.5cm}
+
+	If we want to implement logic in the $\lambda$-calculus, then we need $\lambda$-expressions that \emph{behave like} True and False, propositions, propositional connectives, quantifiers etc.
+
+	\vspace{0.5cm}
+
+	How do True and False \emph{behave}? One use is conditional branching.
+
+	$$\text{COND} = \lambda f. \ \lambda g. \ \lambda c. \ ((c \ f) \ g) $$
+
+	\vspace{3cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{TRUE}
+
+	COND is an expression with three arguments: $a,b,c$. Which should be equivalent to the first argument $a$ if $c = \text{TRUE}$ and the second argument $b$ if $c = \text{FALSE}$.
+
+	$$\text{COND} \ a \ b =_{\beta} \lambda c. \ ((c \ a) \ b) $$
+
+	If we just put in the first two arguments, we get a function waiting for a Boolean to tell it what to do. 
+
+	\vspace{0.5cm}
+
+	Our $\lambda$-expression for TRUE needs to ignore the second input $b$ 
+
+	$$\text{TRUE} = \lambda x. \ \lambda y. \ x$$
+
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{TRUE}
+
+	Perform $\beta$-reduction on the following $\lambda$-expression until the $\lambda$-expression is in normal form. 
+
+	$$ (((\text{COND} \ a) \ b) \ \text{TRUE}) = ((((\lambda f. \ \lambda g. \ \lambda c. \ ((c \ f) \ g) ) \ a) \ b) \ (\lambda x. \ \lambda y. \ x))$$
+
+	\vspace{5cm}
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{FALSE}
+	
+	If the $\lambda$-expression for TRUE ignores the second function, then $\lambda$-expression for FALSE needs to ignore the first argument.
+
+	$$ \text{FALSE} =\hspace{3cm} $$
+
+	\vspace{5cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{FALSE}
+
+	Perform $\beta$-reduction on the following $\lambda$-expression until the $\lambda$-expression is in normal form. 
+
+	$$ ((\text{COND} \ a) \ b)(\text{FALSE}) =_{\beta} \lambda c. \ ((c \ a) \ b)(\lambda x. \ \lambda y. \ y)$$
+
+	\vspace{5cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Propositional Connectives}
+
+	TRUE and FALSE should behave appropriately with some implementation in $\lambda$-expressions of the propositional connectives 
+	
+	\begin{itemize}
+		\item[] NOT 
+		\item[] AND 
+		\item[] OR 
+		\item[] IMP(LICATION)
+		\item[] NAND 
+		% Equiv BOOLEAN is another interesting one. 
+	\end{itemize}
+
+	The trick is to think about these in terms of selecting the first or second argument. 
+	
+	\vspace{0.3cm}
+
+	{\bf Example:} If the first input to AND is TRUE, then which input should the AND expression return? 
+
+	\vspace{0.3cm}
+	
+	For some of these, it may just be easier to build them once you have NOT, OR, and AND.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{NOT}
+
+	\begin{center}
+		$\begin{array}{ l | c }			
+			A &  \text{NOT} A\\
+			\cline{1 - 2}
+			T &  F \\ 
+			F &  T
+		\end{array}$
+	\end{center}
+
+	$\text{TRUE} = \lambda x. \ \lambda y. \ x$ \hspace{4cm} $\text{FALSE} = \lambda x. \ \lambda y. \ y$
+
+	\vspace{5cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{EXAMPLE}
+
+	Perform $\beta$-reduction on the following $\lambda$-expression until the $\lambda$-expression is in normal form.
+	
+	\vspace{0.5cm}
+
+	$\text{NOT} \ \text{FALSE}$
+
+	\vspace{5cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. Some are freely available online. 
+
+	\vspace{0.4cm}
+
+	Type Theory and Functional Programming, \emph{Simon Thompson}
+	
+	\vspace{0.1cm}
+	
+	\begin{itemize}
+		\item Stanford Encyclopedia Articles: 
+			\begin{enumerate}
+				\item The Lambda Calculus
+				\item Type Theory
+				\item Church's Type Theory
+			\end{enumerate}
+	\end{itemize}
+
+	Church's original papers are worth visiting, although more work than Turing's paper. 
+
+	An Unsolvable Problem of Elementary Number Theory, \emph{Alonso Church}
+
+	\vspace{0.2cm}
+
+	A Note on the Entscheidungsproblem, \emph{Alonso Church}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

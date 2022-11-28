@@ -1,0 +1,401 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 4: Natural Deduction}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Validity}
+
+\begin{frame}
+  \frametitle{Validity}
+
+	In order to show an argument for $\gamma$ from $\Sigma$ is valid, it is necessary to show there are no counterexamples. At present the only way to determine this is to write down the entire truth table and check for counterexamples. 
+	
+	\vspace{1cm}
+	
+	In order to show an argument is \emph{not valid} it suffices to find a counterexample. Thus the entire table is not required to show an argument is not valid. 
+
+	\vspace{1cm}
+	
+	Both of these problems are decidable by an algorithm. However truth tables grow exponentially with the number of propositional variables: If there are $n$ variables, then there are $2^{n}$ rows. 
+\end{frame}
+
+
+\section{Satisfiability}
+
+\begin{frame}
+	\frametitle{Satisfiability}
+	
+	If we are only interested in the truth values of one propositional formula, then there are some different possibilities.
+	
+	\begin{defn}[Tautology]
+		a sentence $\gamma$ is a tautology if it is true in every case.
+	\end{defn} 
+	
+	% Make note of the fact that tautologies can be thought of as being proved by no premises.
+	\begin{defn}[Satisfiable]
+		a sentence $\gamma$ is satisfiable if it is true in some case.
+	\end{defn} 
+	
+	\begin{defn}[Contradiction]
+		a sentence $\gamma$ is a contradiction if it is false in every case.
+	\end{defn} 
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examples}
+	
+	Determine whether the following propositional formulae are either (i) tautologies, (ii) satisfiable, or (iii) contradictions.
+	
+	\vspace{1cm}
+	
+	\begin{itemize}
+		\item[1.] $A \land \lnot A$
+		\item[2.] $P \lor \lnot P$
+		\item[3.] $Q$
+		\item[4.] $A \rightarrow (B \rightarrow A)$
+		\item[5.] $A \land (B \lor C)$
+		\item[6.] $(A \lor \lnot B \lor C) \land (A \lor \lnot C) \land (A \lor C ) $
+	\end{itemize}
+	
+\end{frame}
+
+
+%\begin{frame}
+%	\frametitle{Conjunctive Normal Form}
+	
+%	{\bf Definition:} Literal % A or (not A)
+%	
+%	{\bf Definition:} Conjunctive Normal Form % Conjunction of disjunctions
+%	
+%	
+%	% Easier. But still ``np-hard". So we need another way to determine validity. 
+%\end{frame}
+
+\begin{frame}
+	\frametitle{Valuations}
+	
+	Instead of carrying truth tables around all the time, we will often use the more compact notation of \emph{valuations}. 
+	
+	\begin{defn}
+		 Given a finite set of propositional variables $S = \{A_{1},A_{2}, \dots, A_{n}\}$ a valuation function (or \emph{valuation}, or \emph{assignment}) $V:S \rightarrow \{T,F\}$ assigns each $A_{i}$ a unique truth value. Given a well-formed formula $\alpha$ whose propositional variables are in $S$, a valuation assigns 
+	
+		$$ V(\alpha) = \begin{cases} 
+				T & \textnormal{ if $\alpha$ is true in the case determined by $V$} \\
+				F & \textnormal{ if $\alpha$ is false in the case determined by $V$} 
+			   \end{cases}$$
+	\end{defn}
+
+	\vspace{0.5cm}
+			   
+
+	
+	{\bf Note:} specifying a valuation is equivalent to specifying a row in a truth table. 	See Tutorial 2 for more on valuation functions.
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Key Theorem}
+	
+	
+	{\bf Theorem:} $\Sigma \vDash \alpha \rightarrow \beta$ if and only if $\Sigma \cup \{\alpha\} \vDash \beta$
+
+	{\bf Proof:} 
+	
+	
+	\begin{itemize}
+		\item [i)] First suppose $\Sigma \vDash \alpha \rightarrow \beta$ and $v(\Sigma \cup \{\alpha\}) = T$. \vspace{3cm}
+		
+		\item[ii)] Now suppose  $\Sigma \cup \{\alpha\} \vDash \beta$ and $v(\Sigma) = T$.\vspace{2.5cm}
+	\end{itemize}
+
+
+
+% Note: this is a metalogical statement about possible arguments, rather than any specific argument.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Satisfiable}
+	
+	\begin{defn} We say a set of wff $\Sigma$ is satisfiable if there exists some valuation that satisfies each $\sigma \in \Sigma$. 
+	\end{defn}
+
+	\vspace{0.2cm}
+	
+	{\bf Example: }
+		\begin{itemize}
+			\item $\Sigma = \{A, \ \lnot B, \ \lnot A \lor \lnot B\}$
+			
+			\item $\Sigma = \{A, \ \lnot A, \ B, \ C\}$
+		\end{itemize}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Valid Arguments}
+	
+		\begin{defn} 
+			We say an argument from $\Sigma$ for $\gamma$ is valid if each valuation that satisfies $\Sigma$ satisfies $\gamma$. 
+		\end{defn}
+	
+		This is the same definition, but now written in terms of valuations. Again, if $\Sigma \vDash \gamma$, then we say $\gamma$ is a semnatic consequence of $\Sigma$.  
+	
+	
+\end{frame}
+
+\section{Natural Deduction}
+
+\begin{frame}
+	\frametitle{Natural Deduction}
+	
+	Given an argument with hypotheses $\Sigma$ and conclusion $\gamma$, we judge the argument to be valid by checking all of the rows in the corresponding truth table.
+	
+	\vspace{0.5cm}
+		
+	\begin{itemize}
+		\item[1.] This is slow (Later impossible!).
+		\item[2.] It does not reflect how we prove things in mathematics.
+	\end{itemize} 
+
+	\vspace{0.5cm}
+	
+	We will now introduce another method of deduction: natural deduction. 
+	
+	\vspace{0.5cm}
+	
+	%{\bf Note:} We will show that they agree on which arguments are good. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Syntactic Meaning of Logical Connectives}
+	
+	Rather than using the semantic (truth valued) meaning of the propositional variables, we focus on the syntactic meaning of the logical connectives. 
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} What would it require to deduce $A \land B$ in the course of a proof? 
+
+	\pause
+	
+	\begin{center}
+		$\begin{array}{ c  c  c }			
+			\Sigma_{1} & & \Sigma_{2} \\
+			\mathcal{D}_{1} & & \mathcal{D}_{2} \\
+			A & & B \\
+			\cline{1 - 3}
+			 & A \land B &  \\ 	
+		\end{array}$
+	\end{center}
+
+	If we have a deduction for $A$ and a deduction for $B$, then together we should consider those deductions a proof for $A \land B$.	
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\land$ Elimination}
+	
+	{\bf Example:} Suppose $A\land B$ were a premise in a proof. What can we conclude from such a premise?
+	
+	\pause
+
+	\vspace{2cm}
+	
+	\begin{center}
+		$\begin{array} { c c c }
+		
+		\begin{array}{ c  c  c }			
+			 & \Sigma & \\
+			 & \mathcal{D} & \\
+			 & A \land B & \\
+			\cline{1 - 3}
+			 & A &  \\ 	
+		\end{array}
+
+		& \hspace{3cm} &
+
+		\begin{array}{ c  c  c }			
+			 & \Sigma & \\
+			 & \mathcal{D} &  \\
+			 & A \land B &  \\
+			\cline{1 - 3}
+			 & B &  \\ 	
+		\end{array}\\		
+
+		\end{array}$
+	\end{center}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Deductions}
+	
+	\begin{defn} We define deductions (or derivations, or proofs) inductively by the rules: 
+	
+	\begin{itemize}
+		\item For each formula $\alpha$,
+		$$ \alpha $$
+		is a deduction with conclusion $\alpha$ and premises $\{\alpha\}$.
+		
+		\item From a given deduction, an application of a \textit{rule of inference} yields a new deduction.
+		
+		\item Anything that is not a deduction by virtue of the above is \emph{not} a deduction. 
+	\end{itemize}
+
+	\end{defn}
+	
+	\vspace{0.3cm}
+
+	If there exists a deduction $^\Sigma_{\alpha}\mathcal{D}$ of $\alpha$ from $\Sigma$, then we say $\alpha$ is a \textit{syntactic consequence of }(\textit{derivable from}, or \textit{provable from}) $\Sigma$ and denote this $\Sigma \vdash \alpha$. 
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Propositional Calculus}
+	
+	If we follow this idea for all of the logical connectives in propositional logic, then we can develop a method for writing proofs based on the \textit{syntactic} structre of the logical connectives alone. We call this method of proof \emph{Natural Deduction} and we are following Gerhard Gentzen's notation. 
+	
+	\vspace{0.5cm}
+	
+	We need to know how to (i) deduce and (ii) conclude from, each logical connective. In other words, for each logical connective we need to develop rules from introducing the logical connective and eliminating the logical connective.
+	
+	\vspace{0.5cm}
+	
+	So we will spend some time writing down the {\bf Rules of Inference} for our logical connectives. 
+	
+	% Note that the LEAN notes follows the same notation. However the Logic Matters notes do not: still worth reading! 
+	
+	\vspace{0.5cm}
+	
+	{\bf Report:} There are other proof theories - these could be explored for your report. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\rightarrow$ Elimination (MP)}
+	
+	If $^{\Sigma_{1}}_{\alpha \rightarrow \beta}\mathcal{D}_{1}$ and $^{\Sigma_{2}}_{\alpha}\mathcal{D}_{2}$ are deductions, then
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		$\begin{array}{c}		
+			\infer[\rightarrow E]{\beta}{\begin{array}{c} \Sigma_{1} \\ \mathcal{D}_{1} \\ \alpha \rightarrow \beta \end{array} \quad & \begin{array}{c} \Sigma_{2} \\ \mathcal{D}_{2} \\ \alpha \end{array}}	
+		\end{array}$
+	\end{center}
+	
+	is a deduction of $\beta$ from $\Sigma_{1} \cup \Sigma_{2}$.
+	
+	\vspace{1cm}
+	
+	{\bf Note:} This is modus ponens, which we showed to be a semantically valid deduction.
+	% Note that you can label the  step in the proof as MP instead. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show that $\{P \rightarrow (\lnot S\rightarrow L), \hspace{1em} P\rightarrow \lnot S, \hspace{1em} P\} \vdash L$
+	
+	\pause
+	
+	\vspace{2cm}
+	
+	% Write this out by hand in the lecture!
+	\begin{center}
+		$\begin{array}{c}
+			\infer[MP]{L}{\infer[MP\hspace{1cm}]{\lnot S \rightarrow L}{ P \rightarrow (\lnot S\rightarrow L) & P } 
+							&
+						  \infer[MP]{\lnot S}{ P \rightarrow \lnot S & P }
+					  	 	}
+		\end{array}$
+		
+	\end{center}
+	
+	\vspace{5cm}
+	
+\end{frame}
+
+
+\section{Recommended Reading}
+\begin{frame}
+  \frametitle{Further Reading}
+
+  Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+
+  \vspace{0.5cm}
+
+  \begin{itemize}
+    \item L$\exists \forall$N, \emph{Logic and Proof}. Sections: 3.1, 6.1, and 6.2 
+    \item Logic Matters, \emph{An Introduction to Formal Logic}: p172 - 216
+  \end{itemize}
+
+
+\end{frame}
+
+
+
+
+
+\end{document}

@@ -1,0 +1,333 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 10: First Order Predicate Logic}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Motivation}
+
+\begin{frame}
+  \frametitle{Example}
+
+	Propositional logic, alone, is not enough to express the logical structure of propositions and arguments that mathematicians want to make. 
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} For all natural numbers x,y,z it is the case that if $x$ divides the product $yz$, then either $x$ divides $y$ or $x$ divides $z$. 
+	
+	\vspace{0.5cm} 
+	
+	This statement does have propositional structure, in particular the ``if..., then ..." structure. However it also has structure that can't be captured with propositional logic. 
+	
+	% Quantification over a domain of individuals. 
+	% Relations between those individuals.
+	
+\end{frame}
+
+%\begin{frame}
+	%\frametitle{Examples}
+	
+	%{\bf Example:} An integer $x$ is even if and only if there exists another integer $y$ such that %$x = 2y$.
+	
+	% Again, quantification over a domain of individuals. 
+	% and Relations between those individuals. 
+	% Also, functions on the individuals.
+	
+	%\vspace{1cm}
+	
+	%{\bf Example:} There are no numbers preceding $0$.
+	
+	% Assert the (non)-existence of certain objects.
+	
+	
+%\end{frame}
+
+\section{First Order Logic}
+
+\begin{frame}
+	\frametitle{Alphabet of FoL}
+	
+	We use the following standard language of \emph{first-order predicate logic} to build terms and well-formed formula.
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item Variables $x,y,z,...$ or $x_{1}, x_{2}, x_{3},...$
+		\item Constants $a,b,c, ...$ or $c_{1}, c_{2}, c_{3}, ...$
+		\item Predicate (relation) symbols $R_{0}, R_{1}, R_{2}, ... $
+		\item Function symbols $f_{0}, f_{1}, f_{2}, ... $
+		\item Logical connectives from propostional logic $\lnot, \land, \lor, \rightarrow, \bot$
+		\item Quantifiers $\forall$ and $\exists$
+	\end{itemize}
+
+	\vspace{0.5cm}
+	
+	{\bf Note:} For clarity we also use parentheses and commas when writing expressions. These can be included in the symbols of our language as well.
+	
+	% Propositional logic used the logical connectives symbols and letters from various alphabets to stand in form atomic variables. We now add in extra elements to our language in order to express the structures of mathematics (and more complicated natural language statements.)
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Universal and Existential Quantifiers}
+	
+	The symbol $\forall$ will be interpreted as ``for all..."
+	
+	The symbol $\exists$ will be interpreted as ``there exists..."
+	
+
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:}
+	For all real numbers x there exists another real number between x and zero.
+	
+	\vspace{2cm}
+	
+	To help with intuition we can read them as such. However, strictly speaking, they're just symbols in the alphabet of first order logic, for now.
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Grammar of FoL}
+	
+	Terms are defined inductively as follows: 
+	
+	\begin{itemize}
+		\item Variables and constants are terms
+		\item If $f$ is an $n$-ary function and $t_{1}, ... , t_{n}$ are terms, then $f(t_{1}, ... , t_{n})$ is a term.
+	\end{itemize}
+
+	% Note: terms will not have truth values - when it comes to interpretations.
+
+	\vspace{1cm}
+
+	Well-formed formulae are defined inductively as follows: 
+	
+	\begin{itemize}
+		\item $\bot$ is a wff
+		\item An $n$-ary predicate applied to $n$-terms $R(t_{1}, ... , t_{n})$ is a wff.
+		\item If $\alpha, \beta$ are wff, then $\lnot \alpha$, $(\alpha \lor \beta)$, $(\alpha \land \beta)$, and $(\alpha \rightarrow \beta)$ are wff.
+		\item If $\alpha$ is a wff and x is a variable, then $\forall x \alpha$ and $\exists x \alpha$ are wff. 
+	\end{itemize}
+
+	% WFF are the strings that will have truth values.
+	
+	\vspace{0.4cm}
+	
+	Any string of symbols that is neither a term nor a wff by virtue of the above definitions is not a part of first order logic e.g. $\bot \lor \land fR$
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Comments}
+	
+	The last few slides have said how we can build strings that are part of the language of first order logic. So far, these are just strings of symbols that fit together into terms and wff with the grammar defined. 
+	
+	\vspace{0.5cm}
+	
+	They have no meaning, \emph{yet}. Just as in propositional logic, we have to introduce some notion of semantics on top of the language to grant these symbols any meaning. 
+	
+	\vspace{0.5cm}
+	
+	The words \emph{function} and \emph{relation} maybe be familiar to you. However, in so far as the language of first order logic is concerned they are just devices for building terms and wff. The way we usually think of functions and relations is an \emph{interpretation} of these symbols in some \emph{model} - We will talk more about this soon. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examples}
+	
+	Let $R$ be a two-place (binary) predicate, $P$ a one-place (unary) predicates, $f$ a binary function, and $a,b$ be constants. 
+	
+	\vspace{0.5cm}
+	
+	Determine which of the following are wff and which are not. 
+	
+	\begin{enumerate}
+		\item $Pa$
+		\item $a$
+		\item $Pab$
+		\item $\exists x Rxb \rightarrow Px$
+		\item $\exists x (Px \lor Rbx)$
+		\item $\forall x (\exists y (R(x,y)))$
+		\item $\exists x (\forall y (R(x,y)P(y)P(x)))$
+		\item $f(y,b)$
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Binding Conventions}
+	
+	If you want to drop parentheses, then your expressions will be interpreted using the following binding conventions: 
+	
+	\begin{itemize}
+		\item $\forall, \exists, \lnot$ bind most tightly; 
+		\item $\land$ and $\lor$ bind more tightly than $\rightarrow$; 
+		\item $\rightarrow$ binds more tightly than $\leftrightarrow$. 
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	With this convention one can unambiguously interpret the string:
+	
+	$$ \lnot \exists x Rx \rightarrow \lnot Q \land \forall x \lnot Px$$
+	
+	as the following wff:
+	
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{First Order Languages}
+	
+	In practice we decide on a few constants, predicates, and functions depending on the part of mathematics we want to study. Thus specifying a \emph{first order language}.
+	
+	\vspace{0.5cm}
+	
+	{\bf Example} 
+	
+	Let us say we have the constant $0$, unary function $s$, binary functions $+$ and $\times$, and $=$ as the only relation.
+	\vspace{0.5cm}	
+	
+	We collect these together into a first order language, which we can denote $\mathcal{L}$, with signature $\{0,S,+,\times,=\}$
+
+	
+	\vspace{1cm}
+	
+	%{\bf Note:} Again, these are just symbols at this point. They have their obvious interpretations but they are just symbols for us to build terms and wff. 
+	
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{WFF in a First Order Language}
+	
+	Given a first order language $\mathcal{L}$ with signature $\{s,+,\times,=,0,1\}$ we may write the following wff:
+	
+	\begin{itemize}
+		\item  $\forall x \forall y (=(x,y) \lor \lnot(=(x,y)))$
+		\item  $\exists x (\forall y \lnot(=(x,s(y))))$
+		%\item  $\exists x (\forall y \ \lnot(x = s(y))$ Rewrite previous in lecture
+		\item $=(+(0,1),0)$
+	\end{itemize}
+	
+	\vspace{5cm}
+	% Ask for more.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{L$\exists\forall$N Example}
+	
+	In the textbook L$\exists\forall$N they pick the following first order language for the entire chapter on first order logic: 
+	
+	$$\mathcal{L}: \{1,2,3,add,mul,square,even,odd,prime,lt,=\}$$
+	
+	\begin{itemize}
+		\item Every natural number is even or odd, but not both. \vspace{0.7cm}
+		
+		\item $Even(n) \leftrightarrow \exists x (n = mul(2,x))$. \vspace{0.7cm}
+		
+		\item If $x$ is even, then $x^{2}$ is even. \vspace{0.7cm}
+		
+		\item There exists a prime number that is even. \vspace{0.7cm}
+				
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{L$\exists\forall$N Example}
+	
+	$$\mathcal{L}: \{1,2,3,add,mul,square,even,odd,prime,lt,=\}$$
+	
+	\vspace{7cm}
+	
+	
+	
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+
+Below is a selection of resources that I used to prepare the lecture. You might like to read over them yourself to help get a more complete picture of the topics discussed. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+	\item L$\exists \forall$N, \emph{Logic and Proof}. Section: 7.
+	\item Logic Matters, \emph{An Introduction to Formal Logic}: page 228 - 235.
+\end{itemize}
+
+\end{frame}
+
+
+
+
+
+\end{document}

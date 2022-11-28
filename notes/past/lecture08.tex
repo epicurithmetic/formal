@@ -1,0 +1,275 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 8: Revision of PL}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Test}
+
+\begin{frame}
+	\frametitle{Test Details}
+	
+	Test date: 17th August at 6:30pm in Ernest Rutherford 465.
+	
+	\vspace{0.5cm}
+	
+	Duration: 90 minutes 
+	
+	\vspace{0.5cm} 
+	
+	The test will cover the propositional logic topic. Completion and understanding of tutorials 2,3, and 4 is the best preparation for the test. 
+	
+	\vspace{0.5cm}
+	
+	Today we will do some revision for the test. 
+	
+\end{frame}
+
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Translate NL to PL}
+	
+	Translate the following argument into propositional logic and determine whether or not it is valid. 
+	
+	\vspace{0.5cm}
+	
+	Sherlock is either at home or on a case. Sherlock is at home. Therefore, he is not on a case. 
+	
+	\vspace{6cm}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Translate NL to PL}
+	
+	Translate the following argument into propositional logic and determine whether or not it is valid. 
+	
+	\vspace{0.5cm}
+	
+	If Watson is home, then Gladstone is home. Therefore, if Watson is not home, then Gladstone is not home.  
+	
+	\vspace{6cm}
+	
+\end{frame}
+
+\section{Summary}
+
+\begin{frame}
+  \frametitle{What is a proof?}
+
+	{\bf Aim:} Recall that one of our original aims was to be precise about what we mean by a good argument i.e. a good proof. 
+	
+	\vspace{0.5cm} 
+	
+	We have come up with two different perspectives: 
+	
+	\begin{enumerate}
+		\item Semantic: does the argument preserve truth? 
+		\item Syntactic: Is there a deduction for the conclusion from the premises stated in the argument? 
+	\end{enumerate}
+
+	Both of these seem like sensible perspectives to weigh an argument from. 
+	
+	\vspace{0.5cm} 
+	
+	{\bf Question:} Do we have to pick one? Which one do we use?
+\end{frame}
+
+\begin{frame}
+	\frametitle{Soundness}
+	
+	In previous lectures we proved that the deduction system developed is \emph{sound}. 
+	
+	\vspace{0.5cm}
+	
+	\quad {\bf Theorem:} If $\Sigma \vdash \alpha $, then $\Sigma \vDash \alpha $
+	
+	\vspace{0.5cm}
+	
+	That is to say, any deduction we give must be truth preserving. Put another way, we can only provide proofs for truth preserving arguments. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Completeness}
+	
+	We also proved the converse of this statement. 
+	
+	\vspace{0.5cm}
+	
+	\quad {\bf Theorem:} If $\Sigma \vDash \alpha $, then $\Sigma \vdash \alpha $
+	
+	\vspace{0.5cm}
+	
+	If an argument is truth preserving, then there is, necessarily, a deduction for it in our classical deduction system.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Semantic = Syntactic}
+	
+	Thus we do not need to choose one method or the other to decide whether an argument is good. The syntactic and semantic conclusions, as develpoed above, are equivalent notions. 
+	
+	\vspace{0.5cm}
+	
+	They judge the same arguments to be correct.  
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Consider the argument consisting of premises $\Sigma = \{\lnot (A \rightarrow B)\}$ and conclusion $\gamma = A \land B$. 
+	
+	\vspace{0.5cm} 
+	
+	\indent {\bf Question:} Is this argument valid? 
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example continued}
+	
+	{\bf Question:} Given what we deduced on the previous slide, what can we say about any deductions of $\gamma$ from $\Sigma$?
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show that the following semantic consequence holds: $\alpha \lor \beta \vDash \beta \lor \alpha$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example continued}
+	
+	{\bf Question:} Given the conclusion of the previous slide, what can you deduce about any possible deductions of $\beta \lor \alpha$ from the hypothesis $\alpha \lor \beta$?
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Is there a deduction of $(\alpha \lor \beta) \land \gamma$ from $\alpha \lor (\beta \land \gamma)$?
+	
+	\vspace{7cm}
+	
+	% Not you only need the second row of the truth table to show there is counterexample. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Know the Key Definitions}
+	
+	Give examples of the following: 
+	
+	\begin{enumerate}
+		\item Tautology, 
+		\item contradiction, 
+		\item a WFF that is neither a tautology nor a contradiction,
+		\item an example of a pair of logically equivalent wff.
+	\end{enumerate}
+
+	\vspace{1cm}
+
+	Explain why your example satisfies the stated definition. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Know the Key Definitions}
+	
+	Prove that, if $\Sigma \vDash \alpha$ and $\Sigma \vDash \beta$, then $\Sigma \vDash \alpha \land \beta$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example Derivation}
+	
+	Provide a derivation for the following theorem: 
+	
+	$$ \ \vdash \ (\lnot \phi \rightarrow \lnot \psi) \rightarrow (\psi \rightarrow \phi)$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item L$\exists \forall$N, \emph{Logic and Proof}. Sections: PL sections.
+		\item Logic Matters, \emph{An Introduction to Formal Logic}: PL sections.
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

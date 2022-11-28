@@ -1,0 +1,480 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{soul}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 28: Church Numerals}
+\subtitle{Related Data Structures}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Church Numerals}
+
+\begin{frame}{Church Numerals}
+
+    All that is available to us is application and abstraction. However, that is enough to encode the behaviour of the natural numbers in the $\lambda$-calculus. 
+    
+    \begin{align*}
+        \text{ZERO} &= \lambda s. \ \lambda x. \ x \\
+        \text{ONE} &= \lambda s. \ \lambda x. \ s(x) \\
+        \text{TWO} &= \lambda s. \ \lambda x. \ s(s(x)) \\
+        \text{THREE} &= \lambda s. \ \lambda x. \ s(s(s(x))) \\
+        &\vdots \\
+        n & = \lambda s. \ \lambda x. \ s(s \dots (s(x)) \dots ) \\
+        &\vdots
+    \end{align*}
+        
+    The Church numeral representing the natural number $M$ is a binary $\lambda$-expression that applies the first argument to the second $M$ times.    
+
+\end{frame}
+
+\begin{frame}{Pattern}
+
+    If $n$ is a Church numeral and $f,a$ are arbitrary function symbols, then we have the following patterns that occur often in computations with Church numerals. 
+    
+    \vspace{0.3cm}
+    
+    The $\lambda$-expression $nf$ is a function which applies $f$ $n$ times to its input. That is, $f$ composed with itself $n$ times. 
+    
+    \vspace{0.3cm}
+    
+    So we can read $$nfa$$ as \emph{$``f"$ applied to $``a"$ repeatedly $``n"$ times}.
+    
+    \vspace{0.3cm}
+    
+    If we follow this idea when $f$ is also a Church numeral, then we get a $\lambda$-expression for exponentiation.
+    
+\end{frame}
+
+\begin{frame}{Observation}
+    % Explain the beta reduction pattern of one church numeral applied to another. 
+    \begin{align*}
+        \text{TWO} \ \text{ONE} &= (\lambda u. \ \lambda v. \ u(u(v))) (\lambda s. \ \lambda x. \ s(x)) \\
+        &= \lambda v. \ (\lambda s. \ \lambda x. \ s(x))((\lambda s. \ \lambda x. \ s(x))(v))) \\
+        &= \lambda v. \ (\lambda s. \ \lambda x. \ s(x))(\lambda x. \ v(x)) \\
+        &= \lambda v. \ (\lambda s. \ \lambda x. \ s(x))(\lambda w. \ v(w)) \\
+        &= \lambda v. \ (\lambda x. \ (\lambda w. \ v(w))(x)) \\
+        &= \lambda v. \ \lambda x. \ v(x) \\
+        &= \text{ONE}
+    \end{align*}
+    
+    \begin{align*}
+        \text{ONE} \ \text{TWO} &= (\lambda s. \ \lambda x. \ s(x))(\lambda u. \ \lambda v. \ u(u(v))) \\
+        &= (\lambda x. \ (\lambda u. \ \lambda v. \ u(u(v)))(x)) \\
+        &= (\lambda x. \ \lambda v. \ x(x(v)))) \\
+        &= \text{TWO}
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Example: Exponential}
+    We abstract over this idea to define a $\lambda$-expression to compute exponentiation.
+    
+    $$\text{EXP} = \lambda e. \ \lambda b. \ eb $$
+    
+    {\bf Example} 
+    
+    $\beta$-reduce the following expression to normal form
+    
+    \vspace{0.3cm}
+    
+    $\text{EXP} \ \text{THREE} \ \text{TWO}$
+    \vspace{3cm}
+\end{frame}
+
+\section{Church Arithmetic}
+
+\begin{frame}{Programming in $\lambda$-Calculus}
+
+    % Functions in the $\lambda$-calculus (or functional programming languages) are often said to ``not have names". 
+    
+    % \vspace{0.5cm}
+    
+    When programming and running computations in this language we do not update named spaces in memory. 
+    
+    \vspace{0.5cm}
+    
+    We can't think about updating a number stored in a named variable. There is no syntax for this updating in the $\lambda$-calculus.
+    
+    \vspace{0.5cm}
+    
+    Each time we calculate a new $\lambda$-expression (e.g. Church numeral) we must construct it, from scratch, using the input numerals. 
+    
+\end{frame}
+
+\begin{frame}{Encoding Arithmetic Functions}
+
+    We will now find $\lambda$-expressions for fundamental arithmetic functions and predicates on Church numerals.
+    
+    {\bf Arithmetic Functions}
+    \begin{itemize}
+        \item[] SUCC
+        \item[] SUM
+        \item[] MULT
+        \item[] EXP
+        \item[] PRED
+        \item[] SUB
+    \end{itemize}
+    
+    {\bf Arithmetic Predicates}
+    \begin{itemize}
+        \item[] ZERO?
+        \item[] GREATER?
+        \item[] EQUAL?
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Encoding Arithmetic Functions}
+
+    % This is not a state based model of computation. 
+    
+    % \vspace{0.2cm}
+    
+    % There are no numbers in memory that we update with a program. 
+    
+    % \vspace{0.2cm}
+    
+    Programs in the $\lambda$-calculus need to {\bf construct} the output.
+    
+    \vspace{0.3cm}
+    
+    Unary functions on Church numerals will always start 
+    
+    $$\lambda n. \ \lambda u. \ \lambda v. \ \langle \text{BODY} \rangle$$
+    
+    Binary functions on Church numerals will always start 
+    
+    $$\lambda m. \ \lambda n. \ \lambda u. \ \lambda v. \ \langle \text{BODY} \rangle $$
+    
+    \vspace{0.3cm}
+    
+    The first abstractions are for the inputs to the function. 
+    
+    \vspace{0.3cm}
+    
+    Second abstractions ($u$,$v$) are to construct the output numeral. 
+
+\end{frame}
+
+
+\begin{frame}{Successor}
+
+    The successor is a unary function that returns a numeral with one more function application of the first argument to the second.
+    
+    \vspace{0.3cm}
+    
+    $\text{SUCC} = \lambda n. \ \lambda u. \ \lambda v. \ $
+    
+    \vspace{6cm}
+        
+\end{frame}
+
+\begin{frame}{Example}
+    SUCC ZERO
+    
+    \vspace{7cm}  
+\end{frame}
+
+\begin{frame}{SUM}
+
+    The sum of two Church numerals $m,n$ is a binary function that returns a numeral with $m+n$ applications of the first argument to the second. This is similar to string concatenation of successors.
+    
+    \vspace{0.3cm}
+    
+    $\text{SUM} = \lambda m. \ \lambda n. \ \lambda u. \ \lambda v. \ $
+    
+    \vspace{6cm}
+
+\end{frame}
+
+\begin{frame}{Example}
+    SUM ONE ONE
+    
+    \vspace{7cm} 
+\end{frame}
+
+\begin{frame}{MULT}
+    If $m,n$ are Church numerals, then the output of multiplication requires $n$ applications $m$ times of the first argument to the second. 
+    
+    \vspace{0.3cm}
+    
+    $\text{MULT} = \lambda m. \ \lambda n. \ \lambda u. \ \lambda v. \ $
+    
+    \vspace{6cm}      
+\end{frame}
+
+\begin{frame}{Example}
+
+    MULT TWO TWO
+    
+    \vspace{7cm}   
+    
+\end{frame}
+
+\begin{frame}{ZERO?}
+    % 0 = FALSE with this encoding. 
+    
+    Given Church numeral $m$ how do we test if it is ZERO?
+    
+    \vspace{0.3cm}
+    
+    $\text{ZERO?} = \lambda m.  \ $
+    
+    \vspace{6cm}  
+    
+\end{frame}
+
+\begin{frame}{Predecessor}
+
+    % Apparently Church once thought this could not be done in the lambda calculus 
+    % (0,0) -> (1,0) -> (2,1) -> (3,2) -> ...
+    % This can all be encoded in the lambda calculus
+    
+    To one way of thinking, we need to *remove* one application of the function in the Church numeral. 
+    
+    \vspace{1.5cm}
+    
+    However that way of thinking is ``state based" - as if we have an object somewhere in some memory and we update its properties. 
+    
+    \vspace{0.5cm}
+    
+    This is not the way programming is done in the $\lambda$-calculus. 
+    
+    \vspace{0.5cm}
+    
+    Instead we need to think, given an input Church numeral $n$ how do we construct the Church numeral representing $n-1$?
+    
+    \vspace{2cm}
+    
+\end{frame}
+
+\section{Pairs and Lists}
+
+\begin{frame}{PAIR}
+
+    We have been treating applications of the form $ab$ as if they were pairs. Let us formalise this idea with a function to CONStruct a pair from two inputs.
+    
+    $$ \text{PAIR} = \lambda x. \lambda y. \lambda f. \ f \ x \ y$$
+    
+    Once a pair is constructed, we may use the following methods to retrieve either the first or second element respectively. 
+    
+    $$\text{FST} = \lambda u. \ \lambda v. \ u \hspace{1cm} \text{SCD} = \lambda u. \ \lambda v. \ v $$
+    
+    {\bf Example}
+    
+    PAIR ONE TWO FST  $=_{\beta}$ ONE
+    
+    PAIR ONE TWO SCD  $=_{\beta}$ TWO
+    
+    PAIR ONE (PAIR TWO THREE) SCD $=_{\beta}$ PAIR TWO THREE
+    
+\end{frame}
+
+% \begin{frame}{Pairs of pairs of pairs ... LISTs?}
+
+%     % Construct nested pairs and call them lists
+%     % (a, (b, (c, (d,e))))
+%     % Build by iterating the pair function
+    
+%     % Were lists invented by Kleene while defining the predecessor function?
+    
+%     We can use pairs of pairs of... to construct the LIST data structure in the $\lambda$-calculus. Or any functional programming language built on (or, modeled off of) the $\lambda$-calculus.
+    
+%     \vspace{0.5cm}
+    
+%     In order to design methods to effectively manipulate LISTs we need to talk about recursion in the $\lambda$-calculus. 
+    
+%     \vspace{0.5cm}
+    
+%     {\bf Exercise} Without using recursion determine a $\lambda$-expression for retrieving the $n$th element of a list. Assume the list has at least $n$ elements.
+    
+%     % $\lambda n. \lambda \ell. \ (\ell \ ((\text{PRED} \ n) \ \text{SCD})) \ \text{FST} $
+    
+% \end{frame}
+
+\section{Arithmetic Functions and Predicates}
+
+\begin{frame}{PRED}
+    
+    We now have the data structure required to implement the algorithm for calculating the predecessor of a Church numeral. 
+    
+    \vspace{0.5cm}
+    
+    First we write a function which takes in a pair $p = (a,b)$ of Church numerals and outputs the pair consisting of the successor of the first (SUCC $a$) in the pair, together with the first $a$ in the pair.
+    
+    $$ \Psi = \lambda p. \ \text{PAIR} \ (\text{SUCC} \ (p \ \text{FST})) \ (p \ \text{FST}) $$
+    
+    Now we need to iterate this $n$ times on the input pair ZERO ZERO and retrieve the second element.
+    
+    $$\text{PRED} = \lambda n. \ (n \ \Psi \ (\text{PAIR ZERO ZERO})) \ \text{SCD}$$
+    
+    
+\end{frame}
+
+\begin{frame}{Example}
+    
+    PRED ONE
+    \vspace{6cm}
+     
+\end{frame}
+
+\begin{frame}{SUB}
+
+    Given Church numerals $m,n$ how do we construct the Church numeral representing $m-n$?
+    
+    \vspace{0.3cm}
+    
+    $\text{SUB} = \lambda m. \ \lambda n. \ \lambda u. \ \lambda v. \ $
+    
+    \vspace{6cm}
+    
+\end{frame}
+
+\begin{frame}{Example}
+    
+    SUB TWO ONE
+    \vspace{6cm}
+         
+\end{frame}
+
+\begin{frame}{GREATER?}
+
+    Given Church numerals $m,n$ how do we test if one is larger than the other?
+    
+    \vspace{0.3cm}
+    
+    $\text{GREATER?} = \lambda m. \ \lambda n. \ $
+    
+    \vspace{6cm}  
+
+\end{frame}
+
+\begin{frame}{Example}
+
+    GREATER? ONE ONE
+    \vspace{6cm}
+    
+\end{frame}
+
+\begin{frame}{EQUAL?}
+
+    Given Church numerals $m,n$ how do we test if they are equal?
+    
+    \vspace{0.3cm}
+
+    $\text{EQUAL?} = \lambda m. \ \lambda n. \ $
+
+\vspace{6cm}      
+\end{frame}
+
+\begin{frame}{Example}
+
+    EQUAL? ONE ZERO
+    \vspace{6cm}
+    
+\end{frame}
+
+\section{Summary}
+
+\begin{frame}{Summary}
+
+{\bf Arithmetic Functions}
+\begin{align*}
+    \text{SUCC} &= \lambda n. \ \lambda u. \ \lambda v. \ u(nuv) \\
+    \text{SUM} &= \lambda m. \ \lambda n. \ \lambda u. \ \lambda v. \ mu(nuv)\\
+    \text{MULT} &= \lambda m. \ \lambda n. \ \lambda u. \ \lambda v. \ m(nu)v \\
+    \text{EXP} &= \lambda e. \ \lambda b. eb \ \\
+    \text{PRED} &= \lambda n.  \ (n \ \Psi \ (\text{PAIR ZERO ZERO})) \ \text{SCD}  \\
+    \text{SUB} &= \lambda m. \ \lambda n. \ \lambda u. \ \lambda v. \ (n \ \text{PRED} \ m) \ u \ v
+\end{align*}
+
+{\bf Arithmetic Predicates}
+\begin{align*}
+    \text{ZERO?} &= \lambda m. \ m \ (\lambda x. \ \text{FALSE}) \ \text{TRUE} \ \\
+    \text{GREATER?} &= \ \lambda m. \ \lambda n. \ \text{ZERO?} \ (\text{SUB} \ n \ m) \\
+    \text{LESS?} &= \ \lambda m. \ \lambda n. \ \text{ZERO?} \ (\text{SUB} \ m \ n) \\
+    \text{EQUAL?} &= \lambda m. \ \lambda n. \ \text{AND} \ (\text{GREATER?} \ n \ m) \ (\text{LESS?} \ n \ m) 
+\end{align*}
+
+    
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. Some are freely available online. 
+
+	\vspace{0.4cm}
+
+	Type Theory and Functional Programming, \emph{Simon Thompson}
+	
+	\vspace{0.1cm}
+	
+	\begin{itemize}
+		\item Stanford Encyclopedia Articles: 
+			\begin{enumerate}
+				\item The Lambda Calculus
+				\item Type Theory
+				\item Church's Type Theory
+			\end{enumerate}
+	\end{itemize}
+
+	Church's original papers are worth visiting, although more work than Turing's paper. 
+
+	An Unsolvable Problem of Elementary Number Theory, \emph{Alonso Church}
+
+	\vspace{0.2cm}
+
+	A Note on the Entscheidungsproblem, \emph{Alonso Church}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

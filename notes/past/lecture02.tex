@@ -1,0 +1,298 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+
+\title{Lecture 2: Propositional Logic}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+% As we discussed yesterday, we require a language in which we can express all of mathematics so that we can better trust the work that is done and continues to be done. 
+
+% Logic is the language we will use. So, we will start here with logic. 
+
+\section{Arguments}
+
+\begin{frame}
+  \frametitle{Arguments and Proofs}
+
+Analysis of a proof in mathematics, or an argument in a natural language, relies on how particular statements are connected to each other. How one or more statements are said to entail others. 
+
+\vspace{1cm}
+
+ {\bf Example: }
+ 
+ If $p$ divides $ab$, then $p$ divides $a$ or $p$ divides $b$.\footnote{This is an example of an argument: this statement is not necessarily true!}
+  
+ \vspace{1cm}
+ 
+ It is the connective words, as much as the mathematical content words, that we have to analyse when deciding whether this is a good argument.
+
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Natural Language}
+	
+	\begin{itemize}
+		\item If Watson moves in with Holmes, then Holmes will be forever annoyed. Watson moved in with Holmes. Therefore Holmes will be forever annoyed.
+		\vspace{1cm}
+		\item If Watson can trap Moriarty, then Holmes can. Holmes can't trap Moriarty. Therefore Watson can't.
+		\vspace{1cm}
+		\item Either Holmes catches Moriarty or the world will fall into chaos. The world has fallen into chaos. Therefore Holmes did not catch Moriarty.
+		
+	\end{itemize}
+	
+	
+\end{frame}
+
+% Each of these examples are built up of declaritive statements (propositions), one of which is singled out (by the therefore)  as a conclusion. The rest we call premises. 
+
+\begin{frame}
+	\frametitle{Argument}
+	
+
+	\begin{defn}
+		An argument is a set of declaritive sentences (propositions), one of which is singled out as the conclusion, while the rest are considered premises. 
+	\end{defn}
+		 
+	\vspace{0.5cm}
+	
+	Premises are the evidence to support the conclusion.
+	
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Natural Language}
+	
+	\begin{itemize}
+		\item If Watson moves in with Holmes, then Holmes will be forever annoyed. Watson moved in with Holmes. Therefore, Holmes will be forever annoyed.
+
+		\vspace{0.5cm}
+
+		Let's break this up into premises and conclusion: 
+		
+		\vspace{5cm}
+		
+		% P1: If Watson moves in with Holmes, then Holmes will be forever annoyed. 
+		% P2: Watson moved in with Holmes. 
+		%  C: Holmes will be forever annoyed.
+		
+		% Ask questions about the structure of P1 and P2.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Propositional Structures}
+	
+	\begin{defn} 
+		
+		An atomic proposition has no propositional substructure.
+		
+	\end{defn}
+
+
+	
+	We saw above that some propositions do have extra structure: ``If... , then...." and ``Either .... or ... " and ``can't" are important to the nature of the argument. 
+	
+	\vspace{0.5cm}
+	
+	Such connectives are used to join atomic propositions into compound propositions.
+	
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Natural Language}
+	
+	\begin{itemize}
+		\item Either Holmes catches Moriarty or the world will fall into chaos. The world has fallen into chaos. Therefore Holmes did not catch Moriarty.
+		
+		\vspace{0.5cm}
+		
+		Let's break this up into premises and conclusion and determine the atomic propositions.
+		
+		\vspace{5cm}
+		
+		% P1: If Watson moves in with Holmes, then Holmes will be forever annoyed. 
+		% P2: Watson moved in with Holmes. 
+		%  C: Holmes will be forever annoyed.
+		
+		% Ask questions about the structure of P1 and P2.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Comment on Natural Language}
+	
+	% Recall the example about numbers.
+	% Recall the first lecture about the need to choose axioms. 
+	
+	It can be subjective as to what one considers atomic. Natural language is very rich and open to many interpretations. As we are hoping for a precise language on which to found mathematics, we need to remove these ambiguities. 
+	
+	\vspace{1cm}
+	
+	For this reason we introduce the following notations, our first formal logic, collectively known as (classical) propositional logic.
+	
+	
+\end{frame}
+
+\section{Propositional Logic}
+
+\begin{frame}
+	\frametitle{Binary Connectives}
+	
+	To express the same syntactic structure of an \emph{argument} without the ambiguities of a natural language we use capital (English) letters to denote atomic propositions, called \emph{propositional variables}. We use the following symbols to express compound propositions: 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item $\lnot$ : ``It is not the case that... " or "Not... "
+		\item $\land$ : ``Both... and ... " 
+		\item $\lor$ : ``Either... or ... "
+		\item $\rightarrow$ : ``If... , then ... "
+		\item $\leftrightarrow$ : `` ... if and only if ... "
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Translating from NL to PL}
+	\begin{itemize}
+		\item If Watson can trap Moriarty, then Holmes can. Holmes Can't trap Moriarty. Therefore Watson can't.
+	\end{itemize}
+	
+	\vspace{5cm}
+	
+	
+	
+	
+	
+	
+\end{frame}	
+
+\begin{frame}
+	\frametitle{Grammar}
+	
+	Our language is further made up of \emph{well-formed formulae} which we define inductively as follows:	
+	
+	\vspace{0.5cm}
+	\begin{defn}[Well-Formed Formulae]
+	\begin{itemize}
+		\item {\bf Atomic Formulae:} If $\alpha$ is a single propositional variable, then $\alpha$ is a wff.
+		\item {\bf Negation:} If $\alpha$ is a wff, then $\lnot\alpha$ is a wff. 
+		\item {\bf Binary Connective:} If $\alpha$ and $\beta$ are wff and $*$ is a binary connective, then $(\alpha * \beta)$ is a wff. 		
+	\end{itemize}
+	\end{defn}
+	
+	\vspace{0.5cm}	
+	
+	{\bf Note:} Any expression that is not a wff by virtue of these three constructions is not a wff. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examples}
+	Which of the following are wff in propositional logic?
+	
+	\begin{itemize}
+		\item[1.] $A$
+		\item[2.] $AB$
+		\item[3.] $(A \rightarrow B)$
+		\item[4.] $A \rightarrow B \rightarrow C$
+		\item[5.] $((A \rightarrow B) \rightarrow C)$
+		\item[6.] $\lnot Q$
+		\item[7.] $A \lor Q$
+		\item[8.] $A \rightarrow \lnot B \lor C$		
+	\end{itemize}
+		
+	\pause
+		
+	{\bf Binding Conventions:} %If in doubt, then stick to using parentheses!
+	\begin{itemize}
+		\item $\lnot$ binds most tightly, 
+		\item $\lor$ and $\land$ bind more tightly than $\rightarrow$,
+		\item $\rightarrow$ binds more tightly than $\leftrightarrow$. 			
+	\end{itemize}
+	
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+  Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item L$\exists \forall$N, \emph{Logic and Proof}. Sections: 3.1, 6.1, and 6.2 
+		\item Logic Matters, \emph{An Introduction to Formal Logic}: p172 - 216
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+\end{document}

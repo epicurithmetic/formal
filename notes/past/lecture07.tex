@@ -1,0 +1,365 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 7: Metalogic}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Logical Equivalence}
+
+\begin{frame}
+  \frametitle{Logical Equivalence}
+
+	\begin{defn}We say well-formed formulae are \textit{syntactically equivalent} if both 
+	$$ \alpha \vdash \beta \quad \textnormal{and} \quad \beta \vdash \alpha$$\end{defn}
+	
+	\vspace{0.5cm}
+	
+	{\bf Examples} 
+	\begin{itemize}
+		\item $A \lor B \dashv \vdash B  \lor  A$
+		\item $A \rightarrow B \ \dashv \vdash \ \lnot A \lor B$
+	\end{itemize}
+
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Theorems}
+	\begin{defn} We say a well-formed formula $\alpha$ is a theorem if there exists a natural deduction $\mathcal{D}$ from no assumptions i.e. $\Sigma = \emptyset$ and we denote this as $\vdash \alpha$. \end{defn}
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} Law of the Excluded Middle
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} $\vdash \alpha \rightarrow (\beta \rightarrow \alpha)$
+	
+	\vspace{4cm}
+	
+	{\bf Note:} This is the \emph{syntactic} analog to the \emph{semantic} definition of a tautology.
+	
+	
+	
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Example of Equivalence}	
+	
+	If $\alpha$ and $\beta$ are logically equivalent, then $\vdash \alpha \leftrightarrow \beta$. 
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Equivalence of Theorems}
+	
+	If $\vdash \alpha$ and $\vdash \beta$, then $\vdash \alpha \leftrightarrow \beta$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Deduction Theorem}	
+	
+	{\bf Theorem:} $\Sigma \vdash \alpha \rightarrow \beta$ if and only if $\Sigma \cup \{\alpha\} \vdash \beta$
+	
+	\vspace{0.5cm}
+	
+	{\bf Proof} 
+	
+	\vspace{5cm}
+	
+	% Note: this is a metalogical statement about possible deductions, rather than any specific deduction.
+	
+	% This is not so interesting in the deduction method that we've built up. In other systems this is a real theorem. With the rules of inference as we have them, this should not be surprising. For us it is just implication introduction and elimination. 
+	
+\end{frame}
+
+
+\section{Metalogic}
+
+\begin{frame}
+	\frametitle{Semantics and Syntax}
+	If $\Sigma$ is a set of hypotheses and $\alpha$ is a well-formed formula, then we have two methods for analysing whether $\alpha$ follows, in some manner, from $\Sigma$. We can ask the following: 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item Is $\alpha$ a semantic consequence of $\Sigma$? 
+		\item Is $\alpha$ a syntactic consequence of $\Sigma$? 		
+	\end{itemize}
+
+	\vspace{0.5cm}
+	
+	This leads us to the following question: How do these two notions relate to one another? 
+	
+	% Note that this is relative to our choices of semantics and deductions!
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Metalogical Definitions}
+	
+	\begin{defn} a formal system of deduction is {\bf sound} if it only allows derivations of valid arguments. %If $\Sigma \vdash \alpha $, then $\Sigma \vDash \alpha $
+	\end{defn}
+	
+	\vspace{2cm}
+	
+	\begin{defn} a formal system of deduction is (semantically) {\bf complete} if it allows derivations of every valid argument. %If $\Sigma \vDash \alpha $, then $\Sigma \vdash \alpha $
+	\end{defn}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Soundness}
+	
+	\quad {\bf Theorem:} If $\Sigma \vdash \alpha $, then $\Sigma \vDash \alpha $
+	
+	\vspace{0.5cm}
+	
+	\quad {\bf Proof} 
+	
+	\vspace{5cm}
+	
+	% Induction on the length of the proof. Base case easy. Draw the inference diagrams for each of the induction cases: leave some for the tutorials. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof Continued}
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Consistent}
+	
+	\begin{defn} a set of wff $\Sigma$ is consistent if and only if for no $\alpha$ does $\Sigma \vdash \alpha$ and $\Sigma \vdash \lnot\alpha$. \end{defn}
+	
+	\vspace{0.5cm}
+	
+	\begin{defn} a set of wff $\Sigma$ is maximally consistent if and only if it is consistent and for every $\alpha$ either $\Sigma \cup \{\alpha\}$ is inconsistent or $\Sigma \vdash \alpha$.\end{defn} 
+	% There is no universal maximally consistent set. To see this, pick a wff alpha that is  not a contradiction. In this case \{alpha\} is consistent and so is \{notalpha\}. Both of these can be extended to maximally consistent sets. These maximally consistent sets can't be the same, as this would lead to a contradiction.
+	
+	\vspace{0.5cm} 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{G\"{o}del Numbering}
+	
+	G\"{o}del numbering is a method for encoding wff and sequences of wff i.e. proofs. Kurt G\"{o}del used this encoding to prove famous results about the limits of the methods of mathematics. 
+	
+	\begin{center}
+		\begin{tabular}{ c c c c c c c c c c }
+			$\lnot$ & $\lor$ & $\land$ & $\to$ & $($ & $)$ & $A_{1}$ & $A_{2}$ & $A_{3}$ & $\cdots$ \\
+			\hline
+			$1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\cdots$ 
+		\end{tabular}
+	\end{center}
+
+	For now we will use this encoding to show there are only \textit{countably} many wff. Which means we can, in theory, think of the (infinite) list of wff $\{\alpha_{n}\}_{n=1}^{\infty}$.
+	
+	\vspace{4cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{G\"{o}del Numbering Example}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Metalogical Lemmata}
+	
+	{\bf Lemma:} If $\Sigma$ is consistent, then there exists a maximally consistent $\overline{\Sigma}$ such that $\Sigma \subseteq \overline{\Sigma}$.
+	% For each wff throw in either alpha or not alpha depending on whether it can be proved. 
+	
+	{\bf Proof}
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof continued}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Metalogical Lemmata}
+	
+	{\bf Lemma:} If $\overline{\Sigma}$ is maximally consistent, then for each wff $\alpha$ either $\overline{\Sigma} \vdash \alpha$ or $\overline{\Sigma} \vdash \lnot \alpha$. 
+	% If this weren't the case, then we could throw alpha or notalpha into sigma and not change it's consistency, thus contradicting its maximality.
+
+	{\bf Proof}
+	
+	\vspace{6cm}
+	
+	{\bf Note:} This is called \emph{syntactic completeness}. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Metalogical Lemmata}
+	
+	{\bf Lemma} If $\Sigma$ is satisfiable, then $\Sigma$ is consistent.
+	
+	\vspace{0.5cm}
+	
+	\quad {\bf Proof:} We will prove the contrapositive of this statement. 
+	
+	\vspace{0.5cm}
+	
+	If $\Sigma$ is inconsistent, then there exists a wff $\alpha$ such that $\Sigma \vdash \alpha$ and $\Sigma \vdash \lnot\alpha$.
+	 
+	\vspace{0.5cm}
+	
+	Thus, by soundness, we have $\Sigma \vDash \alpha$ and $\Sigma \vDash \lnot\alpha$. 
+	
+	\vspace{0.5cm}
+	
+	Therefore there can be no valuation that satisfies $\Sigma$, as it it would necessarily statisfy both $\alpha$ and $\lnot \alpha$, which is impossible. 
+	
+	\vspace{0.5cm}
+	
+	Thus we see $\Sigma$ is not satisfiable. 
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Metalogical Lemmata}
+	
+	{\bf Lemma} If $\Sigma$ is consistent, then $\Sigma$ is satisfiable.
+	
+	\vspace{0.5cm}
+	
+	\quad {\bf Proof:} We will prove this directly by constructing a valuation that satisfies $\Sigma$. This proof will use induction on the length of well-formed formulae. We provide a valuation on the maximal consistent extension of $\Sigma$ which will restrict to a valuation on $\Sigma$. 
+	
+	\vspace{5cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof continued}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof continued}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Completeness}
+	
+	{\bf Theorem} If $\Sigma \vDash \alpha $, then $\Sigma \vdash \alpha $
+	
+	\vspace{0.5cm}
+	
+	\quad {\bf Proof:} We will prove the contrapositive of this statement. 
+	
+	\vspace{0.2cm}
+	%\pause	
+	If $\Sigma \nvdash \alpha$, then $\Sigma \cup \{\lnot\alpha\}$ is consistent. % We may assume sigma is consistent, or else the statement is trivial.
+	
+	\vspace{0.3cm}
+	%\pause
+	Hence $\Sigma \cup \{\lnot\alpha\}$ is satisfiable.
+	
+	\vspace{0.3cm}
+	%\pause	
+	So there is a valuation, $v$, which satisfies $\Sigma$ and $\lnot\alpha$.
+	
+	\vspace{0.3cm}
+	%\pause	
+	Which means this valuation, $v$, satisfies $\Sigma$ but does not satisfy $\alpha$.
+	
+	\vspace{0.3cm}
+	%\pause	
+	Therefore $\Sigma \nvDash \alpha$. 
+	
+	
+\end{frame}
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+
+Below is a selection of resources that I used to prepare the lecture. You might like to read over them yourself to help get a more complete picture of the topics discussed. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+	\item L$\exists \forall$N, \emph{Logic and Proof}. Sections: 6.3 and 6.4 
+	\item Logic Matters, \emph{An Introduction to Formal Logic}. Sections 24.5, 24.6, and 24.7.
+\end{itemize}
+
+
+
+\end{frame}
+\end{document}

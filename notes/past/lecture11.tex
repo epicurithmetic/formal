@@ -1,0 +1,389 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 11: Model Theory}
+\subtitle{Semantics of First Order Logic}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Model Theory}
+
+\begin{frame}
+  \frametitle{What Does it all Mean, Basil?}
+
+	In the last lecture we added new symbols to our alphabet. This more expressive logic we called first order predicate logic. With this alphabet we can form strings like: 
+	
+	\vspace{1cm}
+	
+	\begin{itemize}
+		\item[] $\forall x (x = w \land \exists y Pxy) \rightarrow \forall z (\lnot Pxz)$ \vspace{0.2cm}
+		\item[] $ \lnot \exists x Rx \rightarrow \lnot Q \land \forall x \lnot Px$ \vspace{0.2cm}
+		\item[] $Even(n) \leftrightarrow \exists x (n = mul(2,x))$ \vspace{0.2cm}
+		\item[] $\lnot \exists x (0 = s(x))$
+	\end{itemize}
+
+	\vspace{3cm}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Arguments and Proofs}
+	
+	Recall that our intention is to understand when an argument is good; when one wff is said to follow from a set of other wff. In order to make precise the idea of a good argument, we will use similar ideas from propositional logic: considering both semantic and syntactic consequences.
+	
+	\vspace{1cm}
+	
+	\begin{itemize}
+		\item[] Semantic consequence requires some idea of meaning and truth. \vspace{0.5cm}
+		\item[] Syntactic consequence requires us to add some rules of inference for the new characters in our alphabet. 
+	\end{itemize}
+
+	\vspace{2cm}
+	
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Valuations and Truth Tables}
+	
+	In propositional logic our semantics were equivalent to considering all possible combinations of the truth values for the propositions in an argument. Each row could thus be thought of as a different \emph{universe} where some things were the case and others were not. 
+	
+	\vspace{0.5cm}
+	
+	Quantification over infinitely many objects makes it impossible to consider truth and meaning in this way e.g. each relation with each input. We can't, even in theory, write down a truth table. 
+	
+	\vspace{0.5cm}
+	
+	For this reason we need to consider more carefully what we mean by a case. It should reflect whether or not our predicates are true, given a particular collection of names/objects.
+	
+	\vspace{1cm}
+	
+	\footnotesize{Section 1.3 \emph{Model Theory} Chang and Keisler.}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Model Theory (Sketch)}
+	
+	Consider the first order language given by the following signature: 
+	$$\mathcal{L}: \{1,2,3,add,mul,square,even,odd,prime,lt,=\}$$
+	
+	\vspace{0.5cm}
+	
+	To evaluate the truth of any wff in this language, we need to assign meaning to each of the symbols. That is, {\bf put all of the symbols in some context for which we can evaluate the truth of formulae.}
+	
+	\vspace{0.5cm}
+	
+	This is almost as far as we will go in saying what a model is. One can find all the details of models and truth in models in the following texts: 
+	
+	\begin{itemize}
+		\item Chapter 1 of \emph{Model Theory}, Chang \& Keisler 
+		\item Section 2.2 of \emph{A Mathematical Introduction to Logic}, Enderton
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Consider the first order language given by the following signature: 
+	$$\mathcal{L}: \{1,2,3,add,mul,square,even,odd,prime,lt,=\}$$
+	% The obvious intepretation gives us one model for this language. 
+	\vspace{5cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Model of a First Order Language}
+	
+	A model $\mathfrak{M} = (U,I)$ of a first order language $\mathcal{L}$ consists of: 
+	
+	\begin{itemize}
+		\item a non-empty domain (or universe) $U$ of objects, and \vspace{0.2cm}
+		\item a function $I$ which assigns to each \vspace{0.2cm}
+			\begin{itemize}
+				\item[-] constant symbol an element on the universe, \vspace{0.2cm}
+				\item[-] $n$-ary function symbol, f, a function $f:U^{n} \rightarrow U$, \vspace{0.2cm}
+				\item[-] $n$-ary predicate symbols, $R$, a subset of $U^{n}$. \vspace{0.2cm}
+			\end{itemize}
+	\end{itemize}
+ 
+	We require $I(\bot) = \emptyset$ and $I(=) = \{(u,u) | u \in U\}$.
+	
+	\vspace{1cm}
+	
+	{\bf Note:} This mentions nothing of how variables should be understood in a model. However, the definition above will suffice for our discussion. See references for more details.
+	
+\end{frame}
+
+\section{Examples}
+
+% Take clues from the way I present these examples as to how much you should say in any given question. 
+
+\begin{frame}
+	\frametitle{Arithmetic Examples}
+	
+	One aim of the 1800-1900s was to find a formal language for number theory, to study the theory of the natural numbers. It is thought that all other mathematics is built from number theory, so understanding number theory should be sufficient.
+	
+	\vspace{0.5cm} 
+	
+	To this end, let's consider the following first order language 
+	$$\mathcal{L}: \{0,1,+,=\}$$
+	
+	\vspace{0.3cm} 
+	
+	If we interpret the constants as $0,1$ in $\mathbb{N}$ and $+,=$ as normal, then we do get a model of this language. That is, the number theory of the natural numbers is a model for this language. 
+	
+	\vspace{0.5cm} 
+	
+	{\bf Question:} Can you think of another model?
+	
+	\pause 
+	
+	Take, for example, $\mathbb{Z}/2\mathbb{Z}$, with $+,=$ interpreted mod $2$. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examples}
+	
+	{\bf Question:} What other objects from your mathematical adventures could be used to model first order languages? 
+	
+	\pause 
+	
+	\vspace{0.5cm}
+	
+	Here are some possible examples to keep in mind when thinking about first-order logic: 
+	\begin{itemize}
+		\item Non-standard arithmetics e.g. modular,
+		\item Graph theory,
+		\item Set theory,
+		\item Groups, Rings, Algebras,
+		\item Geometry (Euclidean, Non-Euclidean).
+	\end{itemize}	
+
+	Our different backgrounds and preferences will bring different models to mind. This is fine: you may use what ever comes to mind to build a model to justify your aims.
+
+\end{frame}
+
+\section{Truth in a Model}
+
+\begin{frame}
+	\frametitle{Truth in a Model}
+	
+	In order to keep some limit on the amount of new notation, we will keep the idea of ``truth in a model" intuitive. We will not talk about claims or models for which it is difficult to ascertain the truth of.
+	
+	\vspace{0.5cm}
+	
+	Truth of quantifers $\forall x$ and $\exists x$ is interpreted by having the variable, $x$, range over all possible elements of the domain of a particular model. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Consider the first order language $\mathcal{L}: \{0,1,+,s,=\}$ and wff: 
+	
+	$$ \gamma: \forall y \lnot(0 = s(y))$$
+	
+	\vspace{0.3cm}
+	
+	Define a model $\mathcal{M}$ as follows:
+	\begin{itemize}
+		\item[] $U = \mathbb{N}$,
+		\item[] $0 \mapsto 0$,
+		\item[] $1 \mapsto 1$,
+		\item[] $s \mapsto s(x) = x+1$ (successor function),
+		\item[] $=$ is equality of natural numbers.
+	\end{itemize}
+	
+	\vspace{0.3cm}
+	
+	{\bf Q:} Translate $\gamma$ into English and determine if it is true in $\mathcal{M}$. 	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Consider the first order language $\mathcal{L}: \{0,1,+,s,=\}$ and wff: 
+	
+	$$ \gamma: \forall y \lnot(0 = s(y))$$
+	
+	\vspace{0.3cm}
+	
+	Define a model $\mathcal{M}$ as follows:
+	\begin{itemize}
+		\item[] $U = \mathbb{Z}$,
+		\item[] $0 \mapsto 0$,
+		\item[] $1 \mapsto 1$,
+		\item[] $s \mapsto s(x) = x+1$ (successor function),
+		\item[] $=$ is equality of integers.
+	\end{itemize}
+	
+	\vspace{0.3cm}
+	
+	{\bf Q:} Translate $\gamma$ into English and determine if it is true in $\mathcal{M}$. 	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Consider the first order language $\mathcal{L}: \{0,1,+,=\}$ and formula 
+	$$ \exists x ((x + x = 0) \land \lnot(x = 0))$$
+	
+	\vspace{0.5cm} 
+	
+	Determine a model for which this true and another model in which this is false. Translate this into natural language in each of your models. 
+	
+	%{\bf TUTORIAL}
+	
+\end{frame}
+
+\section{Notation}
+
+\begin{frame}
+	\frametitle{Semantic Consequence}
+	
+	If a wff $\gamma$ is true in a model $\mathcal{M}$, then we denote this $\mathcal M \vDash \gamma$.
+	
+	\vspace{0.5cm}
+	
+	If $\Sigma$ is a set of wff and $\gamma$ is true in every model that each wff in $\Sigma$ is true, then we denote this $\Sigma \vDash \gamma$. We say that $\gamma$ is a semantic consequence of the set of wff $\Sigma$.
+	
+	\vspace{0.5cm}
+	
+	This is analogous with the propositional case. However, in this case it is not at all obvious how one might ascertain whether one sentence is a semantic consequence of others. It's not a matter of drawing up the truth table. 
+	
+	\vspace{0.5cm}
+	
+	We will talk more about this as we move into the computation topic of the course. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Natural Language Example}
+	
+	There is something that, if it is a mammal, then it lives in the ocean. Therefore, there are ocean dwelling-mammals. 
+	
+	\vspace{0.5cm}
+	
+	This argument can be translated into the formal language $$\mathcal{L}:\{M,O\}$$
+	
+	\vspace{0.3cm}
+	
+	Premise:
+	
+	\vspace{0.5cm}
+	
+	Conclusion: 
+	
+	\vspace{0.5cm}
+	
+	{\bf Question:} Is this a good argument? 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Natural Language Example}
+	
+	Everyone loves someone; so there is someone who everyone loves.
+	
+	\vspace{0.5cm}
+	
+	This argument can be translated into the formal language $$\mathcal{L}:\{L\}$$
+	
+	\vspace{0.3cm}
+	
+	Premise:
+	
+	\vspace{0.5cm}
+	
+	Conclusion: 
+	
+	\vspace{0.5cm}
+	
+	{\bf Question:} Is this a good argument? 
+	
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+
+Below is a selection of resources that I used to prepare the lecture. You might like to read over them yourself to help get a more complete picture of the topics discussed. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+	\item L$\exists \forall$N, \emph{Logic and Proof}. Section: 10.
+	\item Logic Matters, \emph{An Introduction to Formal Logic}. Sections: 29, 30, 35, and 36.
+\end{itemize}
+
+\end{frame}
+
+
+
+
+
+
+\end{document}

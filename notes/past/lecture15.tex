@@ -1,0 +1,267 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 15: First-Order Theories of Arithmetic II}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+\frametitle{Outline}
+
+	\tableofcontents
+
+\end{frame}
+
+
+\section{Peano Arithmetic}
+\begin{frame}
+	\frametitle{Axioms of PA}
+	
+	Peano Arithmetic has signature PA$: \{0,s,+,\times\}$ and axioms
+	
+	\begin{enumerate}
+		\item $\forall x \lnot(s(x) = 0)$
+		\item $\forall x \ \forall y ((s(x) = s(y)) \to (x = y))$
+		%\item $\forall x \ ((x = 0) \lor \exists y (x = s(y)))$
+		\item $\forall x \ (x + 0 = x)$
+		\item $\forall x \ \forall y \ (x + s(y) = s(x + y))$
+		\item $\forall x \ (x \times 0 = 0)$
+		\item $\forall x \ \forall y \ (x \times s(y) = (x \times y) + x)$
+		\item $(P(0) \land \forall x \ (P(x) \to P(x+1))) \rightarrow \forall y (P(y))$
+	\end{enumerate}
+
+	\vspace{0.2cm} 
+	
+	This is Presburger arithmetic with multiplication. It is accepted as \emph{the} first-order theory of arithmetic.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Abbreviations}
+	
+	We make the following abuse of notation 
+	\begin{center}
+	\begin{itemize}
+		\item[] $1 = s(0)$
+		\item[] $2 = s(1) = s(s(0))$
+		\item[] $3 = s(2) = s(s(1)) = s(s(s(0)))$
+		\item[] $\vdots$
+	\end{itemize}
+	\end{center}
+	
+	It is important to distinguish well-formed formulae in our formal language from statements in the intended model. Remember the well-formed formulae in our language are just strings of symbols. Some authors force this with their notation; we will just be mindful of the difference. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	$$ PA \vdash 2 + 1 = 3$$
+	
+	\vspace{7cm}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	$$ PA \vdash 2 \neq 1$$
+
+	\vspace{7cm}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	$$ PA \vdash 0 + 1 = 1$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Induction Example}
+	
+	$$ PA \vdash \forall x \ (0 + x = x)$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	$$ PA \vdash 7 \times 1 = 7$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+
+\section{Theorem Provers and Proof Checkers}
+
+\begin{frame}
+	\frametitle{Is This Feasible?}
+	
+	% Make some comments about computers, and proof generators and checkers.
+	
+	We appear to have a precise formal language in which we can prove real number theoretic statements - great! 
+	
+	\vspace{0.2cm}
+	
+	Unfortunately, it takes slides and slides to prove basic statements about arithmetic - let alone something non-trivial like the fundamental theorem of arithmetic. 
+	
+	\vspace{0.7cm}
+	
+	Happily we now have computers! These computers can store sub-proofs to make writing new proofs much easier. The \textbf{Xena Project} is building a database of undergraduate math with proofs verified by the proof checker L$\exists \forall$N. 
+	
+	\vspace{0.2cm}
+	
+	Tutorial 6 will have you work in L$\exists\forall$N. This way you get an idea for how these ideas have had an effect today, on modern mathematics. Plus, proving basic properties like commutativity of addition is much nicer in L$\exists \forall$N, than writing it on paper. 
+\end{frame}
+
+\section{Answering Hilbert}
+
+\begin{frame}
+	\frametitle{Non-Standard Models}
+	
+	There are non-standard models of Peano Arithmetic! Thoralf Skolem and Abraham Robinson are the pioneers of non-standard models. 
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} One can make a model with an element, $x$, larger than every natural number. (Consequence of the compactness theorem).
+	
+	\vspace{0.5cm}
+	
+	{\bf Example:} Hyperreal numbers (the hypernaturals) were constructed by Abraham Robinson in the 1960s. These provide another non-standard model of Peano Arithmetic. 
+	
+	\vspace{0.5cm}
+	
+	This already suggests that Peano Arithmetic is \emph{incomplete}.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{G\"{o}del's First Incompleteness Theorem}
+	
+	In 1931 G\"{o}del published the following theorem:
+	
+	\vspace{0.5cm}
+	
+	Any consistent formal theory $F$ within which Peano arithmetic can be carried out, is necessarily incomplete. That is, there are statements, $\phi$, in $F$ such that neither $F \vdash \phi$ nor $F \vdash \lnot \phi$. 
+	
+	\vspace{0.5cm} 
+	
+	Thus, Peano arithmetic is incomplete. 
+	
+	\vspace{0.5cm}
+	
+	Perhaps we can add axioms to PA to make it complete? No!  
+	
+	\vspace{0.5cm} 
+	
+	{\bf Peano arithmetic is incompletable!}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{G\"{o}del's Second Incompleteness Theorem}
+	
+	In 1931 G\"{o}del published the following theorem:
+	
+	\vspace{0.5cm}
+	
+	For any consistent formal theory $F$ within which Peano arithmetic can be carried out, the consistency of $F$ cannot be proved in $F$ itself. 
+	
+	\vspace{0.5cm} 
+	
+	Thus, Peano arithmetic can't prove it's own consistency. Nor can any extension of it. 
+	
+	\vspace{0.5cm} 
+	
+	G\"{o}del showed the consistency of PA can be written in PA and is one of those G\"{o}delian sentences!
+	
+\end{frame}
+
+\section{Robinson Arithmetic}
+
+\begin{frame}
+	\frametitle{Axioms of Q}
+	
+	Robinson Arithmetic has signature $\mathcal{Q}: \{0,s,+,\times\}$ and axioms
+	
+	\begin{enumerate}
+		\item $\forall x \lnot(s(x) = 0)$
+		\item $\forall x \ \forall y ((s(x) = s(y)) \to (x = y))$
+		\item $\forall x \ ((x = 0) \lor \exists y (x = s(y)))$
+		\item $\forall x \ (x + 0 = x)$
+		\item $\forall x \ \forall y \ (x + s(y) = s(x + y))$
+		\item $\forall x \ (x \times 0 = 0)$
+		\item $\forall x \ \forall y \ (x \times s(y) = (x \times y) + x)$
+	\end{enumerate}
+	
+	\vspace{0.2cm}
+	
+	Without the induction schema $\mathcal{Q}$ is \emph{fintely} axiomatized, and much weaker than Peano arithmetic. However, Raphael Robinson introduced $\mathcal{Q}$ in 1950 to show that although $\mathcal{Q}$ is much weaker than PA, it (and any extension of $\mathcal{Q}$) is still incomplete and undecidable. There is enough number theory to carry out G\"{o}del's proof. 
+	
+	% It's not the infinite number of axioms that cause the incompleteness or undecidability.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item L$\exists \forall$N, \emph{Logic and Proof}. Sections: 17, 18 (+ 23 optional).
+		\item Logic Matters, \emph{G\"{o}del Without Too Many Tears}.
+		\item SEP, \emph{G\"{o}del's Incompleteness Theorem} (Optional!).
+	\end{itemize}
+	
+\end{frame}
+
+\end{document}

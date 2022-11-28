@@ -1,0 +1,375 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+
+\usepackage{listings}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 20: Primitive Recursion}
+\subtitle{Conditional Functions}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{if, then, else}
+
+\begin{frame}
+  \frametitle{Piecewise Functions}
+
+	If the primitive recursive functions are to be able to perform all possible computations, then we need to be able to write functions that can deal with conditional branching. 
+
+	\vspace{0.5cm}
+
+			$f(n) = \begin{cases}
+				3n+1 & n \text{ odd} \\
+				\frac{n}{2} & n \text{ even}
+			\end{cases}$
+
+			\hspace{1cm}
+
+			% Explain that this amounts to if, (elif,) then, else branching in modern programming. 
+
+			% This requires (i) predicates that are primitive recursive (ii) the ability to branch according to the output of the predicates. 
+
+	\vspace{5cm}
+
+\end{frame}
+
+\section{Arithmetic of Functions}
+
+\begin{frame}
+	\frametitle{Addition of Recursive Functions}
+
+	Given two functions $f_{1},f_{2}$, we can define the point-wise sum of these functions as follows 
+
+	$$(f_{1} + f_{2})(n) = f_{1}(n) + f_{2}(n)$$
+	
+	% if original functions are pr, then so is this sum. This is just a composition of pr functions! 
+	% Can give a recursive definition if it's the same function. 
+
+	\vspace{6cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Addition of Recursive Functions}
+
+	Given functions $f_{1},f_{2},f_{3}$, we can define the point-wise sum of these functions as follows 
+
+	$$(f_{1} + f_{2} + f_{3})(n) = f_{1}(n) + f_{2}(n) + f_{3}(n)$$
+	
+	% Use brackets to show that this is primitive recursive based on the previous slide. 
+	% So, in fact, any finite sum of primitive recursive functions are primitive recursive. 
+
+	\vspace{6cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Addition of Recursive Functions}
+
+	Given a primitive recursive function $f$, we can define the point-wise sum of the function with itself finitely many times as follows 
+
+	$$(f + \dots + f)(n) = f(n) + \dots + f(n)$$
+	
+	% Although the composition still works, we can give a recursive definition if it's the same function.
+	
+	% (Sigma f)(x,n) = (i) 0 if n = 0 (ii) sum(f(x), (sigma f)(x,n-1))
+
+	\vspace{6cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Multiplication of Recursive Functions}
+
+	Given two functions $f_{1},f_{2}$, we can define the point-wise multiplication of these functions as follows 
+
+	$$(f_{1} \cdot f_{2})(n) = f_{1}(n) \cdot f_{2}(n)$$
+	
+	% if original functions are pr, then so is this sum. This is just a composition of pr functions! 
+	% Can give a recursive definition if it's the same function. 
+
+	\vspace{6cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Multiplication of Recursive Functions}
+
+	Given functions $f_{1},f_{2},f_{3}$, we can define the point-wise product of these functions as follows 
+
+	$$(f_{1} \times f_{2} \times f_{3})(n) = f_{1}(n) \times f_{2}(n) \times f_{3}(n)$$
+	
+	% Use brackets to show that this is primitive recursive based on the previous slide. 
+	% So, in fact, any finite product of primitive recursive functions are primitive recursive. 
+
+	\vspace{6cm}
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Multiplication of Recursive Functions}
+
+	Given a primitive recursive function $f$, we can define the point-wise product of the function with itself finitely many times as follows 
+
+	$$(f \times \dots \times f)(n) = f(n) \times \dots \times f(n)$$
+	
+	% if original functions are pr, then so is this sum. This is just a composition of pr functions! 
+	% Can give a recursive definition if it's the same function. 
+
+	% (PI f)(x,n) = (i) 1 if n = 0 (ii) prod(f(x), (PI f)(x,n-1))
+
+	\vspace{6cm}
+
+\end{frame}
+
+\section{Recursive Predicates}
+
+\begin{frame}
+	\frametitle{Recursive Predicates}	
+
+	In order to write conditional functions, we need to be able to compute whether the conditions are satisfied i.e. we need primitive recursive definitions of the conditions. 
+
+	\vspace{0.5cm}
+
+	We define the characteristic function of an $n$-ary predicate $P({\bf x})$
+
+	\vspace{0.5cm}
+
+	$$\chi_{P}({\bf x}):= \begin{cases}
+		1 \hspace{0.5cm} \text{ if } P({\bf x})\\
+		0 \hspace{0.5cm} \text{ if } \lnot P({\bf x})
+	\end{cases} $$
+
+	We say an $n$-ary predicate is primitive recursive if $\chi_{P}$ is primitive recursive. 
+
+	\vspace{5cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Primitive Recursive Predicates}
+
+	Conditional programs (piece-wise functions) may branch according to the values of the following predicates
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item Less than, less than or equal to (order)
+		\item Greater than, greater than or equal to (order)
+		\item Equal (identity)
+	\end{itemize}
+
+	\vspace{5cm}
+
+\end{frame}
+
+
+\section{Recursion and Logic}
+\begin{frame}
+	\frametitle{Propositional Connectives}
+
+	Suppose $P({\bf x})$ and $Q({\bf x})$ are two primitive $n$-ary recursive predicates.
+
+	\vspace{0.5cm}
+
+	Show that the following are all primitive recursive
+
+	\begin{itemize}
+		\item[] $\lnot P({\bf x})$
+		\item[] $P({\bf x}) \lor Q({\bf x})$ 
+		\item[] $P({\bf x}) \land Q({\bf x})$ 
+		\item[] $P({\bf x}) \to Q({\bf x})$
+	\end{itemize}
+
+	\vspace{3.8cm}
+
+	\hspace{6cm} {\bf Details left for tutorial.}
+
+\end{frame}
+
+
+
+\begin{frame}
+	\frametitle{Conditional Functions}
+
+	We may combine the addition, multiplication, and primitive recursive predicates to obtain conditional functionality. 
+
+	\vspace{7cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conditional Functions}
+
+	Suppose we have $k$ distinct $n$-ary primitive recursive predicates $A_{1}, A_{2},\dots , A_{k}$ such that each ${\bf x}$ satisfies precisely one of them. We can use such a family of predicates to define piece-wise functions
+
+	\vspace{0.5cm}
+
+	$$g({\bf x}):= \chi_{A_{1}}({\bf x}) \cdot f_{1}({\bf x}) + \chi_{A_{2}}({\bf x}) \cdot f_{2}({\bf x}) + \cdots + \chi_{A_{k}}({\bf x}) \cdot f_{k}({\bf x})$$
+
+	\vspace{6cm}
+
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Existential Quantifier}
+
+	If $Q(x)$ is a primitive recursive predicate, then bounded search for an integer that satisfies it is primitive recursive. That is to say, the following is primitive recursive.
+
+	$$\chi_{\exists y < n Q(y)} =  \begin{cases}
+		1 \hspace{0.5cm} \text{ if there exists } y < n \text{ such that } Q(y).\\
+		0 \hspace{0.5cm} \text{ otherwise. }
+	\end{cases}   $$
+
+	\vspace{0.5cm}
+
+	Bounded existential quantification is primitive recursive.
+
+	\vspace{3cm}
+	% Bounded summation + non-zero test. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	 $\text{div}(x,y) = 
+	 \begin{cases}
+		1 & \text{ if } x\mid y. \\
+		0 & \text{ otherwise. }
+	 \end{cases}$
+	
+	\vspace{6cm}
+
+	\hspace{6cm} {\bf Details left for tutorial.}
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Universal Quantifier}
+
+	If $Q(x)$ is a primitive recursive predicate, then checking if all integers less than a specified bound satisfy it is a primitive recursive process. 
+
+	$$\chi_{\forall y < n Q(y)} =  \begin{cases}
+		1 \hspace{0.5cm} \text{ if all } y < n \text{ satisfy } Q(y).\\
+		0 \hspace{0.5cm} \text{ otherwise.}
+	\end{cases}   $$
+
+	\vspace{0.5cm}
+
+	Bounded universal quantification is primitive recursive.
+
+	\vspace{3cm}
+	% Bounded product + non-zero test. 
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	 $\text{prime?}(x) = \begin{cases}
+		1 & \text{ if } x \text{ is prime.} \\
+		0 & \text{ otherwise.}
+	 \end{cases}$
+	
+	\vspace{6cm}
+
+	\hspace{6cm} {\bf Details left for tutorial.}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Primitive Recursion Language}
+
+	In a sense we are defining a (programming?) language for a certain class of functions. We are allowed to use the following functions and constructions to build new ones: 
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item[] Constants
+		\item[] Projections 
+		\item[] Arithmetic functions 
+		\item[] Sums and products of functions
+		\item[] $\sum_{y<n}$ and $\prod_{y<n}$
+		\item[] Predicates 
+		\item[] Propositional logic 
+		\item[] Bounded quantification
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	Which mathematical questions can be answered with such functions? 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content.
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item SEP: Recursive Functions. 
+		\item Computability, Richard Epstein. 
+		\item Computability Theory, Enderton.
+		\item Lectures on the Philosophy of Mathematics, Joel Hamkins.		
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

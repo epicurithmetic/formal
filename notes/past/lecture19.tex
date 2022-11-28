@@ -1,0 +1,378 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+
+% Command below puts page numbers in.
+%\setbeamertemplate{footline}[frame number]
+
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 19: Computability}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Entscheidungsproblem}
+
+\begin{frame}
+  \frametitle{Entscheidungsproblem}
+
+	In 1928 David Hilbert asked if there could be an ``effective procedure" that could decide (Yes/No) whether a sentence of first-order logic is a theorem. 
+
+	\vspace{0.5cm}
+
+	Furthermore, he asked if there could be such a procedure that could determine whether a sentence is a theorem of some first-order theory of mathematics.
+
+	\vspace{0.5cm}
+ 
+  	With the formal language written down, we now turn to the idea of an ``effective procedure" or ``algorithm". In order to say whether such a thing exists, we must be precise about what we mean. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Mechanized Computation}
+
+	\begin{itemize}
+		\item Euclid's Algorithm (Calculate greatest common divisor)
+		\item Antikythera Mechanism (Ancient Greece, astronomical cycles)
+		\item Difference Engine (Babbage, Built 1822)
+		% Difference engine could calculate polynomial functions. By Taylor's theorem, many functions!
+		\item Analytical Engine (Babbage, Designed 1837)
+		% ALU, Conditional branching, and memory registers. 
+		\item Mathematicians formalise the idea of computation $\sim$1900s.
+		\item Z3 (Zuse, Built 1941)
+		% World first programmable digital computer. Clock frequency ~5Hz c.f. modern cpus with GHz!
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	In this course we're going to consider some early attemtps at formalising the idea of computation. What might it mean, in some generality, to say a process is computable.  
+
+	\vspace{0.5cm}
+
+	The Computer: from Pascal to von Neumann. Herman Goldstine.
+
+\end{frame}
+
+\section{Encoding Mathematics}
+
+\begin{frame}
+	\frametitle{G\"{o}del/ASCII/Unicode}
+
+	We introduced G\"{o}del numbering as a way of counting the wff of a first-order theory with countably many variables and a finite signature. However, G\"{o}del originally introduced the idea in his proof of the incompleteness theorems. 
+
+	\vspace{0.5cm}
+
+	G\"{o}del did more than just show that there is \emph{some} sentence for which it (and it's negation) can't be proved. He gave an effective procedure for generating such a sentence that one could get their hands on. 
+
+	\vspace{0.5cm}
+
+	G\"{o}del numbering was his way to make wff into objects of computation.
+
+	\vspace{0.5cm}
+
+	Rather than manipulating strings with some rules of computation, G\"{o}del turned the problem into manipulating numbers with some rules of computation.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Numbers}
+
+	We will focus on computations with numbers. Most commonly (in mathematics) we use the decimal system (powers of 10) to represent numbers. However, numbers can be represented as sums of powers of different bases. 
+
+	\vspace{0.5cm}
+
+	For example 
+
+	\vspace{0.1cm}
+
+	\begin{itemize}
+
+		\item (Decimal) $123_{10} = 1\times 10^{2} + 2\times 10^{1} + 3\times 10^{0}$ \vspace{0.5cm}
+
+		\item (Binary) $123_{10} = 1111011_{2}$
+		
+		$1\times 2^{6} + 1\times 2^{5} + 1\times 2^{4} + 1\times 2^{3} + 0\times 2^{2} + 1\times 2^{1} + 1\times 2^{0}$ \vspace{0.5cm}
+
+		\item (Unary) $123_{10} = 11111 \cdots 1111_{1}$
+		
+		$1\times 1^{123} + 1\times 1^{122} + \cdots + 1\times 1^{1} + 1\times 1^{0}$
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Computation?}
+
+	What should we mean by an ``effective procedure"? What properties do we think such a procedure should have? 
+
+	\vspace{6cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{G\"{o}del's Proof}
+
+	A lot of the work in the proof of the incompleteness theorem relied on finding effective definitions of predicates for the following: 
+
+	\begin{itemize}
+		\item Does $x$ divide $y$?
+		\item Is $\phi$ (the G\"{o}del number of) an axiom? 
+		\item Is $\phi$ the negation of $\psi$? 
+		\item Is there an effective function to generate $\phi \land \psi$? 
+		\item Does $\phi$ follow from $\psi$ by modus ponens?
+	\end{itemize}
+
+	In his paper G\"{o}del provides recursive definitions of relations and functions culminating in the definition of the following
+
+	\begin{itemize}
+		\item Is $\phi$ the G\"{o}del number of a proof?
+		\item $\phi$ is a proof of $\psi$. 
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	By effective procedure G\"{o}del meant primitive recursion.
+
+\end{frame}
+
+\section{Primitive Recursion}
+
+\begin{frame}
+	\frametitle{Primitive Recursion: Initial Functions}
+
+	Primitive recursive functions $f: \mathbb{N}^{k} \rightarrow \mathbb{N}$ are built from the following basic functions. 
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item[] Zero: $Z(n) = 0$
+		\item[] Successor: $Succ(n) = s(n)$
+		\item[] Projections: $\pi_{i}^{k}(x_{1},\dots, x_{i},\dots x_{k}) = x_{i}$
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	These are chosen as there is no questioning the computability of these functions. In all cases it's clear what the output should be. 
+
+	\vspace{0.5cm}
+
+	More sophisticated primitive recursive functions are built inductively from these initial functions according to finitely many applications of function composition and recursion. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Function Composition}
+
+	If $g:\mathbb{N}^{m} \rightarrow \mathbb{N}$ is primitive recursive and $h_{1},\dots, h_{m}: \mathbb{N}^{k} \rightarrow \mathbb{N}$ are each primitive recursive, then the function $f:\mathbb{N}^{k} \rightarrow \mathbb{N}$ defined by function composition 
+
+	$$f({\bf x}) = g(h_{1}({\bf x}),\dots , h_{m}({\bf x}))$$
+
+	is a primitive recursive function. 
+
+	\vspace{0.5cm}
+
+	{\bf Example}
+	% Constant functions. 
+	\vspace{4cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Recursion: Single Variable}
+
+	If $g$ is a primitive recursive function and $d \in \mathbb{N}$, then the function $f:\mathbb{N} \rightarrow \mathbb{N}$ defined by 
+
+	$$f(0) = d$$
+	$$f(s(n)) = g(f(n),n)$$
+
+	is also primitive recursive. 
+
+	\vspace{0.5cm}
+
+	{\bf Example}
+	% Sum as a function of one variable: base case is variable held constant. 
+	\vspace{4cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Multiplication and Exponentiation}
+
+	Provide recursive definitions of multiplication and exponentiation.
+
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Recursion: Multiple Variable}
+
+	If $g,h$ are primitive recursive functions of multiple variables, then the following function 
+
+	$$f(0,{\bf x}) = g({\bf x})$$
+	$$f(s(n),{\bf x}) = h(f(n,{\bf x}),n,{\bf x})$$
+
+	is also primitive recursive. 
+
+	% Here {\bf x} represents a finite list of values. 
+
+	\vspace{5cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Effective Procedure as Recursion}
+
+	One interpretation of what it means for a procedure to be effective, is if there exists a primitive recursive function that computes the output.
+
+	\vspace{0.5cm}
+
+	It's up to us to combine the initial components by composition and recursion to see how powerful this family of functions is. 
+
+	\vspace{5cm}
+
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Predecessor}
+
+	Show that the predecessor function is primitive recursive.
+
+	\vspace{7cm}
+
+	% Define the function in some way first. Needs to be clear what output should be. 
+	% P(s(n)) = pi_{2}(P(n),n)
+	% Explain the difference between the informal and formal definition here. 
+	% Happy with the informal. Better to give formal if you can. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Limited Subtraction (Monus)}
+
+	Show that limited subtraction is primitive recursive. 
+
+	\vspace{7cm}
+
+	% ld(x,s(n)) = g(ld(x,n),n)
+	% g = Pred \circ proj_1 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Zero Test}
+
+	The zero test is primitive recursive. 
+
+	\vspace{7cm}
+
+	% Piece wise function: 1 on 0 and 0 otherwise. 
+	% Get the class to do this one. 
+	% ld(1,n)
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Signature}
+
+	The non-zero test, or signature function, is primitive recursive. 
+
+	\vspace{7cm}
+
+	% limited difference of the previous
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Absolute Difference}
+
+	The absolute difference is primitive recursive. 
+
+	\vspace{7cm}
+
+	% Give hints by using a sum of all possible values and conditions (signature of difference) to 0 out all the terms not wanted in a sum.
+	% This function is obtained by composition. No need for multiplication of conditions here. 
+	% Although could be good to illustrate with this example. 
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Min, Max}
+
+	Min (or max) of two variables is primitive recursive. 
+
+	\vspace{7cm}
+
+	% Same idea as previous. Use signature to pickout the min or max. 
+
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content.
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item SEP: Recursive Functions. 
+		\item Computability, Richard Epstein. 
+		\item Computability Theory, Enderton.
+		\item Lectures on the Philosophy of Mathematics, Joel Hamkins.		
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}

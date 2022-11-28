@@ -1,0 +1,498 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 21: General Recursive Functions}
+\subtitle{$\mu$ Operator}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Bounded Search}
+\begin{frame}
+	\frametitle{Bounded Search}
+
+	Continuing on from the definitions of bounded existential and bounded universal quantification, we introduce a new symbol $\mu$ for constructing functions of the form 
+
+	$$\mu t < y P({\bf x,t}) = \text{ Smallest } t < y \text{ for which } P({\bf x},t) =1 $$ 
+
+	So the $\mu$ operator takes in a predicate and a bound, and {\bf defines a function} which returns the smallest $t$ which satisfies the predicate. If there is no such $t$, then the function should return the bound $y$. 
+
+	\vspace{0.5cm}
+
+	{\bf Example} Smallest prime less than $y$ and greater than $x$. 
+
+	$f(x,y) = \mu t < y [(t \text{ prime}) \land (x < t)]$
+
+	$$f(6,4) = 4$$ 
+	$$f(4,6) = 5$$
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\mu t < y$ is Primitive Recursive}
+
+	Bounded minimisation of a primitive recursive predicate is primitive recursive. Idea: count failures up from 0.
+
+	\vspace{0.5cm}
+
+	{\bf Example}
+
+	$P(x)$ is a predicate such that $P(0) = 0$, $P(1) = 0$, and $P(2) = 1$. 
+
+	\vspace{7cm}
+	% Strategy is to count failures! So, we look at the complement. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\mu t < y$ is Primitive Recursive}
+
+	Bounded minimisation of a primitive recursive predicate is primitive recursive. 
+
+	$$\mu t < y P(t) = \sum_{u < y}\prod_{t < u}\chi_{\lnot P}(t) $$
+
+	\vspace{7cm}
+	
+
+\end{frame}
+
+\section{Limitations of Primitive Recursion}
+
+\begin{frame}
+  \frametitle{Question}
+
+	Can every function that is ``intuitively" computable be defined using the constructions of primitive recursive functions? Is this a good definition of ``effective procedure"? 
+
+	\vspace{0.5cm}
+
+	Every step of a primitive recursive function is specified. We do not need any further instruction to carry out the computation of such a function. Furthermore, all primitive recursive functions have a finite number of steps. 
+
+	\vspace{0.5cm}
+
+	% But there are functions which can be argued to be effective, which are not able to be defined using the primitive recursive structure.  
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Count All Functions}
+
+	Are all functions $\mathbb{N}^{k} \rightarrow \mathbb{N}$ primitive recursive? 
+	% There are uncountably many functions of this form. 
+	% f: N -> N are uncountable in number. 
+	% Suffices to consider f:N -> {0,1}
+	% Such an f corresponds to a binary sequence. Diagonal out. 
+	\vspace{7cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{G\"{o}del Codes, Again!}
+
+	Using a similar technique to G\"{o}del allows us to number the primitive recursive functions. We use powers of primes to associate numbers to the basic primitive recursive functions 
+
+	\begin{itemize}
+		\item $\#(Z) = 11$ 
+		\item $\#(S) = 13$
+		\item $\#(\pi_{i}^{k}) = (p_{k+6})^{i+1}$
+	\end{itemize}
+
+	\vspace{0.5cm}
+
+	If $\#(g) = a$ and $\#(h) = b$, then $\#(g\circ h) = 2^{a}3^{b}$.
+
+	\vspace{0.5cm}
+
+	If $f$ is defined by recursion on $h$ with base case $g$, then we assign the code $\#(f) = 5^{a}7^{b}$
+
+	\vspace{0.5cm}
+
+	Decoding an integer is a primitive recursive process!
+
+	\vspace{1cm}
+
+	from \emph{Computability}, Epstein and Carnielli.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conclusion}
+
+	Just by this counting argument we see that there are more functions than there are primitive recursive functions. 
+
+	\vspace{0.5cm}
+
+	Perhaps the extra functions in our count are not computable? 
+
+	\vspace{5cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cantor's Diagonal Returns}
+
+	The countability of the primitive recursive functions means we have a computable list of primitive recursive functions of one-variable $f_{0}, f_{1}, \dots , f_{n}, \dots $
+
+	\vspace{0.5cm}
+
+	We consider the function $g(n) = f_{n}(n) + 1$. 
+
+	\vspace{5cm}
+
+	% Is this computable? Yes. 
+	% Is this primitive recursive? No! Not on the list. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Non-Recursive, but Computable}
+
+	Consider the function $h$ defined as follows 
+
+	\begin{align*}
+		h(0) &= f_{0}(0) + 1 \\
+		h(1) &= f_{0}(1) + f_{1}(1) + 1 \\
+		&\vdots \\
+		h(n) &= f_{0}(n) + f_{1}(n) + \dots + f_{n}(n) + 1 \\
+		&\vdots
+	\end{align*}
+
+	{\bf Question:} Is $h$ primitive recursive? 
+
+	\vspace{3cm}
+
+	% Is considered computable because the list of pr functions is. 
+
+	% If $f$ is primitive recursive, then f = f_{n}. But then f_{n}(n) < h(n). So no primitive recursive function agrees with $h$ every where. Thus, $h$ is not primitive recursive. Actually disagrees with all x >= n.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Computation and Primitive Recursion}
+
+	In this way we see that primitive recursion is different from the intuitive idea we have of an effective procedure. 
+
+	\vspace{0.5cm}
+
+	Others gave different ideas about what effective computation should mean. 
+
+	\vspace{0.5cm}
+
+	Stephen Kleene extended the notion of primitive recursion by adding in an unbounded search operator. 
+
+	% We won't say much about this, other than state what it means. 
+	% We will instead move onto talk about Turing machines. 
+
+\end{frame}
+
+\section{$\mu$-Recursion}
+
+\begin{frame}
+	\frametitle{Unbounded-Search}
+
+	In search of a broader class of functions that we can't diagonalise out of we follow Kleene and drop the bound and define the $\mu$ operator. 
+
+	\vspace{0.5cm}
+
+	Given a recursive function $f(y,{\bf x})$ we define a new function denoted by $\mu f$ and defined as
+
+	$$(\mu f)({\bf x}) = \text{min}\{t \ | \ f(t,{\bf x}) = 0 \text{ and } f(y,{\bf x}) \downarrow \forall y < t \} $$
+
+	Thus returning the minimum zero of a function.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Is $\mu$ Computable?}
+
+	% Because the predicate is primitive recursive, each step in the process is certainly computable. All of the instructions for the computation are given. 
+	% However, the process may never end! 
+	% So the requirement of termination is given up. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Total v. Partial Functions}
+
+	This suggests the following definitions: 
+
+	\vspace{0.5cm}
+
+	We say a function $f:\mathbb{N}^{k} \rightarrow \mathbb{N}$ is {\bf total} if there is a well-defined output for each input. 
+
+	\vspace{0.5cm}
+
+	If there exist ${\bf x} \in \mathbb{N}^{k}$ for which $f({\bf x})$ is not defined, then we say $f(x)$ is a {\bf partial} function.
+
+	\vspace{0.5cm}
+
+	The broadening of the allowable constructions yields functions which are not total; that is, computable functions which do not have a well-defined output. 
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Total v. Partial Functions}
+	% Introduce the notation on this slide. 
+
+	If $\varphi$ is a recursive function, we still write $\varphi(x)$ to denote the process of applying $\varphi$ to $x$. However, $\varphi(x)$ may not denote any object; there may not be any output.  
+
+	\vspace{0.5cm}
+
+	If we know $\varphi(x)$ is defined, we denote this by $\varphi(x)\downarrow$
+	
+	\vspace{0.5cm}
+
+	If we know $\varphi(x)$ is undefined, we denote this by $\varphi(x)\cancel{\downarrow}$
+\end{frame}
+
+\begin{frame}
+	\frametitle{$\mu$-Recursion}
+
+	We can enumerate the general recursive functions:
+	
+	$$\varphi_{1}(x), \varphi_{2}(x), \dots \varphi_{n}(x), \dots $$ 
+		
+	We can write down $\psi(x) = \varphi_{x}(x) + 1$. 
+
+	\vspace{5cm}
+
+\end{frame}
+
+\section{Modern Languages and Primitive Recursion}
+
+\begin{frame}
+	\frametitle{Engineering Machines}
+
+	In parallel to these theoretical considerations, physicists and electrical engineers were constructing machines and their components to actually carry out more general computational procedures.  
+
+	\vspace{0.5cm} 
+
+	This is a different, equally interesting, story that we will not get to talk about in any great detail. Tutorial 7 gave you a small view into the developments in that direction. 
+
+	\vspace{0.5cm}
+
+	However, to make this class of functions more tangible to our modern perspective, we will note how the general recursive functions relate to modern programming constructs. 
+
+	\vspace{0.5cm}
+
+	In the 1960s Albert Meyer (Complexity Theory pioneer) and Dennis Ritchie (C, Unix) wrote a programming language, designed for an (abstract) register machine, which ``implements" this notion of computability.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Loop Programs}
+
+	Loop, or For, programs are constructed using 
+
+	\begin{enumerate}
+		\item[] {\bf Var} = $x,y,z,...$
+		\item[] Assignments $x:=0$, $x:=y+1$, $x:=y$
+		\item[] Sequential composition $p;q$
+		\item[] Loop $x$ do $p$ end
+	\end{enumerate}
+
+	\vspace{0.5cm}
+
+	Where the Loop $x$ do $p$ is interpreted as
+
+	\begin{enumerate}
+		\item[] At the start of the loop $x$ is determined.
+		\item[] The loop-program $p$ is executed that many times. 
+		\item[] Further changes to $x$ does not change the loop. 
+		\item[] No decrement of $x$ required. 
+	\end{enumerate}
+
+	Meyer and Ritchie showed such programs are equivalent to the primitive recursive functions. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Addition: $x:= x + y$ 
+	
+	\vspace{0.5cm}
+
+	\begin{enumerate}
+		\item[] $x := a$; $y := b$;
+		\item[] loop $y$ do 
+		\item[] \hspace{0.5cm} $x := x + 1$
+		\item[] end
+	\end{enumerate}
+
+	\vspace{5cm}
+
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Predecessor: $x:= y - 1$ 
+	
+	\vspace{0.5cm}
+
+	\begin{enumerate}
+		\item[] $x := 0$; $y := a$; $t = 0$;
+		\item[] loop $y$ do 
+		\item[] \hspace{0.5cm} $x := t$;
+		\item[] \hspace{0.5cm} $t := t + 1$;
+		\item[] end
+	\end{enumerate}
+
+	\vspace{5cm}
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	Conditional Execution: If $x = 0$, then (do) $p$. 
+	
+	\vspace{0.5cm}
+
+	\begin{enumerate}
+		\item[] $x := a$; $t = 1$;
+		\item[] loop $x$ do 
+		\item[] \hspace{0.5cm} $t := 0$;
+		\item[] end;
+		\item[] loop $t$ do
+		\item[] \hspace{0.5cm} $p$;
+		\item[] end
+	\end{enumerate}
+
+	\vspace{5cm}
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+
+	If $x = 0$, then $p$, elif $x = 1$ do $q$, else do $r$. 
+	
+	% \vspace{0.5cm}
+
+	% \begin{enumerate}
+	% 	\item[] $x := a$; $t = 1$;
+	% 	\item[] loop $x$ do 
+	% 	\item[] \hspace{0.5cm} $t := 0$;
+	% 	\item[] end;
+	% 	\item[] loop $t$ do
+	% 	\item[] \hspace{0.5cm} $p$;
+	% 	\item[] end
+	% \end{enumerate}
+
+	\vspace{7cm}
+
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Single Variable Recursion}
+
+	Suppose $f(x)$ is defined recursively with base case $f(0) = 1$ and $f(x+1) = h(x,f(x))$ such that $h$ is primitive recursive and can be calculated by the Loop-program $H$. Provide a Loop-program, $F$, that calculates $f$. 
+
+	\vspace{6cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{While Programs}
+
+	Let us define the while-construct as follows
+
+	\begin{enumerate}
+		\item[] while $x < y$ do $p$ end
+	\end{enumerate}
+
+	Where the condition $x < y$ is tested every loop and $p$ is executed until the condition is false. At which point the program control passes to the next instruction after the while-loop.
+
+	\vspace{0.5cm}
+
+	Adding this construct to the loop-programs gives programs that compute the general recursive class of functions. 
+
+	\vspace{0.5cm}
+
+	{\bf Note:} Loop construct is redundant in the presence of while.
+	% do p x times using the following
+	% x := a; 
+	% t := 0; 
+	% while t < x do 
+	% 		p;
+	%		t := t + 1;
+	% end
+	\vspace{3cm}
+
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content.
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item SEP: Recursive Functions. 
+		\item Computability, Richard Epstein. 
+		\item Computability Theory, Enderton.
+		\item Lectures on the Philosophy of Mathematics, Joel Hamkins.		
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+
+\end{document}

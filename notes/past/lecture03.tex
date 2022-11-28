@@ -1,0 +1,311 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 3: Truth and Validity}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Example}
+	
+\begin{frame}
+  \frametitle{Example}
+	
+	``Thin is guilty," observed Watson, ``because either Holmes is right and the vile Moriarty is guilty, or he (Holmes) is wrong and Thin did the job; but those scoundrels are either both guilty or both innocent; and, as usual, Holmes is correct".
+	
+	\vspace{5.5cm}
+
+
+	\footnotesize{Example from Richard Jeffrey, \emph{Formal Logic: Its Scope and Limits}}
+
+\end{frame}
+
+\section{Argument}
+
+\begin{frame}
+	\frametitle{Argument Structure}
+	\begin{center}
+		$\begin{array}{ l c r }			
+			& \textnormal{Proposition 1} & \\
+			& \textnormal{Proposition 2} & \\
+			& \vdots & \\
+			& \textnormal{Proposition n} & \\
+			\cline{1 - 3} 
+			& \textnormal{Conclusion} & 	
+		\end{array}$
+	\end{center}
+
+	\vspace{1cm}
+
+{\bf Question:} What makes for a ``good argument"? What might we mean by a ``good argument"?
+\end{frame}
+
+\section{Truth Values}
+
+\begin{frame}
+	\frametitle{Truth Values}
+	
+	It may either be the case that an atomic formula is true, or false.
+	\begin{center}
+		$\begin{array}{ l c r }			
+			A & & A\\
+			\cline{1 - 1} \cline{3 - 3}
+			T & & 1\\ 
+			F & & 0
+		\end{array}$
+	\end{center}	
+	
+	There are precisely two truth values in \emph{classical} propositional logic and each proposition must take \emph{exactly one} of them: there are no contradictions and there are no other logical values. Note that there are other logics which relax these conditions.
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Truth table: ($\lnot$) Negation}
+	
+		\begin{center}
+			$\begin{array}{ l | c r }			
+				A & & \lnot A\\
+				\cline{1 - 3}
+				T & & \\ 
+				F & & 
+			\end{array}$
+	\end{center}
+
+The truth of compound variables (wff with syntactic structure) will depend, ultimately, on the truth values of the atomic formulae from which it is built.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Truth table: ($\land$) Conjunction}
+	
+	\begin{center}
+		$\begin{array}{ l | c | r }			
+		A & B & A \land B\\
+		\cline{1 - 3}
+		T & T & \\ 
+		T & F & \\
+		F & T & \\
+		F & F & 	
+		\end{array}$
+	\end{center}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Truth table: ($\lor$) Disjunction}
+	
+	\begin{center}
+		$\begin{array}{ l | c | r }			
+		A & B & A \lor B\\
+		\cline{1 - 3}
+		1 & 1 & \\ 
+		1 & 0 & \\
+		0 & 1 & \\
+		0 & 0 & 	
+		\end{array}$
+	\end{center}
+
+	\pause
+	\vspace{2cm}
+	Your intuition may not agree with this. Perhaps $\lor$ should not be true when both $A$ and $B$ are true. We have another binary connective to associate to this meaning: \emph{exclusive disjunction} and we denote it by $\oplus$ or $\veebar$.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Truth table: ($\rightarrow$) Implication}
+	
+	\begin{center}
+		$\begin{array}{ l | c | r }			
+		A & B & A \rightarrow B\\
+		\cline{1 - 3}
+		1 & 1 & \\ 
+		1 & 0 & \\
+		0 & 1 & \\
+		0 & 0 & 	
+		\end{array}$
+	\end{center}
+
+	\pause
+	\vspace{2cm}	
+	Again, your intuition may resist here. Implication is used in this sense in mathematics, so we stick to it. See the reading at the end for a discussion on the different meanings of implication. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Consider the wff $(A\rightarrow(B \land A))$ that involves more than one binary operation. 
+	
+	\begin{center}
+		$\begin{array}{ c | c | c | c }			
+			A & B & B \land A & (A\rightarrow(B \land A))\\
+			\cline{1 - 4}
+			1 & 1 & & \\ 
+			1 & 0 & &\\
+			0 & 1 & &\\
+			0 & 0 & &	
+		\end{array}$
+	\end{center}	
+\end{frame}
+
+\section{Valid Arguments}
+
+\begin{frame}
+	\frametitle{Valid Argument}
+	
+	Suppose $\Sigma$ is the set of premises of an argument with $\gamma$ as the conclusion.
+	
+	\begin{defn} We say an argument is valid if its conclusion is true in every case in which each of its premises are true.
+	\end{defn}
+ 
+	\vspace{0.5cm}
+	
+	If the argument for $\gamma$ from $\Sigma$ is valid, then we say $\gamma$ is a \emph{semantic consequence of } $\Sigma$ and denote it $\Sigma \vDash \gamma$ 
+	
+	\vspace{1cm}
+	
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: Modus Ponens}
+	
+	Show $\{A, (A \rightarrow B)\} \vDash B$
+	
+	
+	\pause
+	\vspace{1cm}
+	\begin{center}
+		$\begin{array}{ c | c | c }			
+			A & B & (A\rightarrow B)\\
+			\cline{1 - 3}
+			1 & 1 & 1 \\ 
+			1 & 0 & 0\\
+			0 & 1 & 1\\
+			0 & 0 & 1	
+		\end{array}$
+	\end{center}	
+
+	\pause
+	\vspace{1cm}
+	There is only one case in which both of the premises are true. In that case, the conclusion is also true.
+		\begin{center}
+			$\begin{array}{ c | c | c }			
+				A & B & (A\rightarrow B)\\
+				\cline{1 - 3}
+				1 & 1 & 1 \\ 	
+			\end{array}$
+		\end{center}	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Counterexamples}
+	
+	\begin{defn}[Counterexample] A counterexample to an argument is a case in which the premises are all true, but the conclusion is false. \end{defn}
+	
+	%\vspace{0.5cm}	
+	
+	{\bf Example: Affirming the Consequent} 
+	
+	Show $\{B, (A \rightarrow B)\} \nvDash A$
+	
+	\begin{center}
+		$\begin{array}{ c | c | c }			
+			A & B & (A\rightarrow B)\\
+			\cline{1 - 3}
+			1 & 1 & 1 \\ 
+			1 & 0 & 0\\
+			0 & 1 & 1\\
+			0 & 0 & 1	
+		\end{array}$
+	\end{center}
+
+This time the one line of interest is the counterexample: $A$ (the conclusion) is false, but the premises are true. 
+	
+	\begin{center}
+		$\begin{array}{ c | c | c }			
+			A & B & (A\rightarrow B)\\
+			\cline{1 - 3}
+			0 & 1 & 1 \\ 	
+		\end{array}$
+	\end{center}	
+	
+\end{frame}
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+  Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item L$\exists \forall$N, \emph{Logic and Proof}. Sections: 3.1, 6.1, and 6.2 
+		\item Logic Matters, \emph{An Introduction to Formal Logic}: p172 - 216
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+\end{document}

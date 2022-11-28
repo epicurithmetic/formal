@@ -1,0 +1,162 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Proof Assistants}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	$$ PA \vdash 0 + 1 = 1$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Induction Example}
+	
+	$$ PA \vdash \forall x \ (0 + x = x)$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	$$ PA \vdash 7 \times 1 = 7$$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+
+\section{Proof Assistants}
+
+\begin{frame}
+	\frametitle{Is This Feasible?}
+	
+	% Make some comments about computers, and proof generators and checkers.
+	
+	We appear to have a precise formal language in which we can prove number theoretic statements - great! 
+	
+	\vspace{0.2cm}
+	
+	Unfortunately, it takes slides and slides to prove basic statements about arithmetic - let alone something non-trivial like the fundamental theorem of arithmetic. 
+	
+	\vspace{0.2cm}
+	
+	The idea of developing new mathematics using natural deductions is unthinkable - no one would advocate for that.
+	
+	\vspace{0.2cm}
+	
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof Assistants}
+	
+	Happily we now have computers! These computers can store sub-proofs to make writing new proofs much easier. While still maintaining the easy verification of our natural deductions. 
+	
+	\vspace{0.2cm} 
+	
+	Software can be written to tuck a lot of the steps away and verify them for us. 
+	
+	\vspace{0.2cm}
+	
+	Agda, Coq, Isabelle, HOL, and L$\exists\forall$N are a few examples of programming languages that have been developed. They have all, in some way, absorbed the ideas we've developed throughout the course. 
+	
+	\vspace{0.2cm}
+	
+	These languages give mathematicians tools that they can use to genuinely prove things at the frontier. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof Assistants}
+	
+	These come in two primary flavours (i) automatic theorem provers (ii) interactive theorem provers. 
+	
+	\vspace{0.2cm}
+	
+	If a first-order theory is decidable, then there is (in-theory) an algorithm that can be written to decide whether a particular wff is a theorem. For example, Presburger's paper shows that questions about the addition on natural numbers are decidable. 
+	
+	\vspace{0.2cm}
+	
+	However these are often impractically slow. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{L$\exists\forall$N }
+	
+	L$\exists\forall$N is an interactive theorem prover which has the user enter the proofs. The structure of the language allows the program to verify the proof. Some automatic tactics are available for certain problems. 
+	
+	\vspace{0.2cm}
+	
+	The \textbf{Xena Project} is building a database of undergraduate math with proofs verified by the proof checker L$\exists \forall$N. 
+	
+	\vspace{0.2cm}
+	
+	Mathematicians at the frontier are verifying their work in L$\exists\forall$N! 
+	
+	\vspace{0.2cm}
+	
+	Tutorial 6 will have you work in L$\exists\forall$N. This way you get an idea for how these ideas have had an effect today, on modern mathematics. Plus, proving basic properties like commutativity of addition is much nicer in L$\exists \forall$N, than writing it on paper.
+	
+	\vspace{0.2cm}
+	
+	So how does this work? 
+	
+\end{frame}
+\end{document}

@@ -1,0 +1,531 @@
+\documentclass[11pt]{report}
+
+% Document dimensions
+\usepackage{geometry}
+\geometry{top=1.5cm, bottom=1.5cm, textwidth=15cm}
+
+% Math related packges.
+\usepackage{amsmath,amsfonts}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Turing Machine macros
+\usepackage{tikz}
+\def \bcell {\hspace{0.5em}}
+\def \tmtape#1#2#3#4#5#6#7#8#9 {
+	$\begin{array}{|||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+		\cline{1-17}
+		@ & 
+		#1 &
+		#2 & 
+		#3 & 
+		#4 & 
+		#5 & 
+		#6 & 
+		#7 & 
+		#8 &
+		#9 & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\bcell &
+		\bcell & 
+		\bcell & 
+		\cdots  \\
+		\cline{1-17}
+	\end{array}$
+	}
+
+\def \headposition#1 {
+	% Gross hack to get the head position indicator lined up with the cell set by the input of this function.
+	\ifnum#1=1 \hspace{0.1cm} $\bigtriangleup$ \else 
+		\ifnum#1=2 \hspace{0.7cm} $\bigtriangleup$ \else 
+			\ifnum#1=3 \hspace{1.25cm} $\bigtriangleup$ \else  
+				\ifnum#1=4 \hspace{1.8cm} $\bigtriangleup$ \else 
+					\ifnum#1=5 \hspace{2.35cm} $\bigtriangleup$ \else 
+						\ifnum#1=6 \hspace{2.9cm} $\bigtriangleup$ \else 
+							\ifnum#1=7 \hspace{3.45cm} $\bigtriangleup$ \else 
+								\ifnum#1=8 \hspace{4cm} $\bigtriangleup$ \else 
+									\ifnum#1=9 \hspace{4.55cm} $\bigtriangleup$ \else
+										\ifnum#1=10 \hspace{5.1cm} $\bigtriangleup$ \else  \fi
+									
+									\fi								
+								\fi
+							\fi
+						\fi
+					\fi				
+				\fi			
+			\fi		
+		\fi
+	 \fi}
+
+
+
+\begin{document}
+	
+	
+% Heading for the tutorial	
+\begin{center}
+	{\bf MATH230: Course Summary}
+\end{center}
+\begin{center}
+	{\bf Exam Preparation}
+\end{center}
+
+This document is intended as a guide for your exam preparation. It will help scaffold the content of the course and highlight the types of questions that may appear in the exam. This document is the best guide for what will be in the exam. All relevant problems from tutorials have been placed in this document. Lecture notes and reading suggestions at the end of each lecture will provide explanation for how to solve these problems. You may ask the lecturer for help anytime before the exam.
+
+\vspace{0.5cm}
+
+{\bf Exam Format}
+
+The examination has FOUR parts. The first part will be an essay style question, asking about some aspect of the over arching story of the course. The second part will have TEN short answer - drill type - questions covering all topics. The third part will ask for natural deductions in first order logic and Peano arithmetic. The fourth part will be about performing computations using each of the three models of computation that we have studied in the course. 
+
+\vspace{0.5cm}
+
+You may not bring in any extra materials to the exam. The next page (or something similar) of this document will appear on a page near the beginning of the examination booklet. It will contain axioms and encodings relevant to the exam, as well as the definitions for constructing primitive recursive functions. Some questions will provide further encodings if they're necessary.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\bf Peano Arithmetic: Signature and Axioms}
+
+Peano Arithmetic has signature PA$: \{0,s,+,\times,=\}$ and axioms
+	
+\begin{enumerate}
+	\item $\forall x \lnot(s(x) = 0)$
+	\item $\forall x \ \forall y ((s(x) = s(y)) \to (x = y))$
+	%\item $\forall x \ ((x = 0) \lor \exists y (x = s(y)))$
+	\item $\forall x \ (x + 0 = x)$
+	\item $\forall x \ \forall y \ (x + s(y) = s(x + y))$
+	\item $\forall x \ (x \times 0 = 0)$
+	\item $\forall x \ \forall y \ (x \times s(y) = (x \times y) + x)$
+	\item $(P(0) \land \forall x \ (P(x) \to P(x+1))) \rightarrow \forall y (P(y))$
+\end{enumerate}
+Axiom 7 is the infinite axiom schema of induction. 
+
+\vspace{0.75cm}
+
+{\bf Primitive Recursion: Basic Functions}
+
+Primitive recursive functions are built from the following basic functions using composition and recursion.
+
+\begin{enumerate}
+	\item[] Zero: $Z(n) = 0$
+	\item[] Successor: $s(n) = successor(n)$
+	\item[] Projections: $\pi_{i}^{k}(x_{1},\dots, x_{i},\dots x_{k}) = x_{i}$
+\end{enumerate}
+
+Composition of functions is defined using formulae of the form 
+$$f({\bf x}) = g(h_{1}({\bf x}),\dots , h_{m}({\bf x}))$$
+
+Functions are defined recursively on their first argument using primitive recursive functions $g,h$ and the following equations 
+$$f(0,{\bf x}) = g({\bf x})$$
+$$f(s(n),{\bf x}) = h(f(n,{\bf x}),n,{\bf x})$$
+
+\vspace{0.75cm}
+
+$\lambda$-{\bf encoding} for propositional logic. 
+
+The following $\lambda$-encodings maybe useful in the examination.
+	\begin{itemize}
+		\item[] TRUE = $\lambda x. \ \lambda y. \ x$ 
+		\item[] FALSE = $\lambda x. \ \lambda y. \ y$
+		\item[] COND = $\lambda f. \ \lambda g. \ \lambda c. \ (c \ f) \ g$
+		\item[] NOT = COND FALSE TRUE 
+	\end{itemize}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\bf Story of Hilbert's Metamathematical Dreams}
+
+A major part of the course has been the unfolding of the story of Hilbert's Program. All of the ideas introduced in this course were originally motivated by this program. You will be asked one of the questions below at the start of the examination. These are intended to be short explanations of problems or concepts that motivated the mathematicians, logicians, and early computer scientists of the early twentieth century. 
+
+\vspace{0.3cm}
+
+{\bf You should spend at most 30 minutes on this in the exam.}
+
+\begin{enumerate}
+	\item Explain how work of the early twentieth century resolved Hilbert's program.
+	
+	\item Explain what it means for a first order theory to be complete.
+	
+	\item Explain what it means for a first order theory to be consistent.
+	
+	\item Explain the aim(s) of Hilbert's Program for mathematics. How did the topics studied in this course address these aims? Your answer should reference the metalogical and metamathematical theorems Hilbert hoped would be proved and how the topics of the course addressed these aims.
+	
+	\item Hilbert hoped for an ``effective procedure" for deciding whether a wff of first-order logic is a theorem. Describe one of the formalisations of ``effective procedure" that we studied in class.
+	
+	\item Explain the Halting problem for Turing machines.  
+	
+	\item What is a Universal Turing machine? 
+	
+	\item Discuss the meaning of the Church-Turing thesis as mentioned in class. 
+\end{enumerate}
+
+{\bf Answer and Study Suggestions}
+
+Write a bullet point plan of the key points to answer to each question {\bf before} the examination. You should also write this in the exam to help structure your answer. Aim to turn each bullet point into a short paragraph. One page should be sufficient for an answer to any of the above.
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\bf First Order Logic}
+
+There will be questions on both the semantics and syntax of first-order logic. That is to say questions about interpretations of wff within models and natural deductions. 
+
+\vspace{0.5cm}
+
+{\bf Semantics}
+
+\begin{enumerate}
+	\item Let $\mathcal{L}:(0,+,\times,=)$ be a first order language with a constant symbol $0$ and two binary functions $+, \times$. 
+	
+		\begin{enumerate}
+			\item Write a wff in the first order language $\mathcal{L}$
+			\item Interpret that wff in a model with universe $U = \mathbb{N}$ the natural numbers, where the binary function $+$ is addition and $\times$ is multiplication.
+		\end{enumerate}
+
+	\item Let $\mathcal{L}$ be a first order language, and $\Sigma$ be a set of axioms in the language $\mathcal{L}$ with distinct models $\mathcal{M}_{1}, \mathcal{M}_{2}$. Suppose $\alpha$ is a wff in the first order language $\mathcal{L}$ that is true in $\mathcal{M}_{1}$ and false in $\mathcal{M}_{2}$. What may you conclude about the derivability of $\alpha$ from the axioms $\Sigma$? Refer to any relevant metalogical theorems in your answer. 
+
+\end{enumerate}
+
+
+\vspace{0.5cm}
+
+{\bf Syntax}
+
+Shorter (i.e. minimal/intuitionistic with few steps) proofs and longer (i.e. classical RAA, or requiring many steps) proofs may both be in the exam. 
+
+\begin{enumerate}
+	
+	\item $\forall x \lnot Fx \dashv\vdash \lnot \exists x Fx$
+
+	\item $\forall x (Fx \rightarrow Gx) \vdash \forall x Fx \rightarrow \forall x Gx$
+
+	\item $\forall x (Fx \land Gx) \vdash \forall x Fx \land \forall x Gx$
+
+	\item $\exists x Fx \vdash \lnot (\forall x \lnot Fx)$
+	
+	\item $\forall x ((Fx \lor Gx)\rightarrow Hx), \ \forall x \lnot Hx \ \vdash \ \forall x \lnot F x$
+	
+	\item $\forall x Fx \vdash \lnot (\exists x \lnot Fx)$
+	
+	\item $\lnot (\exists x \lnot Fx) \vdash \forall x Fx$
+	
+	\item $\exists x \lnot Fx \vdash \lnot \forall x Fx$
+
+	\item $\lnot \forall x Fx \vdash \exists x \lnot Fx$
+	 
+\end{enumerate}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\bf First Order Theories of Arithmetic}
+
+You will be asked to write proofs in Peano Arithmetic. You will be given the axioms in the exam booklet, just as they appear at the beginning of this document.
+
+\vspace{0.5cm}
+
+Rewrite each of these in the first-order language of Peano arithmetic. Provide natural deductions to prove each of them.
+
+\begin{enumerate}
+	\item PA $\vdash 2 \neq 1$
+	\item PA $\vdash 1 + 1 = 2$
+	\item PA $\vdash 0 + 1 = 1$
+	\item PA $\vdash 0 \times 1 = 0$
+	\item PA $\vdash 1 \times 1 = 1$
+\end{enumerate}
+
+Using an instance of the induction axiom schema provide natural deductions for the following sequents.
+
+\begin{enumerate}
+	\item PA $\vdash \forall x \ (0 + x = x)$
+	\item PA $\vdash \forall x \ (0 \times x = 0)$
+	\item PA $\vdash \forall x \ (1 \times x = x)$
+\end{enumerate}
+
+For each of the induction proofs above you should follow these steps on your way to the natural deduction of the universal statement. 
+
+\begin{enumerate}
+	\item[a.] Identify the wff $P(n)$ on which you will do induction. 
+	\item[b.] Prove the base case i.e. PA $\vdash P(0)$.
+	\item[c.] Induction step PA $\vdash \ P(n) \rightarrow P(s(n))$. [Hypothetical! Assume $P(n)$.]
+	\item[d.] Tie it all together with induction and modus ponens. 
+\end{enumerate}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\bf Recursion}
+
+Primitive recursive, and $\mu$-recursive, computations may appear in the examination. You may also be asked to explain more complex procedures in terms of (primitive) recursive procedures. 
+
+\vspace{0.5cm}
+
+If you're asked to prove a given function is primitive recursive, then you need not prove that all functions involved in your proof are primitive recursive. But you must be clear about which functions you're using, how they constructed, and that you know the components are primitive recursive. 
+
+\begin{enumerate}
+	\item Use the composition and/or the recursion schema to formally define the following functions in terms of other functions known to be primitive recursive.
+	
+		\begin{enumerate}
+			\item Constant $C_{1}(n) = 1$ [Unary]
+			\item Predecessor $f(n) = n - 1$ [Unary]
+			\item Factorial $f(n) = n!$ [Unary]
+			\item Addition by $3$ $f(a) = a + 3$ [Unary]
+			\item Addition of two natural numbers $f(a,b) = a + b$ [Binary]
+			\item Multiplication of two natural numbers $f(a,b) = a \times b$ [Binary]
+			\item Limited difference of two natural numbers $f(a,b) = a \ \dot - \ b$ [Binary]
+		\end{enumerate}
+
+	\item For each of the functions below, explain why they're primitive recursive. Use primitive recursive functions to build processes to calculate the function values. 
+	
+		\begin{enumerate}
+			\item Let Divides$(x,y)$ denote the function which returns 1 if $x$ divides $y$ and $0$ otherwise. 
+			\item Let Prime$(x)$ denote the function on the natural numbers which returns 1 if $x$ is prime and $0$ otherwise. 
+			\item Let nextPrime$(x)$ denote the function which returns the smallest prime greater than $x$. 
+			\item $p: \mathbb{N} \rightarrow \mathbb{N}$ such that $p(n) = $ nth prime. 
+		\end{enumerate}
+
+	\item Suppose $p(x,y)$ is a polynomial. Let $f(x)$ denote the function which returns the smallest $t$ such that $p(x,t) = 0$. Explain why $f(x)$ is not primitive recursive, but is $\mu$-recursive. 
+
+\end{enumerate}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\bf Turing Machines}
+
+Turing machine computations may appear in the examination. You may also be asked to describe more complex machines, or explain what a given machine does. 
+
+\vspace{0.3cm}
+
+You may be asked to write a short list of instructions for Turing machines, or read instructions and {\bf explain} what the machine will do on a given input. 
+
+\vspace{0.3cm}
+{\bf Assumptions} Unless stated otherwise, you may always assume the input appears to the right of the home square, which is always indicated with an (@) symbol. Unless stated otherwise, if your Turing machine HALTS, then it must do so at the home square. 
+
+\begin{enumerate}
+	\item Write instructions to mark the first blank square after a binary string and HALT on that blank square.
+	
+	\item Write instructions for a Turing machine that flips 0s to 1s and 1s to 0s and halts on the first blank square of the tape. Assume the input is a finite binary string.
+	
+	\item Write down instructions for a Turing machine that computes the conjunction (AND) of $n$-bits. Assume the input is a non-empty binary string of arbitrary finite length placed to the right of the home (@) square and that the machine starts in state $q_{0}$ on the home (@) square.
+		
+	\vspace{0.1cm}
+
+	Leave a blank square after the input then print the output. Your Turing machine should print 1 if the conjunction is TRUE, otherwise the Turing machine should print 0. The Turing machine should HALT on the same square as the output. {\bf Explain} your method.
+	
+	\item Write down instructions for a Turing machine that computes the bit-wise disjunction (OR) of $n$-bits. Assume the input is a non-empty binary string of arbitrary finite length placed to the right of the home (@) square and that the machine starts in state $q_{0}$ on the home (@) square.
+		
+	\vspace{0.1cm}
+
+	Leave a blank square after the input then print the output. Your Turing machine should print 1 if the disjunction is TRUE, otherwise the Turing machine should print 0. The Turing machine should HALT on the same square as the output. {\bf Explain} your method.
+	
+	\item Write a Turing machine to blank out the tape and HALT on the home square. Assume the tape has a finite binary string placed to the right of the home square.
+\end{enumerate}
+
+You may be asked to explain how a Turing machine could be built to perform a specific task. Writing specific instructions for these is too much in a short, hand-written, exam. Provide a natural language, high-level, explanation of how the scanning head would move, read, and write in order to complete the task. If it is helpful, then you may assume the input and output are on $F$-squares with $E$-squares between them.
+
+\begin{enumerate}
+	\item Explain how a Turing machine could reverse the order of a finite binary string. 
+	\item Explain how a Turing machine could copy a finite binary string. 
+	\item Explain how a Turing machine could detect if a binary string is a palindrome.
+\end{enumerate}
+
+\newpage
+You may be asked to explain what given instructions do. This may depend on an input. You may assume any input after the snippit given consists entirely of blank squares. 
+
+\begin{enumerate}
+	
+	\item Explain what the Turing machine with instructions 
+		
+		\begin{enumerate}
+			\item[] $q_{0},@,@,R,q_{1}$
+			\item[] $q_{1},0,0,R,q_{2}$
+			\item[] $q_{1},1,0,R,q_{2}$
+			\item[] $q_{2},1,1,L,q_{1}$
+			\item[] $q_{2},0,0,R,q_{1}$
+		\end{enumerate}
+
+		does with the following input tape 
+
+		\hspace{0.3cm} {\bf Input: } \tmtape{1}{1}{1}{1}{1}{1}{1}{1}{1}	
+
+		Assume the Turing machine starts in state $q_{0}$ reading the home @ square. 
+
+	\item Explain what the Turing machine with instructions 
+	
+		\begin{enumerate}
+			\item[] $q_{0},@,@,R,q_{0}$
+			\item[] $q_{0},1,1,R,q_{0}$
+			\item[] $q_{0},0,1,R,q_{0}$
+			\item[] $q_{0},b,1,R,q_{0}$
+		\end{enumerate}
+
+		does with the following input tape 
+
+		\hspace{0.3cm} {\bf Input: } \tmtape{1}{0}{0}{1}{\bcell}{1}{1}{\bcell}{1}	
+
+		Assume the Turing machine starts in state $q_{0}$ reading the home @ square. 		
+\end{enumerate}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\bf Lambda Calculus}
+
+Lambda calculus computations may appear in the examination. Primary focus will be on computing $\beta$ reductions of $\beta$-redexes. 
+
+\begin{enumerate}
+	\item Perform $\beta$-reduction on the following. 
+
+	\begin{enumerate}
+		\item $(\lambda x . \ xx)a \ b$
+		\item $(\lambda x . \ x (x x))a$
+		\item $(\lambda x . \ (\lambda y . \ n \ y)i \ x)c \ e$
+		\item $(\lambda x . \ x x)(\lambda x. \ x x)$ [Comment on the outcome of further $\beta$-reduction]
+		\item $(\lambda x . \ x x) \ g$
+		\item $(\lambda x . \ x)(\lambda y . \ y) $
+	\end{enumerate}
+
+	\item You should know how to perform $\beta$-reduction on $\lambda$-expressions encoding Booleans and propositional connectives. Reduce each of the following to normal form. You will be given TRUE, FALSE, COND, and NOT on the formula sheet. If you are asked to reduce a $\lambda$-expression, then you will be given any relevant $\lambda$ representations. 
+	
+		\begin{itemize}
+			\item TRUE TRUE 
+			\item TRUE FALSE 
+			\item FALSE TRUE 
+			\item FALSE FALSE
+			\item OR FALSE TRUE 
+			\item AND FALSE TRUE
+			\item IMP TRUE FALSE 
+			\item EQUIV TRUE FALSE 
+			\item EQUIV FALSE TRUE
+			\item NAND FALSE FALSE
+		\end{itemize}
+
+	\item You should know how to perform $\beta$-reduction on $\lambda$-expressions encoding natural numbers and arithmetic. Reduce each of the following to normal form. You will be provided the relevant $\lambda$-expressions in the question if you're asked to do this. 
+	
+		\begin{itemize}
+			\item SUCC TWO
+			\item SUM ONE TWO
+			\item SUM THREE ZERO 
+			\item MULT ZERO ZERO 
+			\item MULT ONE ZERO 
+			\item MULT ONE TWO
+			\item ZERO? TWO
+		\end{itemize}
+
+	\newpage
+	\item You should know how to represent propositional connectives using $\lambda$-expressions. You will be given TRUE, FALSE, COND, and NOT on the formula sheet in the examination booklet. If you want to use others, then you will have to derive those. You will be asked to explain your idea. 
+	
+		\begin{itemize}
+
+			\item Write down a $\lambda$-expression that represents the propositional binary connective NAND. Recall that NAND has the following truth table.
+			
+			\vspace{0.5cm}
+	
+			%\begin{center}
+				$\begin{array}{ c c | c }			
+					P & Q & \text{NAND}(P,Q)\\
+					\cline{1 - 3}
+					T & T & F \\ 
+					T & F & T \\ 
+					F & T & T \\ 
+					F & F & T
+				\end{array}$
+		
+			\vspace{0.5cm}
+			\item Write down a $\lambda$-expression that represents the propositional binary connective AND. Recall that AND has the following truth table.
+			
+			\vspace{0.5cm}
+	
+			%\begin{center}
+				$\begin{array}{ c c | c }			
+					P & Q & \text{AND}(P,Q)\\
+					\cline{1 - 3}
+					T & T & T \\ 
+					T & F & F \\ 
+					F & T & F \\ 
+					F & F & F
+				\end{array}$
+		
+			\vspace{0.5cm}
+			\item Write down a $\lambda$-expression that represents the propositional binary connective OR. Recall that OR has the following truth table.
+			
+			\vspace{0.5cm}
+	
+			%\begin{center}
+				$\begin{array}{ c c | c }			
+					P & Q & \text{OR}(P,Q)\\
+					\cline{1 - 3}
+					T & T & T \\ 
+					T & F & T \\ 
+					F & T & T \\ 
+					F & F & F
+				\end{array}$
+
+			\vspace{0.5cm}
+			\item Write down a $\lambda$-expression that represents the propositional binary connective IMP(lication). Recall that IMP has the following truth table.
+			
+			\vspace{0.5cm}
+	
+			%\begin{center}
+				$\begin{array}{ c c | c }			
+					P & Q & \text{IMP}(P,Q)\\
+					\cline{1 - 3}
+					T & T & T \\ 
+					T & F & F \\ 
+					F & T & T \\ 
+					F & F & T
+				\end{array}$				
+			\vspace{0.5cm}
+			\item Write down a $\lambda$-expression that represents the propositional binary connective exclusive-OR, XOR. Recall that XOR has the following truth table.
+			
+			\vspace{0.5cm}
+	
+			%\begin{center}
+				$\begin{array}{ c c | c }			
+					P & Q & \text{XOR}(P,Q)\\
+					\cline{1 - 3}
+					T & T & F \\ 
+					T & F & T \\ 
+					F & T & T \\ 
+					F & F & F
+				\end{array}$
+
+
+			\hspace{12cm}{\bf PTO}
+			\newpage
+			\item Write down a $\lambda$-expression that represents the propositional binary connective NOR. Recall that NOR has the following truth table.
+			
+				\vspace{0.5cm}
+		
+				%\begin{center}
+					$\begin{array}{ c c | c }			
+						P & Q & \text{NOR}(P,Q)\\
+						\cline{1 - 3}
+						T & T & F \\ 
+						T & F & F \\ 
+						F & T & F \\ 
+						F & F & T
+					\end{array}$		
+		\end{itemize}
+
+\end{enumerate}
+	
+\end{document}

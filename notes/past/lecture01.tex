@@ -1,0 +1,276 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{linkcolor=blue}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 1: Welcome}
+\subtitle{Logic, Automata, and Computability}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Introduction}
+
+
+
+\begin{frame}
+  \frametitle{Welcome to MATH230}
+	
+	\begin{itemize}
+		\item[]	Lecturer: Robert Culling (Rob)\\
+			\quad Office: Jack Erskine 422\\
+			\quad Email: robert.culling@canterbury.ac.nz
+			
+			\vspace{0.1cm}
+			
+			\quad Feel free to come and chat about the course anytime. 
+			
+			\vspace{0.2cm}
+	
+	
+		\item[] Tutor: Kerry Manson
+		
+			\quad Tutorials are on Monday evenings every week. 
+			
+			\quad Hand-in select problems that Wednesday.
+	
+			\vspace{0.2cm}
+	
+		\item[]	Class Representative: ? Could be you ?
+		
+		% Be sure to get an idea of the cohort. What do they study? Major?
+	
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Who is taking this course?}
+	
+	What is your major? Why have you taken this course?
+	
+	\vspace{0.5cm}
+	
+	What do you hope to get out of this course? 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{What Will We Study?}
+	
+	Mathematics, and metamathematics, that came into focus in the 1800s and blossomed in the 1900s. 
+	
+	\vspace{0.2cm}
+	
+	Work that was motivated by the following questions about mathematics: 
+	
+	\begin{itemize}
+		\item Is mathematics consistent?
+			% There were concerns from some of the work being done at the time: multiple geometries, new types of numbers, contradictions in the theory of sets. 		
+		\item Can we determine/prove all true statements?
+		\item What does it mean to give a proof?
+		\item Is there a fixed process/procedure/algorithm that we can give a statement to tell us whether or not the statement is true?
+	\end{itemize}
+	
+	{\bf Hilbert's Program} called for an axiomatic formalisation of mathematics so that these questions \textit{about} mathematics could be answered precisely. 
+	
+\end{frame}
+
+\section{Course Overview}
+
+\begin{frame}
+	\frametitle{What Will We Study?}
+	
+	In order to be precise about these issues mathematicians chose to write mathematics in a precise language: first order predicate logic. 
+	
+	\vspace{0.2cm}
+	
+	With mathematics written in a particular language it is easier to say what exactly we mean by a proof. 
+	
+	\vspace{0.2cm} 
+	
+	Furthermore the precise language is able to be encoded into numerals. This enabled mathematicians to write down specifically what one might mean by ``an effective procedure". Thus mathematicians could get into a position to give answers to the possibility of a ``universal proof procedure".
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{What Will We Study?}
+	
+	As we follow this story we will talk about the following topics: 
+	
+	\vspace{0.2cm}
+	
+	\begin{itemize}
+		\item Propositional logic.
+		\item First order logic.
+		\item First order theories of arithmetic.
+		\item Theories of computation.
+		\item Limits of computation and mathematics. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Contemporary Influence}
+	
+	This subject, the foundations of mathematics, lives on today in many different forms. For example 
+	
+	\begin{itemize}
+		\item Research of mathematicians from around the world.
+		\item Philosophy.
+		\item Interactive proof checkers.
+		\item Computers and computer science. 
+	\end{itemize}
+
+	In particular researchers at Microsoft have developed the open source project L$\exists \forall$N. This is an interactive theorem prover. 
+	
+	\vspace{0.2cm}
+	
+	This project boasts an ever growing library of definitions, theorems, and proofs of mathematics in a formal language. Your first tutorial will introduce you to this programming language via the	\href{https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/}{Natural Numbers Game}.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Report}
+	
+	We can only cover so much in lectures. These topics have a vast history and many interesting contemporary ideas. As part of your assessment you will be writing a report on some idea, person, machine, model, logic, that we just don't have time to cover. 
+	
+	\vspace{0.1cm} 
+	
+	\begin{itemize}
+		\item Logic 
+				\begin{itemize}
+					\item Non-standard logics 
+					\item Different proof theories 
+					\item Different semantics
+					\item Philosophy
+				\end{itemize}
+		\item Models of Computation
+				\begin{itemize}
+					\item Elementary cellular automata
+					\item Conway's game of Life 
+					\item Register machines
+					\item Ada Lovelace and the first computer program
+				\end{itemize}
+		\item People, changing of ideas, theorem checkers/provers etc.  
+		
+	\end{itemize}
+
+	Come and chat with me to finalise your topic. 
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Assessment}
+	
+	\begin{itemize}
+		\item Report 20\%
+		\item Tutorials 10\% (Hand-in 10 out of the 12).
+		\item Test 15\%.
+		\item Assignments (Turing machines) 20\%.
+		\item Examination 35\% (With 40\% hurdle).
+	\end{itemize}
+	
+	\vspace{0.2cm}
+	
+	All official course information can be found on Learn.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Expectations}
+	
+	University guidelines suggest spending at least 10 hours per week on a 15 point course. 
+	
+	\begin{itemize}
+		\item 3 hours on lectures actively taking notes 
+		
+		(Double-speed is not good!)
+		\item 1 hour in tutorial
+		\item 6 hours extra to study. What can you do? 
+	\end{itemize}
+	% Make a note on reading mathematics - you won't get everything straight away, but that's okay. It will come together. 
+	\vspace{3cm}
+	
+	{\bf Expectations of me:} You can expect me to be available to help in my office in appointed times or when we have planned a meeting. I want you to do well and I will make sure I am here to help that happen. 
+	
+\end{frame}
+
+\section{Recommended Resources}
+\begin{frame}
+  \frametitle{Further Reading}
+
+  Throughout the course I will recommend you read certain sections of two texts: both of which are freely available online at the following links. 
+  
+  \vspace{0.5cm}
+  
+  \begin{itemize}
+  	\item L$\exists \forall$N: Logic and Proof. \\ 
+  			@ https://leanprover.github.io/logic\_and\_proof/index.html
+  	\item Logic Matters: An Introduction to Formal Logic. \\ 
+  			@ https://www.logicmatters.net/ifl/  	
+   	\item The Stanford Encyclopedia of Philosophy.
+  \end{itemize}
+
+	\vspace{0.5cm}
+
+	I encourage you to find your own extra resources online and in the libraries on campus. However, beware that formal logic has a lot of symbols and authors don't always agree on which symbols to use for which concepts. So, notation may differ from ours. Always use our notation in assessments. 
+
+\end{frame}
+
+
+
+
+
+\end{document}

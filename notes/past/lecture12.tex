@@ -1,0 +1,331 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\useinnertheme[shadow]{rounded}
+\setbeamercolor{block title}{bg=blue!30, fg=black}
+\setbeamercolor{block body}{bg=blue!20}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\newtheoremstyle{indentDefn}
+{\topsep} % Space above
+{\topsep} % Space below
+{\it} % Body font
+{2cm} % Indent amount
+{\bf} % Theorem head font
+{:} % Punctuation after theorem head
+{0.5em} % Space after theorem head
+{} % Theorem head spec
+
+\theoremstyle{indentDefn} \newtheorem{defn}[]{Definition}
+
+\title{Lecture 12: Proof Theory I}
+\subtitle{Syntax of First Order Logic}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{Syntax v. Semantics}
+
+	Given a first order language $\mathcal{L}$ we have determined how to assign meaning to well-formed formulae. As the quantifers and predicates increase the scope of the language, the truth and falsity of formulae in $\mathcal{L}$ are difficult to determine. 
+	
+	\vspace{0.5cm} 
+	
+	As in the case of propositional logic, we have another method for analysing whether some formulae follow from others; the syntactic, proof theoretic, point of view. 
+	
+	\vspace{0.5cm} 
+	
+	We will now extend the natural deduction calculus to include rules of inference for the quantifiers. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Universal Quantification}
+	
+	Suppose we had, in the course of a proof, deduced the statement $\forall x \alpha$, where $\alpha$ is a well-formed formula that (may) contain the variable $x$. What can we conclude from that? 
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+	$\begin{array}{c}
+		\infer[\forall E]{\hspace{0.3cm} ? \hspace{0.3cm}}{\begin{array}{c} 
+			\Sigma \\
+			\mathcal{D} \\ 
+			\forall x \alpha			
+			\end{array}}
+	\end{array}$
+	\end{center}
+
+	Following our model theory interpretation of $\forall$ we should then be able to substitute any term, $t$, in place of each instance of the variable $x$ in $\alpha$.
+\end{frame}
+
+\section{Substitution, Free, and Bound Variables}
+
+\begin{frame}
+	\frametitle{Substitution Rules}
+	
+	If we don't take care when subsitituting for variables, then we can go astray. 
+	
+	\vspace{0.5cm}
+	
+	\begin{defn} If a variable, $x$, is used to quantify over $\alpha$ --- as in $\gamma = \forall x \alpha$ --- then we say any instance of $x$ in $\alpha$ is \emph{bound} in $\gamma$ by the quantifer. Similarly for the existential quantifier.  \end{defn}
+	% Lecture: make clear that it's bound in the wff that includes the quantifier.
+	
+	\vspace{0.5cm} 
+		
+	\begin{defn} If a variable, $x$, is not bound in $\alpha$, then we say that it is free in $\alpha$.\end{defn}
+		
+	\vspace{0.5cm} 
+	
+	Bound and free variables act differently when interpreted; they play different roles. 
+	
+	% Lecture: Technically a variable can be both in the same formula. But, in that case, it's better to rename the bound variable. So you should never have a variable that is both.
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Free vs. Bound Variables}
+	
+	We can translate the first-order expression: $\forall x (x < y)$ as ``every $x$ is less than \_\_\_\_". The interpretation of this statement depends on the interpretation of $y$; because $y$ is free. It's truth will depend on the interpretation of $y$.
+	
+	\vspace{0.5cm} 
+	
+	On the other hand the interpretation of $\exists y (\forall x (x < y))$ doesn't depend on $y$. As, in a model, there either exists something that satisfies this sentence, or there doesn't. 
+	
+	\vspace{0.5cm}
+
+	{\bf For this reason we should not make free variables bound, or vice versa, when substituting.}
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examples}
+
+	
+
+	\begin{itemize}
+		\item[]	$x_{2}$ is free for $x_{0}$ in $\exists x_{3} (P(x_{0},x_{3}))$, \vspace{0.2cm}
+		\item[] $f(x_{0},x_{1})$ is not free for $x_{0}$ in $\exists x_{1} (P(x_{0},x_{3}))$, \vspace{0.2cm}
+		\item[] $x_{5}$ is free for $x_{1}$ in $P(x_{1},x_{3})\rightarrow \exists x_{1} (Q(x_{1},x_{2}))$.
+	\end{itemize}	
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{What Can Go Wrong?}
+	
+	Consider the formula 
+	
+	$$\forall x \exists y (y > x).$$
+	
+	In a model with domain the natural numbers, this asserts that there is always a larger natural number. 
+	
+	\vspace{0.5cm}
+	
+	Notice that $x$ is free in the formula $\exists y (y > x)$. So if we aren't careful and substitute $x \mapsto y+1$, then we obtain the statement 
+	
+	$$ \exists y (y > y+1)$$
+	
+	Which is not true in this interpretation. {\bf This problem arose because $y$ is bound in the formula, so we can't substitute $t=y+1$ for $x$.}
+	
+	\vspace{0.5cm}
+	
+	\footnotesize{Example from Section 7.3 L$\exists\forall$N}
+	
+\end{frame}
+
+\section{Rules of Inference: Universal}
+
+\begin{frame}
+	\frametitle{Universal Elimination}
+	
+	If $^{\Sigma}_{\forall x \alpha}\mathcal{D}$ is a derivation, where $y$ is free for $x$ in $\alpha$, then
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		$\begin{array}{c}
+		\infer[\forall E]{\alpha[x/y]}{\begin{array}{c} 
+			\Sigma \\
+			\mathcal{D} \\ 
+			\forall x \alpha			
+			\end{array}}
+		\end{array}$
+	\end{center}
+	
+	is a derivation of $\alpha[x/y]$ from hypotheses $\Sigma$. 
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Every human is mortal. Sherlock is Human. Therefore, Sherlock is mortal. 
+	
+	\vspace{6cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Proof of For All}
+	
+	What does it mean to prove something ``for all x"?
+	
+	\vspace{0.5cm} 
+	
+	A proof of the irrationality of $\sqrt{2}$ starts as follows: 
+	
+	\vspace{0.2cm}
+	
+	\begin{center}
+		Assume there are some integers $A,B$ such that $\sqrt{2} = A/B$.... Eventually deriving a contradiction from this assumption.
+	\end{center}
+	
+	The proof itself, in the end, assumes \emph{nothing} of the integers $A,B$ apart from their (possible) existence. Thus it shows that no matter which integers are in place of $x,y$, the formula 
+	
+	$$(x^{2} = 2y^{2})$$
+	
+	can have no solutions and hence we may conclude 
+	
+	$$\forall x,y \ \lnot (x^{2} = 2y^{2})$$
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Universal Introduction}
+	
+	If $^{\Sigma}_{\alpha[x/y]}\mathcal{D}$ is a derivation, where $y$ does not appear free in $\Sigma$ nor $\alpha$, then
+	
+	\vspace{0.5cm}
+	
+	\begin{center}
+		$\begin{array}{c}
+		\infer[\forall I]{\forall x \alpha}{\begin{array}{c} 
+			\Sigma \\
+			\mathcal{D} \\ 
+			\alpha[x/y]
+			\end{array}}
+		\end{array}$
+	\end{center}
+	
+	is a derivation of $\forall x \alpha$ from hypotheses $\Sigma$. 
+	
+	\vspace{0.5cm} 
+	
+	{\bf Properties of $y$ can't play a role in the proof of $\alpha[x/y]$. They can't appear in the hypotheses $\Sigma$ of the proof.} \\
+	
+	{\bf Nor can any y be free in alpha. You should be replacing all instances of y with an x when using the $\forall$ introduction.}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show $\{\forall x (Px \rightarrow Qx), \hspace{0.5em} \forall x Px\} \hspace{0.5em} \vdash \hspace{0.5em} \forall x Qx$
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}
+	\frametitle{Example}
+	
+	Show $\{\forall x (Px \rightarrow Qx), \hspace{0.5em} \forall x (Qx \rightarrow Rx)\} \hspace{0.5em} \vdash \hspace{0.5em} \forall x (Px \rightarrow Rx)$
+	
+	% Make a point about the $a$ being part of the assumptions, but by the time the \forall comes in we have already discharged it from the assumption list. 
+	
+	\vspace{7cm}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Example: When Things Go Wrong}
+	
+	Sherlock is a person. Gladstone is not a person. Therefore, Moriarty is the Queen.
+	
+	\vspace{0.5cm}
+	
+	Show $\{Ps, \ \lnot Pg\} \hspace{0.5em} \vdash \hspace{0.5em} Q$
+	
+	% Make a point about the $a$ being part of the assumptions. This causes the problem, in the first step.
+	
+	\begin{center}
+		$\begin{array}{c}
+			\infer[\bot]{Q}
+				{\infer[MP]{ \ \bot \ }{\lnot Pg & \infer[\forall E]{ \ Pg \ }{\infer[\forall I]{ \ \forall x Px \ }{Ps\vspace{0.2cm}}}}}
+		\end{array}$
+	\end{center}
+	
+	\pause
+	{\bf From one instance (Sherlock's Personhood) we cannot assume all objects are people.}
+	
+\end{frame}
+
+\begin{frame}
+  \frametitle{Further Reading}
+
+
+Below is a selection of resources that I used to prepare the lecture. You might like to read over them yourself to help get a more complete picture of the topics discussed. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+	\item L$\exists \forall$N, \emph{Logic and Proof}. Section: 8.  
+	\item Logic Matters, \emph{An Introduction to Formal Logic}: 32 and 33.
+\end{itemize}
+
+\end{frame}
+
+
+
+
+
+\end{document}

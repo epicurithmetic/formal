@@ -1,0 +1,346 @@
+% Load required themes and packages.
+\documentclass{beamer}
+\usetheme{Pittsburgh}
+\usecolortheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\usefonttheme{structurebold}
+% Math related packges.
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{soul}
+
+% Natural Deduction package
+\usepackage{proof}
+
+% Package for hyperlinks
+\usepackage{hyperref}
+
+% Remove navigation bar
+\beamertemplatenavigationsymbolsempty
+
+% Bibliography
+% \usepackage[style=verbose]{biblatex}
+% \bibliography{deltaBib.bib}
+% Command line sequence:
+% pdflatex *filename*
+% biber *filename*
+% pdflatex *filename*
+
+\title{Lecture 24: Limits of Computation}
+\author{MATH230}
+\institute{Te Kura P\=angarau $\vert$ School of Mathematics and Statistics \\ Te Whare W\=ananga o Waitaha $\vert$ University of Canterbury}
+\date{}
+
+% Document body starts here.
+\begin{document}
+
+
+% Title frame
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+% Table of contents page
+\begin{frame}
+  \frametitle{Outline}
+
+  \tableofcontents
+
+\end{frame}
+
+\section{Decidability}
+
+\begin{frame}
+  \frametitle{(In)Completeness v. (Un)Decidability}
+
+  G\"{o}del showed that there are sentences $\alpha$ in PA for which neither $\alpha$ nor $\lnot \alpha$ can be proved from the axioms of PA. 
+
+  \vspace{0.3cm}
+
+  This still leaves room for there to be an effective procedure that could determine whether an arbitrary formula is a theorem of a particular first-order theory. In the case of G\"{o}delian sentences it would just return No for both $\alpha$ and $\lnot \alpha$. 
+
+  \vspace{0.1cm}
+
+  \begin{itemize}
+	\item Entscheidungsproblem
+	\item Decidability of arithmetic 
+	\item Decidability of a first-order theory $\mathcal{T}$
+  \end{itemize}
+
+  There are many decidability problems. Theoremhood for any first-order theory. 
+
+  \vspace{0.3cm}
+
+  With some concrete notion of effective procedure at hand, mathematicians were in a position to determine whether some theories were decidable. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Church-Turing Thesis}
+
+	This is an agreement/consensus among mathematicians and computer scientists that we can swap ``effective procedure" (``algorithm" or ``mechanical procedure") for ``computable by a Turing machine" in any sentence. This is \emph{not} a theorem. % Any process that meets our idea of mechanical or effective can be encoded using a Turing machine. Programming languages can be swapped in for any mention of an effective procedure!
+
+	\vspace{0.5cm}
+
+	Two sections of Turing's paper introducing Turing machines are dedicated to philosophical arguments for why Turing machines capture what we mean by computation.
+
+	\vspace{0.5cm}
+
+	Furthermore, we can swap ``computable by a Turing machine" to ``computable according to $\langle\langle$any model equivalent to Turing machines$\rangle\rangle$" in any such sentence. 
+	% Programming languages can be swapped in for any mention of an effective procedure!
+
+	\vspace{0.5cm}
+
+	Sometimes referred to as the Church-Turing-Kleene thesis to account for the first three models of computation that were proven to be equivalent.
+
+	\vspace{3cm}
+	
+\end{frame}
+
+\section{Universal Turing Machine}
+\begin{frame}
+	\frametitle{G\"{o}del Numbering, again!}
+	
+	Turing uses the standard form of the instructions to encode every Turing machine to a number. One further change he makes is that symbols must be of the form 
+
+	$$S_{0} = b, S_{1} = 0, S_{2} = 1, \dots , S_{n} $$
+	
+	For example: $q_{1},S_{0},S_{1},R,q_{2}$
+
+	\vspace{0.5cm}
+
+	Writing the instructions as a string, separated by semicolons, he made the following substitutions.
+
+	\begin{itemize}
+		\item $q_{i} \mapsto $ D followed by $i$ As.
+		\item $S_{j} \mapsto $ D followed by $j$ Cs.
+	\end{itemize}
+
+	The strings describing a Turing machine are written using the symbols $A$ $C$ $D$ $L$ $R$ $N$ and ; % Replace these with 1,2,3,4,5,6,7 respectively. 
+
+	\vspace{2cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Universal Turing Machine}
+
+	With Turing machines compiled down to an integer, we can then load them onto the tape for another Turing machine.
+	
+	\vspace{0.3cm}
+
+	In fact, Turing went to great pains to describe a machine, $\mathcal{U}$, that could read the description number of any machine, read an input tape, and then mimic the output of the input machine on that input tape. 
+
+	\vspace{0.3cm}
+
+	It is not at all as clean as you might hope, there are many messy details, but the output at any given step will, eventually, be printed, somewhere, on the tape with the initial description number.
+
+	\vspace{0.5cm}
+
+	% Remarkable at a time where there was one device/algorithm for one problem. 
+	Previously we'd need one primitive recursive function for each procedure, or setup one $\lambda$-expression for each procedure. Turing showed that, at least in theory, there is just one machine that can be \emph{programmed} to carry out \emph{any} computation. 
+
+	% Note: Babbage and Ada Lovelace were onto this idea as well! Not a universal computer, but at least a computer that could be programmed to do many different things. 
+	
+\end{frame}
+
+\section{Halting Problem}
+\begin{frame}
+	\frametitle{Circle Free Machines}
+	% Turing's original "is the machine circle free?" has been swapped for Martin Davis' (1958, 20 years after Turing) "does the machine HALT?"
+
+	Machines that go on printing (in $F$-squares) forever are called circle free machines. Otherwise, a machine is called circular. 
+
+	\vspace{0.3cm}
+
+	Can we decide (i.e. with a TM) whether any given Turing machine is circle free?
+	% In some sense it seems obvious that you can't. In order to test you'd need to run the machine. It may HALT in the next step. Technically, this maybe readable in the instructions... So you need a formal proof. 
+
+	\vspace{0.3cm}
+
+	Turing proves that there can be no Turing machine that would decide whether any Turing machine is circle free. His is a proof by contradiction. 
+	
+	\vspace{0.3cm}
+	
+	For sake of that contradiction, then, let us assume $\mathcal{D}$ is a Turing machine that decides whether an input machine is circle-free.
+
+	\vspace{2cm}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Circle Free? Undecidable!}
+
+	Turing embeds this hypothetical machine $\mathcal{D}$ inside another Turing machine, $\mathcal{H}$, which he describes as executing the following loop: 
+
+	\vspace{0.2cm}
+
+	\begin{enumerate}
+		\item Generate the next integer $n$, 
+		\item Test whether integer is the D.N. of a TM $M(n)$
+		\item Use $\mathcal{D}$ to test if circle free 
+			\begin{enumerate}
+				\item If circle free, then (using $\mathcal{U}$) print $n$th element of $M(n)$,  
+				\item else, print previous value on tape
+			\end{enumerate}
+		\item return to the top of the loop. 
+	\end{enumerate}
+
+	\vspace{0.2cm}
+
+	Turing asks: What will $H$ do when it arrives at the description number of itself? Is $H$ circle free?  % Turing goes to no great pains to explain why $H$ is computable by a Turing machine. He is assuming the only thing to stop it from being a TM is $\mathcal{D}$.
+
+	\vspace{2cm}
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Halting Problem}
+	% Modern approach to give an undecidable problem. 
+	% Just draw a diagram. 
+	% Mention Numberphile and Mark Jago
+	
+	This argument has been adjusted over time to the following which you can find all over the internet. Mark Jago has a good explanation on his website and on Computerphile. 
+	\vspace{6cm}
+
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Print 0? Undecidable!}
+
+	Is there a Turing machine, $\mathcal{E}$, that can tell whether any input Turing machine ever prints 0? Choice of symbol not important!
+	
+	\vspace{0.3cm}
+
+	Turing argues: if there is such a machine, then we could design another machine which would tell us whether any input machine prints \emph{infinitely} many 0s. 
+	
+	\vspace{0.3cm}
+	
+	But this knowledge could be used to say whether the machine is circle-free. Thus, there can be no such machine to tell whether any input machine ever prints 0.
+	
+\end{frame}
+
+\section{Entscheidungsproblem}
+\begin{frame}
+	\frametitle{Entscheidungsproblem}
+
+	Next Turing makes his final move toward deciding, in the negative, the Entscheidungsproblem. He writes down a predicate, in a first-order language, that can be interpreted (in the correct model) as saying
+
+	$$P(n): \textnormal{Turing machine M(n) will print 0}$$
+	
+	If there were a Turing machine that could decide theoremhood of \emph{any} well-formed formula, then it would be able to decide whether this is a theorem for each $n$ and hence decide if any machine would ever print 0. 
+	
+	\vspace{0.5cm}
+	
+	Thus such a machine could solve a problem he'd already shown to be uncomputable. Turing reduced the Entscheidungsproblem to the halting problem.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Peano Arithmetic}
+
+	Peano arithmetic is strong enough to talk about the natural numbers. 
+
+	\vspace{0.3cm}
+
+	Turing showed that Turing machines can be encoded with numbers. 
+
+	\vspace{0.3cm}
+
+	Using this fact means you can analyse Turing machines \emph{within} Peano arithmetic. 
+	
+	\vspace{0.3cm}
+	
+	Much of the above proof of the entscheidungsproblem thus carries over to prove the undecidability of Peano arithmetic. 
+
+	\vspace{0.3cm}
+
+	This was figured out by others, after the publication of Turing's paper.
+
+	\vspace{0.3cm}
+
+	% Therefore Peano arithmetic is (i) incomplete (ii) undecidable and (iii) can't be proven to be consistent using finite means. 
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Hilbert's \st{Dream} Nightmare}
+
+	Therefore Peano arithmetic is (i) incomplete (ii) undecidable, and (iii) can't be proven to be consistent using finite means. 
+
+	\vspace{0.3cm}
+
+	Hilbert presented his dream about metamathematics in 1921. 
+
+	\vspace{0.5cm}
+
+	Presburger and Skolem made \emph{positive} ground $\sim$ 1929.
+
+	\vspace{0.3cm}
+	
+	Together G\"{o}del and Turing - with the help of many others - turned those dreams into a nightmare by 1936.
+
+	\vspace{0.5cm}
+
+	\begin{itemize}
+		\item[] What did they actually prove about mathematics? 
+		\item[] What does this mean for mathematicians?
+		\item[] What does this mean for computer scientists? Programmers?
+	\end{itemize}
+	
+
+\end{frame}
+
+% \begin{frame}
+% 	\frametitle{G\"{o}del's Incompleteness Theorems}
+
+% 	% While it is not true that undecidability and incompleteness of an arbitrary first-order theory have anything to do with one another, there is a relationship between these questions for Peano arithmetic. 
+
+% 	Suppose PA were consistent and syntactically complete. 
+
+% 	\vspace{0.3cm}
+
+% 	Since wff are countable and deductions are finite tree-like structures, the space of all proofs is searchable. 
+	
+% 	\vspace{0.3cm}
+
+% 	Therefore, if every theorem (or its negation) is provable, then we can perform this search to decide which it is. 
+
+% 	\vspace{0.3cm}
+
+% 	The halting problem can be encoded in PA. If PA were complete and consistent, then this would contradict the undecidability of the halting problem.
+
+% 	\vspace{0.3cm}
+
+% 	G\"{o}del's incompleteness theorems can be seen as a consequence of the Halting problem!
+	
+% \end{frame}
+
+\begin{frame}
+	\frametitle{Further Reading}
+	
+	Here are some recommended reading to follow up on the lecture content. They are all freely available online. 
+	
+	\vspace{0.5cm}
+	
+	\begin{itemize}
+		\item Stanford Encyclopedia Articles: 
+			\begin{enumerate}
+				\item Turing machines
+				\item Church-Turing thesis
+				\item Computability and complexity theory
+			\end{enumerate}
+	\end{itemize}
+	
+\end{frame}
+
+
+
+
+
+\end{document}
