@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Rules of Inference: Existential Quantifier}{3}{0}{1}
+\beamer@sectionintoc {2}{Examples}{7}{0}{2}
+\beamer@sectionintoc {3}{Extended Example}{10}{0}{3}
+\beamer@sectionintoc {4}{G\"{o}del's Completeness Theorem}{16}{0}{4}
