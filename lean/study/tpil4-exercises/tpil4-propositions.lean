@@ -28,8 +28,43 @@ example : p ∨ q ↔ q ∨ p :=
           Or.intro_left q wp))
 
 -- associativity of ∧ and ∨
-example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := sorry
-example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := sorry
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := 
+  Iff.intro
+    (λ t : (p ∧ q) ∧ r =>
+      have wr : r := And.right t
+      have wpq : p ∧ q := And.left t
+      have wp : p := And.left wpq
+      have wq : q := And.right wpq
+      show p ∧ (q ∧ r) from And.intro wp (And.intro wq wr))
+    (λ s : p ∧ (q ∧ r) => 
+      have wp : p := And.left s
+      have wqr : q ∧ r := And.right s
+      have wq : q := And.left wqr
+      have wr : r := And.right wqr
+      show (p ∧ q) ∧ r from And.intro (And.intro wp wq) wr)
+
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := 
+  Iff.intro
+    (λ t : (p ∨ q) ∨ r =>
+      Or.elim t
+        (λ wpq : p ∨ q =>
+          Or.elim wpq 
+            (λ wp : p =>
+              show p ∨ (q ∨ r) from Or.intro_left (q ∨ r) wp)
+            (λ wq : q =>
+              show p ∨ (q ∨ r) from Or.intro_right p (Or.intro_left r wq)))
+        (λ wr : r =>
+          show p ∨ (q ∨ r) from Or.intro_right p (Or.intro_right q wr)))
+    (λ s : p ∨ (q ∨ r) =>
+      Or.elim s
+        (λ wp : p =>
+          show (p ∨ q) ∨ r from Or.intro_left r (Or.intro_left q wp))
+        (λ wqr : q ∨ r =>
+          Or.elim wqr
+            (λ wq : q =>
+              show (p ∨ q) ∨ r from Or.intro_left r (Or.intro_right p wq))
+            (λ wr : r =>
+              show (p ∨ q) ∨ r from Or.intro_right (p ∨ q) wr )))
 
 -- distributivity
 example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
