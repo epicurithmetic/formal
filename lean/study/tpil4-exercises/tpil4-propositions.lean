@@ -117,7 +117,14 @@ example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
 example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
 example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
 example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
-example : ¬(p ∧ ¬p) := sorry
+
+-- Non-contradiction
+example : ¬(p ∧ ¬p) := 
+  λ w : p ∧ ¬p =>
+    have wp : p := And.left w
+    have wnp : ¬p := And.right w
+    show False from wnp wp
+
 example : p ∧ ¬q → ¬(p → q) := sorry
 example : ¬p → (p → q) := sorry
 example : (¬p ∨ q) → (p → q) := sorry
