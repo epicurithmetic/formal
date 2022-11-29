@@ -12,7 +12,6 @@ example : p ∧ q ↔ q ∧ p :=
       have wp : p := And.right wqp
       show p ∧ q from And.intro wp wq)
 
-
 example : p ∨ q ↔ q ∨ p := 
   Iff.intro
     (λ wpq : p ∨ q =>
