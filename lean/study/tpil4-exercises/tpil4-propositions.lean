@@ -163,7 +163,7 @@ example : ¬(p ∨ q) ↔ ¬p ∧ ¬q :=
           (λ wq : q =>
             show False from wnq wq))
 
-
+-- Here is one direction: the other direction is classical.
 example : ¬p ∨ ¬q → ¬(p ∧ q) := 
   λ w : ¬p ∨ ¬q =>
     λ t : p ∧ q =>
@@ -182,12 +182,50 @@ example : ¬(p ∧ ¬p) :=
     have wnp : ¬p := And.right w
     show False from wnp wp
 
-example : p ∧ ¬q → ¬(p → q) := sorry
-example : ¬p → (p → q) := sorry
-example : (¬p ∨ q) → (p → q) := sorry
-example : p ∨ False ↔ p := sorry
-example : p ∧ False ↔ False := sorry
-example : (p → q) → (¬q → ¬p) := sorry
+example : p ∧ ¬q → ¬(p → q) :=
+  λ w : p ∧ ¬q =>
+    have wp : p := And.left w
+    have wnq : ¬q := And.right w
+    λ x : p → q =>
+      show False from wnq (x wp)
+
+example : ¬p → (p → q) :=
+  λ x : ¬p => 
+    λ y : p =>
+      show q from False.elim (x y)
+
+example : (¬p ∨ q) → (p → q) := 
+  λ x : (¬p ∨ q) => 
+    λ wp : p =>
+      Or.elim x
+        (λ wnp : ¬p =>
+          show q from False.elim (wnp wp))
+        (λ wq : q =>
+          show q from wq)
+
+example : p ∨ False ↔ p := 
+  Iff.intro
+    (λ x : p ∨ False =>
+      Or.elim x
+        (λ wp : p =>
+          show p from wp)
+        (λ y : False =>
+          show p from False.elim y))
+    (λ wp : p =>
+      show (p ∨ False) from Or.intro_left False wp)
+
+example : p ∧ False ↔ False := 
+  Iff.intro
+    (λ x : p ∧ False =>
+      show False from And.right x)
+    (λ y : False => 
+      show p ∧ False from False.elim y)
+
+example : (p → q) → (¬q → ¬p) := 
+  λ x : p → q =>
+    λ y : ¬q => 
+      λ z : p =>
+      show False from y (x z)
 
 
     
