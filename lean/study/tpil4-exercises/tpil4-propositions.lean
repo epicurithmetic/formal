@@ -113,10 +113,53 @@ example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) :=
               show p ∨ (q ∧ r) from Or.intro_right p (And.intro wq wr))))
 
 -- other properties
-example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
-example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
+example : (p → (q → r)) ↔ (p ∧ q → r) := 
+  Iff.intro
+    (λ wpqr : p → (q → r) => 
+      λ wpq : p ∧ q =>
+        have wp : p := And.left wpq
+        have wq : q := And.right wpq
+        show r from wpqr wp wq)
+    (λ w : p ∧ q → r => 
+      λ wp : p =>
+        λ wq : q => 
+          have t : p ∧ q := And.intro wp wq
+          show r from w t)
+
+
+example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) :=
+  Iff.intro
+    (λ w : (p ∨ q) → r =>
+      have wpr : p → r := 
+        (λ wp : p => w (Or.intro_left q wp))
+      have wqr : q → r :=
+        (λ wq : q => w (Or.intro_right p wq))
+      show (p → r) ∧ (q → r) from And.intro wpr wqr)
+    (λ x : (p → r) ∧ (q → r) =>
+      have t : p → r := And.left x
+      have s : q → r := And.right x
+      λ y : p ∨ q =>
+        Or.elim y
+          (λ wp : p =>
+            show r from t wp)
+          (λ wq : q =>
+            show r from s wq))
+
+
+
 example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
-example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
+
+
+example : ¬p ∨ ¬q → ¬(p ∧ q) := 
+  λ w : ¬p ∨ ¬q =>
+    λ t : p ∧ q =>
+      have wp : p := And.left t
+      have wq : q := And.right t
+      Or.elim w
+        (λ wnp : ¬p =>
+          show False from wnp wp)
+        (λ wnq : ¬q =>
+          show False from wnq wq)
 
 -- Non-contradiction
 example : ¬(p ∧ ¬p) := 
@@ -132,30 +175,5 @@ example : p ∨ False ↔ p := sorry
 example : p ∧ False ↔ False := sorry
 example : (p → q) → (¬q → ¬p) := sorry
 
--- Working through exercises from Theorem Proving in Lean 4
-example : (p → (q → r)) →  (p ∧ q → r) := 
-  by exact fun t : p → (q → r) =>
-    fun s : p ∧ q =>
-      have j₁: p := s.left
-      have j₂: q := s.right
-      have t₂: q → r := t j₁
-      show r  from t₂ j₂ 
 
-example : (p ∧ q → r) → (p → (q → r))  := 
-  by exact fun hpqr:(p ∧ q → r) =>
-    fun hp:p =>
-      fun hq:q =>
-        have hpq:(p ∧ q) := And.intro hp hq
-        have hr:r := hpqr hpq
-        show r from hr
-
-example : ¬(p ∨ q) → ¬p ∧ ¬q := 
-  fun wnpq : ¬(p ∨ q) =>
-    have wnp : ¬p := (fun wp:p =>
-      have j:(p ∨ q):= Or.intro_left q wp
-      show False from wnpq j)
-    have wnq : ¬q := (fun wq:q =>
-      have j:(p ∨ q):= Or.intro_right p wq
-      show False from wnpq j)
-    show ¬p ∧ ¬q from And.intro wnp wnq 
     
