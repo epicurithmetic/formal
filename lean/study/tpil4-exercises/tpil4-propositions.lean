@@ -145,9 +145,23 @@ example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) :=
           (λ wq : q =>
             show r from s wq))
 
-
-
-example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := 
+  Iff.intro
+    (λ w : ¬(p ∨ q) =>
+      have wnp : ¬p :=
+        (λ wp : p => w (Or.intro_left q wp))
+      have wnq : ¬q :=
+        λ wq : q => w (Or.intro_right p wq)
+      show ¬p ∧ ¬q from And.intro wnp wnq)
+    (λ x : ¬p ∧ ¬q =>
+      have wnp : ¬p := And.left x
+      have wnq : ¬q := And.right x
+      λ y : p ∨ q =>
+        Or.elim y
+          (λ wp : p =>
+            show False from wnp wp)
+          (λ wq : q =>
+            show False from wnq wq))
 
 
 example : ¬p ∨ ¬q → ¬(p ∧ q) := 
