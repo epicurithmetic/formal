@@ -227,7 +227,6 @@ example : (p → q) → (¬q → ¬p) :=
       λ z : p =>
       show False from y (x z)
 
-
 -- Extra
 example : ¬(p ↔ ¬p) :=
   (λ x : p ↔ ¬p =>
