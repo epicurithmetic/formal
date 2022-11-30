@@ -228,4 +228,17 @@ example : (p → q) → (¬q → ¬p) :=
       show False from y (x z)
 
 
-    
+-- Extra
+example : ¬(p ↔ ¬p) :=
+  (λ x : p ↔ ¬p =>
+    have y : p → ¬p := Iff.mp x
+    have z : ¬p → p := Iff.mpr x
+    have wnp : ¬p := 
+      (λ wp : p =>
+        have w : ¬p := y wp
+        show False from w wp)
+    have wnnp : ¬¬p :=
+      (λ np : ¬p =>
+        have w : p := z np
+        show False from np w)
+    show False from wnnp wnp)
