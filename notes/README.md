@@ -1,1 +1,1 @@
-# First Order Logic, Computing, and Formal Mathematics
+# Logic, Computing, and Formal Mathematics
