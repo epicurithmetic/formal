@@ -48,8 +48,6 @@ The script generates a .txt file with each step of the computation recorded.
 The five parts of an instruction are to be read: in the current state (q0), reading the current symbol (b), the machine will write this symbol (c), move one cell in this direction (R), and update into this state (q1).
 Note the semi-colon ; to end each instruction. Furthermore the final line of the instructions needs to end with a new-line character. Move instructions can be one of either (L)eft, (N)owhere, or (R)ight.
 
-## Can you help me? :thinking: 
-If you have found yourself here, then perhaps you can help me. 
+## Work in progress :construction: :construction_worker_man: :building_construction: :construction:
 
-I would like to generate .gif representations of these computations. Each frame of the .gif would correspond to one stage of the computation.
-Ideally the frames could be built from the .txt output file. If you have an idea about how to do this, then I would like to hear from you.
+I am working on an implementation of this that produces .png files, rather than .txt files. I hope to generate one .png file for each step of a computation and then stich them together to form a .gif representation of the computation. I will use the [Python Imaging Library](https://pillow.readthedocs.io/en/stable/index.html) module to create the .png files. 
