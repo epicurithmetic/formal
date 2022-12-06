@@ -19,6 +19,12 @@ During the process of computing 1101<sub>2</sub> + 1<sub>2</sub> the Turing mach
 This Turing machine uses the special characters 'c' and 's' to keep track of the carry and sum. 
 It prints the sum in reverse at the end of the tape. Once the machine has finished it moves the sum back to the start of the tape, then halts.
 
+An example of an entire computation can be seen in the .gif below. Each bit is summed, the carry is stored in memory. Finally the sum is moved to the beginning of the tape.
+
+<p align="center">
+  <img width="420" height="100" src="https://github.com/epicurithmetic/turingMachine/blob/master/images/binary-sum.gif">
+</p>
+
 ## How to use this script
 
 To perform a calculation you will need: 
