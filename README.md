@@ -22,7 +22,7 @@ I intend to develop this repository over the coming years. I aim to add the foll
     - [ ] :: Student exercises: Translate natural deductions into Lean proofs. 
     
   - Turing machine ASCII art
-    - [ ] :: Write code to generate .gif representations rather than the static .txt output.
+    - [X] :: Write code to generate .gif representations rather than the static .txt output.
     - [ ] :: Fix the end-of-file bug.
   
   
